@@ -1,0 +1,11 @@
+{
+  "type": "redcircuit:macerating",
+  "ingredient": {
+    "tag": "c:ingots/copper"
+  },
+  "result": {
+    "id": "redcircuit:copper_dust",
+    "count": 1
+  },
+  "time": 100
+}

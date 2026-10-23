@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "redcircuit:block/power_alloy_wire_flat"
+      }
+    }
+  ]
+}

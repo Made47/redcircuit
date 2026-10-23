@@ -1,0 +1,193 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:sequencer_gate"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.all_gates.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.all_gates.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "not": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:not_gate"
+          }
+        ]
+      }
+    },
+    "buffer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:buffer_gate"
+          }
+        ]
+      }
+    },
+    "and": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:and_gate"
+          }
+        ]
+      }
+    },
+    "nand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:nand_gate"
+          }
+        ]
+      }
+    },
+    "or": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:or_gate"
+          }
+        ]
+      }
+    },
+    "nor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:nor_gate"
+          }
+        ]
+      }
+    },
+    "xor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:xor_gate"
+          }
+        ]
+      }
+    },
+    "xnor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:xnor_gate"
+          }
+        ]
+      }
+    },
+    "rs_latch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:rs_latch_gate"
+          }
+        ]
+      }
+    },
+    "toggle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:toggle_gate"
+          }
+        ]
+      }
+    },
+    "pulse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:pulse_gate"
+          }
+        ]
+      }
+    },
+    "timer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:timer_gate"
+          }
+        ]
+      }
+    },
+    "randomizer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:randomizer_gate"
+          }
+        ]
+      }
+    },
+    "counter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:counter_gate"
+          }
+        ]
+      }
+    },
+    "sequencer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:sequencer_gate"
+          }
+        ]
+      }
+    },
+    "state_cell": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:state_cell_gate"
+          }
+        ]
+      }
+    },
+    "synchronizer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:synchronizer_gate"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:first_gate",
+  "rewards": {
+    "experience": 100
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Bundled Cable",
+  "icon": "redcircuit:bundled_cable",
+  "category": "redcircuit:wiring",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "16 independent channels in one cable. An insulated wire of colour X attached to the cable sends and reads channel X.$(br2)The $(item)Assembler$(), CC: Tweaked computers and the multimeter read single channels."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:bundled_cable"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:timer_gate"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.timer.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.timer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:timer_gate"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:first_gate"
+}

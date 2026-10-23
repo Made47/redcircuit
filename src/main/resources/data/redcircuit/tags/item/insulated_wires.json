@@ -1,0 +1,20 @@
+{
+  "values": [
+    "redcircuit:insulated_wire_white",
+    "redcircuit:insulated_wire_orange",
+    "redcircuit:insulated_wire_magenta",
+    "redcircuit:insulated_wire_light_blue",
+    "redcircuit:insulated_wire_yellow",
+    "redcircuit:insulated_wire_lime",
+    "redcircuit:insulated_wire_pink",
+    "redcircuit:insulated_wire_gray",
+    "redcircuit:insulated_wire_light_gray",
+    "redcircuit:insulated_wire_cyan",
+    "redcircuit:insulated_wire_purple",
+    "redcircuit:insulated_wire_blue",
+    "redcircuit:insulated_wire_brown",
+    "redcircuit:insulated_wire_green",
+    "redcircuit:insulated_wire_red",
+    "redcircuit:insulated_wire_black"
+  ]
+}

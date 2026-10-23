@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:wireless_transmitter",
+    "count": 1
+  }
+}

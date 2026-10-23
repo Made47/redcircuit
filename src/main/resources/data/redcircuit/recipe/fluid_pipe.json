@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "BGB"
+  ],
+  "key": {
+    "B": {
+      "tag": "c:ingots/brass"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    }
+  },
+  "result": {
+    "id": "redcircuit:fluid_pipe",
+    "count": 8
+  }
+}

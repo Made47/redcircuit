@@ -1,0 +1,25 @@
+{
+  "name": "Nadajniki i odbiorniki",
+  "icon": "redcircuit:wireless_transmitter",
+  "category": "redcircuit:wireless",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Częstotliwości 1-5000 są wspólne dla całego świata, także między wymiarami i w niezaładowanych chunkach. PPM ustawia częstotliwość.$(br2)Zasilony $(item)nadajnik$() nadaje; $(item)odbiornik$() daje sygnał 15 na wszystkie strony, gdy jego częstotliwość jest aktywna."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Pilot bezprzewodowy$() nadaje, gdy trzymasz PPM; Shift + PPM ustawia częstotliwość."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:wireless_transmitter",
+      "recipe2": "redcircuit:wireless_receiver"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:wireless_remote"
+    }
+  ]
+}

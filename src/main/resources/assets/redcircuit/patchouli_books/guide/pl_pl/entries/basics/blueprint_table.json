@@ -1,0 +1,21 @@
+{
+  "name": "Stół kreślarski i plany",
+  "icon": "redcircuit:blueprint_table",
+  "category": "redcircuit:basics",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Stół kreślarski$() pamięta siatkę 3x3 i ma 18 slotów magazynu. Składniki są brane najpierw z magazynu, więc siatka działa jak wzór. Shift + klik na wynik wytwarza do 64 razy."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Włóż $(item)pusty plan$() do lewego slotu, ułóż recepturę i naciśnij przycisk z piórem, żeby zapisać $(item)plan$(). Zapisany plan + przycisk wczytuje recepturę: puste pola siatki uzupełniają się z magazynu."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:blueprint_table",
+      "recipe2": "redcircuit:blank_plan"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "redcircuit:block/bundled_cable_flat"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SPS",
+    "SKS",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "tag": "c:cobblestones/normal"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "K": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:block_breaker",
+    "count": 1
+  }
+}

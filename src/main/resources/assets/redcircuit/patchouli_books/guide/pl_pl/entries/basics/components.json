@@ -1,0 +1,39 @@
+{
+  "name": "Komponenty",
+  "icon": "redcircuit:power_circuit",
+  "category": "redcircuit:basics",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Płytka obwodu$() (płyta z gładkiego kamienia + redstone) to podstawa każdej bramki. $(item)Zębatki$(): kamienna (4 bruk w kształcie plusa), potem miedziana, złota, żelazna, mosiężna, srebrna i diamentowa wokół kamiennej; netherytowa na stole kowalskim."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Obwód energetyczny$() trafia do narzędzi elektrycznych i do $(item)obudowy maszyny energetycznej$() (żelazo, mosiądz, obwód), korpusu maszyn na energię."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Obwód sygnałowy$() (stop sygnałowy, pochodnie redstone, płytka obwodu) daje $(item)obudowę maszyny sygnałowej$() (żelazo, cyna, obwód), korpus maszyn sterowanych redstone: ekstraktora, regulatora, relay, wyrzutnika, detektora, zapalarki, aplikatora, niszczarki i asemblera."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:circuit_plate",
+      "recipe2": "redcircuit:stone_gear"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:iron_gear",
+      "recipe2": "redcircuit:power_circuit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:power_machine_casing",
+      "recipe2": "redcircuit:signal_circuit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:signal_machine_casing"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Fluid Tank",
+  "icon": "redcircuit:fluid_tank",
+  "category": "redcircuit:fluids",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Holds 16,000 mB of one fluid, visible through the glass. Use buckets on it; pipes and other mods connect on every side. Fluid flows down into a tank placed below. The tank keeps its contents when broken; comparators read the level."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:fluid_tank"
+    }
+  ]
+}

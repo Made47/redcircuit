@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "redcircuit:block/power_machine_casing"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "redcircuit:block/charger"
+    },
+    "lit=true": {
+      "model": "redcircuit:block/charger_on"
+    }
+  }
+}

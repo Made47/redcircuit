@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:encased_insulated_wire_white"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:insulated_wire_white",
+    "count": 1
+  }
+}

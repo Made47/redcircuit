@@ -1,0 +1,15 @@
+{
+  "type": "redcircuit:sawing",
+  "ingredient": {
+    "tag": "minecraft:bamboo_blocks"
+  },
+  "result": {
+    "id": "minecraft:bamboo_planks",
+    "count": 3
+  },
+  "time": 100,
+  "bonus": {
+    "id": "redcircuit:sawdust"
+  },
+  "bonus_chance": 1.0
+}

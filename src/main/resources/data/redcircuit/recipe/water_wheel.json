@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "PSP",
+    "SGS",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    },
+    "G": {
+      "tag": "c:gears/iron"
+    }
+  },
+  "result": {
+    "id": "redcircuit:water_wheel",
+    "count": 1
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_center"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_south"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_east"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_west"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_up"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/encased_insulated_wire_green_down"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "redcircuit:macerating",
+  "ingredient": {
+    "tag": "c:ingots/iron"
+  },
+  "result": {
+    "id": "redcircuit:iron_dust",
+    "count": 1
+  },
+  "time": 100
+}

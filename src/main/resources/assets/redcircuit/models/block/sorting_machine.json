@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/sorting_machine_side",
+    "north": "redcircuit:block/sorting_machine_front",
+    "south": "redcircuit:block/sorting_machine_back",
+    "east": "redcircuit:block/sorting_machine_side",
+    "west": "redcircuit:block/sorting_machine_side",
+    "up": "redcircuit:block/sorting_machine_side",
+    "down": "redcircuit:block/sorting_machine_side"
+  }
+}

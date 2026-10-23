@@ -1,0 +1,25 @@
+{
+  "name": "Baterie i ładowarka",
+  "icon": "redcircuit:battery_box",
+  "category": "redcircuit:energy",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Akumulator$() mieści 1 000 000 FE. Przenośna $(item)bateria$() mieści 50 000 FE i zasila maszyny ze slotu baterii, gdy brakuje prądu z sieci."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "W oknie akumulatora górny slot ładuje baterię, a dolny ją rozładowuje. $(item)Ładowarka$() ma 4 sloty i ładuje baterie, narzędzia elektryczne i przedmioty FE innych modów (1000 FE/t na slot)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:battery_box",
+      "recipe2": "redcircuit:battery"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:charger"
+    }
+  ]
+}

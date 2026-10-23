@@ -1,0 +1,21 @@
+{
+  "name": "Requester & Manager",
+  "icon": "redcircuit:requester",
+  "category": "redcircuit:logistics",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place the $(item)Requester$() by clicking a tube. On a redstone pulse it searches every inventory on the tube network and fetches an item matching its filter to itself. 200 FE per fetch."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Manager$() sits on an inventory it keeps stocked: missing items from its list are requested from the network, items not on the list are sent away. 100 FE per request."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:requester",
+      "recipe2": "redcircuit:manager"
+    }
+  ]
+}

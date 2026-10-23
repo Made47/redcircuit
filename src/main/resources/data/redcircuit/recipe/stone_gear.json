@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " M ",
+    "M M",
+    " M "
+  ],
+  "key": {
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "result": {
+    "id": "redcircuit:stone_gear",
+    "count": 1
+  }
+}

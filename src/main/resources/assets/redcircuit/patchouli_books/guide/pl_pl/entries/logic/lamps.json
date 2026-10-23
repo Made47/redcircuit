@@ -1,0 +1,17 @@
+{
+  "name": "Lampy",
+  "icon": "redcircuit:lamp_red",
+  "category": "redcircuit:logic",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Lampy w 16 kolorach świecą (poziom 15) przy sygnale redstone, także z przewodów RedCircuit. $(item)Lampy odwrócone$() świecą bez sygnału. Lampa + pochodnia redstone zamienia jedną w drugą.$(br2)Gasną z opóźnieniem 4 ticków, więc krótkie impulsy nie migoczą."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:lamp_white",
+      "recipe2": "redcircuit:inverted_lamp_white"
+    }
+  ]
+}

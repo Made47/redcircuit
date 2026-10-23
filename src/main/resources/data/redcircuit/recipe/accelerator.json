@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ITI",
+    "WMW",
+    "ITI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "T": {
+      "item": "redcircuit:tube"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    },
+    "M": {
+      "item": "redcircuit:power_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:accelerator",
+    "count": 1
+  }
+}

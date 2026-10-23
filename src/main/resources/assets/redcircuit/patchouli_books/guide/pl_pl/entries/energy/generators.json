@@ -1,0 +1,17 @@
+{
+  "name": "Panel słoneczny i termostos",
+  "icon": "redcircuit:solar_panel",
+  "category": "redcircuit:energy",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Panel słoneczny$() daje 10 FE/t w dzień pod gołym niebem (mniej w deszczu).$(br2)$(item)Termostos$() daje 8 FE/t za każdą parę sąsiadów: gorący (lawa, ogień, magma, ognisko) i zimny (woda, lód, śnieg), maks. 24 FE/t."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:solar_panel",
+      "recipe2": "redcircuit:thermopile"
+    }
+  ]
+}

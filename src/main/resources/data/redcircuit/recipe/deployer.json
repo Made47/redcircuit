@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SPS",
+    "SHS",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "tag": "c:cobblestones/normal"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "H": {
+      "tag": "c:chests/wooden"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:deployer",
+    "count": 1
+  }
+}

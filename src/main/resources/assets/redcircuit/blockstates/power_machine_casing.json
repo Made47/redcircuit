@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "redcircuit:block/power_machine_casing"
+    }
+  }
+}

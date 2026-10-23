@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ITI",
+    "TCT",
+    "ITI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "T": {
+      "tag": "c:ingots/tin"
+    },
+    "C": {
+      "item": "redcircuit:signal_circuit"
+    }
+  },
+  "result": {
+    "id": "redcircuit:signal_machine_casing",
+    "count": 1
+  }
+}

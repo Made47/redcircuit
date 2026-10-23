@@ -1,0 +1,16 @@
+{
+  "name": "Rury pneumatyczne",
+  "icon": "redcircuit:tube",
+  "category": "redcircuit:logistics",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Przedmioty w rurach szukają najtańszej trasy do inwentarza, który je przyjmie. Leje i inne mody mogą wkładać przedmioty do rur.$(br2)PPM $(item)barwnikiem$() maluje rurę: przewozi wtedy tylko przedmioty w tym kolorze. Shift + PPM pustą ręką zmywa farbę."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:tube"
+    }
+  ]
+}

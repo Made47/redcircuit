@@ -1,0 +1,17 @@
+{
+  "type": "redcircuit:alloying",
+  "ingredients": [
+    {
+      "tag": "c:ingots/silver"
+    },
+    {
+      "tag": "c:dusts/azurite",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "redcircuit:power_alloy_ingot",
+    "count": 1
+  },
+  "cooktime": 200
+}

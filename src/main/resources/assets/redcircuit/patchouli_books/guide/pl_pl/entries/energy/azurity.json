@@ -1,0 +1,17 @@
+{
+  "name": "Azurity i przewody",
+  "icon": "redcircuit:power_alloy_wire",
+  "category": "redcircuit:energy",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Azurity to $(item)Forge Energy$() (FE), więc działa z kablami i maszynami innych modów.$(br2)$(item)Przewód ze stopu energetycznego$() przykleja się do ścian jak przewody redstone i przesyła 500 FE/t. PPM pokazuje stan."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:power_alloy_wire",
+      "recipe2": "redcircuit:encased_power_alloy_wire"
+    }
+  ]
+}

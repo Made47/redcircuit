@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:windmill"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.windmill.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.windmill.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redcircuit:windmill",
+              "redcircuit:water_wheel"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:generator"
+}

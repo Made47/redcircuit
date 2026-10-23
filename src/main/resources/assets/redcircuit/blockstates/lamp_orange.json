@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "redcircuit:block/lamp_orange_off"
+    },
+    "lit=true": {
+      "model": "redcircuit:block/lamp_orange_on"
+    }
+  }
+}

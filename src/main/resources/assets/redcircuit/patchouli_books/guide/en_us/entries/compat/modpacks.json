@@ -1,0 +1,16 @@
+{
+  "name": "Modpacks",
+  "icon": "minecraft:writable_book",
+  "category": "redcircuit:compat",
+  "sortnum": 37,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)config/redcircuit-common.toml$() can disable each ore and change generator outputs and machine costs.$(br2)Recipes use common $(item)c:$() tags, so tin, silver or brass from other mods work. Alloy recipes ($(item)redcircuit:alloying$()) can be edited with datapacks, KubeJS or CraftTweaker."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Jade$() shows signal levels, bundled channels, gate settings and generator output. $(item)JEI$() shows alloy recipes and info pages."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "PHP",
+    "GMG",
+    "IWI"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "H": {
+      "tag": "redcircuit:handsaws"
+    },
+    "G": {
+      "tag": "c:gears/iron"
+    },
+    "M": {
+      "item": "redcircuit:power_machine_casing"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:sawmill",
+    "count": 1
+  }
+}

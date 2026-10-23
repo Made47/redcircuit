@@ -1,0 +1,17 @@
+{
+  "name": "Insulated Wire",
+  "icon": "redcircuit:insulated_wire_red",
+  "category": "redcircuit:wiring",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "16 colours. An insulated wire only connects to the same colour, to Signal Alloy Wire and to Bundled Cable, so different signals can run side by side."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:insulated_wire_red",
+      "recipe2": "redcircuit:insulated_wire_blue"
+    }
+  ]
+}

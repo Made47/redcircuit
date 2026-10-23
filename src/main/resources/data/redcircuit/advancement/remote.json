@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:wireless_remote"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.remote.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.remote.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:wireless_remote"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:wireless"
+}

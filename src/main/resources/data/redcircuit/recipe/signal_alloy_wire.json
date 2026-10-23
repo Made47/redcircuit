@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "III"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/signal_alloy"
+    }
+  },
+  "result": {
+    "id": "redcircuit:signal_alloy_wire",
+    "count": 12
+  }
+}

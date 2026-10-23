@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "redcircuit:block/lamp_light_blue_off"
+    },
+    "lit=true": {
+      "model": "redcircuit:block/lamp_light_blue_on"
+    }
+  }
+}

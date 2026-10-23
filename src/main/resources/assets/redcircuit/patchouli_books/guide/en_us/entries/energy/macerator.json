@@ -1,0 +1,24 @@
+{
+  "name": "Macerator",
+  "icon": "redcircuit:macerator",
+  "category": "redcircuit:energy",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Grinds ores and raw ores into $(l)2 dusts$() (10% chance of a third) and ingots into 1 dust. Smelt the dusts into ingots. It also crushes cobblestone, gravel, bones, blaze rods, wool, glowstone and more."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Uses 16 FE/t and has a battery slot. Hoppers insert from any side and take the results out. Datapacks can add recipes of type $(item)redcircuit:macerating$()."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:macerator"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:iron_dust"
+    }
+  ]
+}

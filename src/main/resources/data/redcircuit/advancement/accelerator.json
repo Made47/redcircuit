@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:accelerator"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.accelerator.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.accelerator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:accelerator"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:tube"
+}

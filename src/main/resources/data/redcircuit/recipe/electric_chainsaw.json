@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "AAA",
+    "IMI",
+    "IBI"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:diamond_axe"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "M": {
+      "item": "redcircuit:power_circuit"
+    },
+    "B": {
+      "item": "redcircuit:battery"
+    }
+  },
+  "result": {
+    "id": "redcircuit:electric_chainsaw",
+    "count": 1
+  }
+}

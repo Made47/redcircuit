@@ -1,0 +1,21 @@
+{
+  "name": "Pump & Fluid Pipe",
+  "icon": "redcircuit:pump",
+  "category": "redcircuit:fluids",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place the $(item)Pump$() by clicking the fluid source (a tank or a lake): it sucks from the back and pushes to the front. It drains up to 256 source blocks of a lake. 200 FE per bucket; a redstone signal stops it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Fluid Pipes$() hold 1000 mB each, level out among themselves and push fluid into every connected tank except the one it came from (250 mB/t per side)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:pump",
+      "recipe2": "redcircuit:fluid_pipe"
+    }
+  ]
+}

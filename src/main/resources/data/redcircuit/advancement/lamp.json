@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:lamp_yellow"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.lamp.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.lamp.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#redcircuit:lamps"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:red_wire"
+}

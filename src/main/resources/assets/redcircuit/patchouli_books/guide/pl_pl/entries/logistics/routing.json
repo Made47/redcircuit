@@ -1,0 +1,26 @@
+{
+  "name": "Regulator, Relay i Buffer",
+  "icon": "redcircuit:regulator",
+  "category": "redcircuit:logistics",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Regulator$(): przenosi z inwentarza z tyłu do inwentarza z przodu, aż ten ma ilości z filtra; wtedy daje sygnał $(li)$(item)Relay$(): 9 slotów, przyjmuje z każdej strony poza przodem i stale wypycha przodem $(li)$(item)Buffer$(): 18 slotów dostępnych z każdej strony; komparator czyta zapełnienie"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Detektor przedmiotów$(): impuls przy każdym przejeżdżającym stosie"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:regulator",
+      "recipe2": "redcircuit:relay"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:buffer",
+      "recipe2": "redcircuit:item_detector"
+    }
+  ]
+}

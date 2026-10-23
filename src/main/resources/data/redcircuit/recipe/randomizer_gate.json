@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "tag": "c:gems/quartz"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:randomizer_gate",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "redcircuit:block/signal_alloy_wire_flat"
+      }
+    }
+  ]
+}

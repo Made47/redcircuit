@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "redcircuit",
+  "version": "${version}",
+  "name": "RedCircuit",
+  "description": "Redstone wires without signal loss, logic gates, pneumatic tubes with sorting and Azurity energy.",
+  "authors": ["Geesio"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["pl.geesio.redcircuit.RedCircuit"],
+    "client": ["pl.geesio.redcircuit.client.RedCircuitClient"],
+    "rei_client": ["pl.geesio.redcircuit.client.rei.RedCircuitReiPlugin"],
+    "jade": ["pl.geesio.redcircuit.compat.jade.RedCircuitJadePlugin"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "team_reborn_energy": ">=4.1.0"
+  },
+  "suggests": {
+    "roughlyenoughitems": "*",
+    "jade": "*",
+    "computercraft": ">=1.113",
+    "patchouli": "*"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Miernik",
+  "icon": "redcircuit:multimeter",
+  "category": "redcircuit:tools",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "PPM na bloku wypisuje poziom sygnału (wejście, wyjście albo poziom przewodu), aktywne kanały kabla wiązkowego, energię i ciecze."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:multimeter"
+    }
+  ]
+}

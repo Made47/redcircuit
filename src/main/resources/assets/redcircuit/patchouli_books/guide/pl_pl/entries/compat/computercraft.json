@@ -1,0 +1,16 @@
+{
+  "name": "CC: Tweaked",
+  "icon": "minecraft:command_block",
+  "category": "redcircuit:compat",
+  "sortnum": 35,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Z CC: Tweaked kable wiązkowe łączą się z komputerami i żółwiami: $(item)redstone.setBundledOutput$() steruje kanałami kabla, a $(item)redstone.getBundledInput$() je odczytuje."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Peryferia: $(item)redcircuit_gate$() (czas zegara, licznik, wyciszenie) i $(item)redcircuit_wireless$() (częstotliwość, stan). Maszyny, zbiorniki i baterie są widoczne jako ogólne peryferia $(item)inventory$(), $(item)fluid_storage$() i $(item)energy_storage$()."
+    }
+  ]
+}

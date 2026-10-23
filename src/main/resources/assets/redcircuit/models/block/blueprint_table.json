@@ -1,0 +1,68 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "minecraft:block/oak_planks",
+    "planks": "minecraft:block/oak_planks",
+    "side": "redcircuit:block/blueprint_table_side",
+    "overlay": "redcircuit:block/blueprint_table_top"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#planks",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#planks",
+          "cullface": "down"
+        },
+        "north": {
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#overlay",
+          "cullface": "up"
+        }
+      }
+    }
+  ]
+}

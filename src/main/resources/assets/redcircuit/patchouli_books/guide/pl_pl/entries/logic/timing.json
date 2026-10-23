@@ -1,0 +1,30 @@
+{
+  "name": "Zegary i liczniki",
+  "icon": "redcircuit:timer_gate",
+  "category": "redcircuit:logic",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Zegar$(): tyka, gdy B jest wyłączone; impuls z przodu, z lewej i z prawej $(li)$(item)Sekwencer$(): sygnał krąży przód, prawo, tył, lewo $(li)$(item)Komórka stanu$(): impuls z B startuje odliczanie, prawa strona (albo lewa, do ustawienia w oknie) świeci w trakcie, potem impuls z przodu"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Licznik$(): L +1, R -1; przód świeci przy maksimum, tył przy zerze; komparator czyta stan"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "PPM na tych bramkach otwiera $(l)okno ustawień$(): czas w sekundach (0,2 s - 1 h) albo maksimum licznika (1-1024). Bramki cicho tykają; dźwięk można wyciszyć w oknie każdej bramki osobno."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:timer_gate",
+      "recipe2": "redcircuit:sequencer_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:state_cell_gate",
+      "recipe2": "redcircuit:counter_gate"
+    }
+  ]
+}

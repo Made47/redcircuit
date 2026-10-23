@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IRI",
+    "CHC",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "item": "redcircuit:requester"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "H": {
+      "tag": "c:chests/wooden"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:manager",
+    "count": 1
+  }
+}

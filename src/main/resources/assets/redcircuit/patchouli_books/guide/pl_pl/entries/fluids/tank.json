@@ -1,0 +1,16 @@
+{
+  "name": "Zbiornik na ciecz",
+  "icon": "redcircuit:fluid_tank",
+  "category": "redcircuit:fluids",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Mieści 16 000 mB jednej cieczy, widocznej przez szkło. Nalewa się i zabiera wiadrem; rury i inne mody łączą się z każdej strony. Ciecz sama spływa do zbiornika niżej. Rozbity zbiornik zachowuje zawartość; komparator czyta poziom."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:fluid_tank"
+    }
+  ]
+}

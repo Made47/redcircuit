@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "redcircuit:block/macerator_top",
+    "front": "redcircuit:block/macerator_front",
+    "side": "redcircuit:block/macerator_side"
+  }
+}

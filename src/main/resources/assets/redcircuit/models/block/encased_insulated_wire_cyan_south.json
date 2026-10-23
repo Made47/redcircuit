@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "t": "redcircuit:block/encased_insulated_wire_cyan",
+    "particle": "redcircuit:block/encased_insulated_wire_cyan"
+  },
+  "elements": [
+    {
+      "from": [
+        5.0,
+        5.0,
+        11.0
+      ],
+      "to": [
+        11.0,
+        11.0,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t"
+        },
+        "south": {
+          "texture": "#t"
+        },
+        "east": {
+          "texture": "#t"
+        },
+        "west": {
+          "texture": "#t"
+        },
+        "up": {
+          "texture": "#t"
+        },
+        "down": {
+          "texture": "#t"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "MMS"
+  ],
+  "key": {
+    "M": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "result": {
+    "id": "redcircuit:stone_handsaw",
+    "count": 1
+  }
+}

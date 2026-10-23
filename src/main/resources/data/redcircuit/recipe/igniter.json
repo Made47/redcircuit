@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "NNN",
+    "IFI",
+    "IWI"
+  ],
+  "key": {
+    "N": {
+      "tag": "c:netherracks"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "F": {
+      "item": "minecraft:flint_and_steel"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:igniter",
+    "count": 1
+  }
+}

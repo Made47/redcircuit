@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:signal_alloy_wire"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.red_wire.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.red_wire.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:signal_alloy_wire"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:signal_alloy"
+}

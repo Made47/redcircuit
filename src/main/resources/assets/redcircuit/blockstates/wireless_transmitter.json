@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "redcircuit:block/wireless_transmitter_off"
+    },
+    "powered=true": {
+      "model": "redcircuit:block/wireless_transmitter_on"
+    }
+  }
+}

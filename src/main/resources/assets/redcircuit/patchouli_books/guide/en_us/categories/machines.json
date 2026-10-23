@@ -1,0 +1,6 @@
+{
+  "name": "World Machines",
+  "description": "Machines that place, break and use blocks.",
+  "icon": "redcircuit:deployer",
+  "sortnum": 4
+}

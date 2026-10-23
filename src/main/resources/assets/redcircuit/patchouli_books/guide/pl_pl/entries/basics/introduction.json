@@ -1,0 +1,16 @@
+{
+  "name": "Wstęp",
+  "icon": "minecraft:book",
+  "category": "redcircuit:basics",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)RedCircuit$() dodaje przewody redstone bez strat, bramki logiczne, rury pneumatyczne i energię $(item)Azurity$().$(br2)Zacznij od znalezienia rud $(item)cyny$(), $(item)srebra$() i $(item)azurytu$(), a potem zbuduj $(l:basics/alloy_furnace)piec do stopów$(/l), żeby wytopić $(item)stop sygnałowy$() i $(item)stop energetyczny$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Większość bloków kierunkowych stawia się, klikając blok, który ma być za nimi (np. skrzynię). Później obróci je $(l:basics/crafting_tools)śrubokręt$(/l).$(br2)Z $(item)JEI$() podejrzysz każdą recepturę, a z $(item)Jade$() poziom sygnału, energię i ustawienia zegarów."
+    }
+  ]
+}

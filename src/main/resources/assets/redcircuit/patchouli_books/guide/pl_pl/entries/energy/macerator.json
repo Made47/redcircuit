@@ -1,0 +1,24 @@
+{
+  "name": "Macerator",
+  "icon": "redcircuit:macerator",
+  "category": "redcircuit:energy",
+  "sortnum": 28,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Miele rudy i surowe rudy na $(l)2 pyły$() (10% szans na trzeci), a sztabki na 1 pył. Pyły przetapia się na sztabki. Kruszy też bruk, żwir, kości, pręty płomienia, wełnę, jasnogłaz i inne."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Zużywa 16 FE/t i ma slot baterii. Lejki wkładają z każdej strony i wyjmują wyniki. Datapacki mogą dodawać receptury typu $(item)redcircuit:macerating$()."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:macerator"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:iron_dust"
+    }
+  ]
+}

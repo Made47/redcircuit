@@ -1,0 +1,6 @@
+{
+  "name": "Tools",
+  "description": "Electric tools and the multimeter.",
+  "icon": "redcircuit:electric_drill",
+  "sortnum": 8
+}

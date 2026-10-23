@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "redcircuit:block/generator_top",
+    "front": "redcircuit:block/generator_front",
+    "side": "redcircuit:block/generator_side"
+  }
+}

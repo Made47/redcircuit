@@ -1,0 +1,30 @@
+{
+  "name": "Latches & Pulses",
+  "icon": "redcircuit:rs_latch_gate",
+  "category": "redcircuit:logic",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)RS Latch$(): L sets, R resets; front+left on when set, back+right on when reset (sides swappable, quiet mode in the GUI) $(li)$(item)Toggle$(): a pulse on L or R switches the output front <-> back; right-click toggles by hand $(li)$(item)Pulse Former$(): rising edge on B gives a 2-tick pulse"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Randomizer$(): while B is on, front, left and right get random states every 4 ticks $(li)$(item)Synchronizer$(): waits for pulses on both L and R, then pulses; B resets"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:rs_latch_gate",
+      "recipe2": "redcircuit:toggle_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:pulse_gate",
+      "recipe2": "redcircuit:randomizer_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:synchronizer_gate"
+    }
+  ]
+}

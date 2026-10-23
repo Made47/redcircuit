@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "redcircuit:tin_dust"
+  },
+  "result": {
+    "id": "redcircuit:tin_ingot"
+  },
+  "experience": 0.3,
+  "cookingtime": 100
+}

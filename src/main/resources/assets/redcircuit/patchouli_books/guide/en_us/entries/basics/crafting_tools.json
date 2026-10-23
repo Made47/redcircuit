@@ -1,0 +1,30 @@
+{
+  "name": "Crafting Tools",
+  "icon": "redcircuit:iron_handsaw",
+  "category": "redcircuit:basics",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Handsaws$() (stone to netherite) stay in the grid and lose 1 durability. Any saw is needed for the $(item)Sawmill$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Wire Cutters$() (steel) work the same way: ingot + wire cutters = $(item)Fine Copper/Iron Wire$(). Four fine copper wires around an iron ingot make a $(item)Copper Coil$().$(br2)The $(item)Screwdriver$() rotates gates, machines and vanilla blocks; Shift rotates the other way. Shift-right-click a gate to pick it up with its settings. It never wears out."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:iron_handsaw",
+      "recipe2": "redcircuit:wire_cutters"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:fine_copper_wire",
+      "recipe2": "redcircuit:copper_coil"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:screwdriver"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Sawmill",
+  "icon": "redcircuit:sawmill",
+  "category": "redcircuit:energy",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Cuts logs and stems into $(l)6 planks$() instead of 4, always with a bit of $(item)sawdust$(), and planks into 3 sticks. Uses 12 FE/t and has a battery slot.$(br2)Sawdust burns in furnaces, and 3 sawdust in a row make 2 paper. Datapacks can add recipes of type $(item)redcircuit:sawing$()."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:sawmill",
+      "recipe2": "redcircuit:paper_from_sawdust"
+    }
+  ]
+}

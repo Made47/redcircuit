@@ -1,0 +1,17 @@
+{
+  "name": "Extractor & Filter",
+  "icon": "redcircuit:extractor",
+  "category": "redcircuit:logistics",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place an $(item)Extractor$() by clicking the chest it should pull from. A redstone pulse pulls a stack and pushes it out the front (tube, inventory or ground).$(br2)The $(item)Filter$() only pulls items matching its 9 pattern slots (right-click). Empty filter = anything."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:extractor",
+      "recipe2": "redcircuit:filter"
+    }
+  ]
+}

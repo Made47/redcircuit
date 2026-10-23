@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:electric_drill"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.drill.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.drill.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:electric_drill"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:motor"
+}

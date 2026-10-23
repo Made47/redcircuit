@@ -1,0 +1,7 @@
+{
+  "parent": "redcircuit:block/gate_base",
+  "textures": {
+    "top": "redcircuit:block/gate_randomizer_off_l0r1",
+    "side": "redcircuit:block/gate_side"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Ores",
+  "icon": "redcircuit:azurite_ore",
+  "category": "redcircuit:basics",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "All ores also have a deepslate variant; Fortune and Silk Touch work.$(br2)$(li)$(item)Tin$(): Y 0 to 80, stone pickaxe$(br)$(li)$(item)Silver$(): Y -48 to 32, iron pickaxe$(br)$(li)$(item)Azurite$(): Y -64 to 16, drops 4-5 like redstone$(br2)Every ore can be disabled in $(item)config/redcircuit-common.toml$()."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:tin_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:silver_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:azurite"
+    }
+  ]
+}

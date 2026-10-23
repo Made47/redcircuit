@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IBI",
+    "BRB",
+    "IBI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "tag": "c:ingots/power_alloy"
+    },
+    "R": {
+      "tag": "c:storage_blocks/redstone"
+    }
+  },
+  "result": {
+    "id": "redcircuit:battery_box",
+    "count": 1
+  }
+}

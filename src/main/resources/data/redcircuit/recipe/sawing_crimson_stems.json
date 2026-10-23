@@ -1,0 +1,15 @@
+{
+  "type": "redcircuit:sawing",
+  "ingredient": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "result": {
+    "id": "minecraft:crimson_planks",
+    "count": 6
+  },
+  "time": 100,
+  "bonus": {
+    "id": "redcircuit:sawdust"
+  },
+  "bonus_chance": 1.0
+}

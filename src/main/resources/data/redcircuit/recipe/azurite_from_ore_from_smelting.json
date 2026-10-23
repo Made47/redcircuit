@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": [
+    {
+      "item": "redcircuit:azurite_ore"
+    },
+    {
+      "item": "redcircuit:deepslate_azurite_ore"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:azurite"
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

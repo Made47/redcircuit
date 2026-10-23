@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "IMI"
+  ],
+  "key": {
+    "B": {
+      "tag": "c:ingots/power_alloy"
+    },
+    "A": {
+      "item": "redcircuit:alloy_furnace"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "M": {
+      "item": "redcircuit:power_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:power_alloy_furnace",
+    "count": 1
+  }
+}

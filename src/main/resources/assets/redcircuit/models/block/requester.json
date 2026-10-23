@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/requester_side",
+    "north": "redcircuit:block/requester_front",
+    "south": "redcircuit:block/requester_back",
+    "east": "redcircuit:block/requester_side",
+    "west": "redcircuit:block/requester_side",
+    "up": "redcircuit:block/requester_side",
+    "down": "redcircuit:block/requester_side"
+  }
+}

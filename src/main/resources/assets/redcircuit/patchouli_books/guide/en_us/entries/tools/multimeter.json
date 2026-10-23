@@ -1,0 +1,16 @@
+{
+  "name": "Multimeter",
+  "icon": "redcircuit:multimeter",
+  "category": "redcircuit:tools",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Right-click a block to print its signal level (input, output or wire level), active bundled channels, stored energy and fluids."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:multimeter"
+    }
+  ]
+}

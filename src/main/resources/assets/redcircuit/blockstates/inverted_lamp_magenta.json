@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "redcircuit:block/lamp_magenta_off"
+    },
+    "lit=true": {
+      "model": "redcircuit:block/lamp_magenta_on"
+    }
+  }
+}

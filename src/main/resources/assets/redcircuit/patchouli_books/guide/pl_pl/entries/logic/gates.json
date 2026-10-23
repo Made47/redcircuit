@@ -1,0 +1,36 @@
+{
+  "name": "Bramki logiczne",
+  "icon": "redcircuit:and_gate",
+  "category": "redcircuit:logic",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Płaskie bramki stawiane na podłodze. Wyjście jest w kierunku, w który patrzysz przy stawianiu. Wejścia: $(l)L$() lewo, $(l)B$() tył, $(l)R$() prawo. $(li)NOT: !B na przód, lewo i prawo (boczne wyjścia wyłączane) $(li)Bufor: B na przód, lewo i prawo (boczne wyjścia wyłączane) $(li)AND: L i B i R, B domyślnie wył. $(li)NAND: nie (L i B i R), B domyślnie wył."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)OR / NOR: L lub B lub R $(li)XOR / XNOR: L xor R $(br2)PPM na dowolnej bramce: opis, podgląd wejść/wyjść i opcje - wyłączanie wejść (szara zaślepka)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:not_gate",
+      "recipe2": "redcircuit:buffer_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:and_gate",
+      "recipe2": "redcircuit:nand_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:or_gate",
+      "recipe2": "redcircuit:nor_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:xor_gate",
+      "recipe2": "redcircuit:xnor_gate"
+    }
+  ]
+}

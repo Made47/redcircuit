@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:wire_cutters"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.wire_cutters.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.wire_cutters.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:wire_cutters"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:root"
+}

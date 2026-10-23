@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/igniter_side",
+    "north": "redcircuit:block/igniter_front",
+    "south": "redcircuit:block/igniter_back",
+    "east": "redcircuit:block/igniter_side",
+    "west": "redcircuit:block/igniter_side",
+    "up": "redcircuit:block/igniter_side",
+    "down": "redcircuit:block/igniter_side"
+  }
+}

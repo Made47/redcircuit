@@ -1,0 +1,21 @@
+{
+  "name": "Requester i Manager",
+  "icon": "redcircuit:requester",
+  "category": "redcircuit:logistics",
+  "sortnum": 17,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Requester$() stawia się, klikając rurę. Na impuls redstone przeszukuje wszystkie inwentarze w sieci rur i ściąga do siebie przedmiot pasujący do filtra. 200 FE za pobranie."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Manager$() stoi na pilnowanym inwentarzu: brakujące przedmioty z listy zamawia z sieci, a przedmioty spoza listy odsyła. 100 FE za zamówienie."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:requester",
+      "recipe2": "redcircuit:manager"
+    }
+  ]
+}
