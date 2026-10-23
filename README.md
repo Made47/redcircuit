@@ -1,160 +1,166 @@
 # RedCircuit (Fabric 1.21.1)
 
-> Wersja dla **Fabric** (osobny projekt, port z wersji NeoForge). Wymaga **Fabric API**.
-> Energia działa przez **Team Reborn Energy** (dołączone do jara) - 1 FE = 1 E, zgodna z Tech Reborn i innymi modami.
-> Przedmioty i płyny - przez Fabric Transfer API (leje, rury i zbiorniki innych modów).
-> Różnice względem NeoForge: zamiast JEI jest **REI** (Roughly Enough Items), nie ma integracji z CB Multipart (mod tylko na Forge/NeoForge),
-> konfiguracja jest w `config/redcircuit-common.properties`. Baterie i narzędzia RedCircuit ładują się w maszynach
-> RedCircuit; ładowarki innych modów ich (na razie) nie widzą.
+*[Polska wersja: README.pl.md](README.pl.md)*
 
-Przewody redstone bez strat sygnału, bramki logiczne, rury pneumatyczne z sortowaniem i energia Azurity. Cały kod i grafiki są autorskie.
-Zawiera kable redstone, bramki logiczne, rury z sortowaniem i Azurity.
+> Version for **Fabric** (a separate project, ported from the NeoForge version). Requires **Fabric API**.
+> Energy works through **Team Reborn Energy** (bundled in the jar) – 1 FE = 1 E, compatible with Tech Reborn and other mods.
+> Items and fluids – through the Fabric Transfer API (other mods' hoppers, pipes and tanks).
+> Differences from NeoForge: **REI** (Roughly Enough Items) instead of JEI, no CB Multipart integration (that mod is Forge/NeoForge only),
+> the config is in `config/redcircuit-common.properties`. RedCircuit batteries and tools charge in RedCircuit
+> machines; other mods' chargers don't see them (yet).
 
-## Budowanie `.jar`
+Lossless redstone wiring, logic gates, pneumatic tubes with sorting and Azurity power. All code and art are original.
+Includes redstone cables, logic gates, sorting tubes and Azurity energy.
 
-### Opcja A – na swoim komputerze (Windows)
-1. Zainstaluj **JDK 21**, np. Temurin: https://adoptium.net (zaznacz „Set JAVA_HOME”).
-2. Rozpakuj projekt, otwórz w tym folderze terminal (PowerShell) i uruchom:
+> **Made with AI.** This mod was created with the help of artificial intelligence (Claude by Anthropic).
+> The source code, the texture-generating scripts, translations and this documentation were largely written by AI,
+> under the direction of the author, who designed, reviewed and play-tested the mod. Expect occasional bugs – reports are welcome.
+
+## Building the `.jar`
+
+### Option A – on your own computer (Windows)
+1. Install **JDK 21**, e.g. Temurin: https://adoptium.net (tick “Set JAVA_HOME”).
+2. Unpack the project, open a terminal (PowerShell) in its folder and run:
    ```
    .\gradlew.bat build
    ```
-   Pierwsze budowanie trwa kilka minut, bo pobiera Minecrafta, Fabric Loom i Fabric API.
-3. Gotowy plik: `build\libs\redcircuit-fabric-0.1.0.jar` → wrzuć do `mods/` razem z **Fabric API** (Fabric Loader 0.16+ dla MC 1.21.1).
+   The first build takes a few minutes because it downloads Minecraft, Fabric Loom and Fabric API.
+3. The finished file: `build\libs\redcircuit-fabric-0.1.0.jar` → put it into `mods/` together with **Fabric API** (Fabric Loader 0.16+ for MC 1.21.1).
 
-Do testów w grze bez instalowania: `.\gradlew.bat runClient`.
+To test in game without installing: `.\gradlew.bat runClient`.
 
-### Opcja B – GitHub Actions (bez instalowania niczego)
-Wrzuć projekt do nowego repozytorium na GitHubie. Workflow `.github/workflows/build.yml`
-zbuduje mod przy każdym pushu, a `.jar` pojawi się w zakładce **Actions → (ostatni run) → Artifacts**.
+### Option B – GitHub Actions (nothing to install)
+Push the project to a GitHub repository. The workflow `.github/workflows/build.yml`
+builds the mod on every push, and the `.jar` appears under **Actions → (latest run) → Artifacts**.
 
-## Zawartość
+## Content
 
-### Rudy
-Każda ruda ma też wersję głębinową (deepslate) i generuje się w Overworldzie. Działa szczęście i jedwabny dotyk.
+### Ores
+Every ore also has a deepslate variant and generates in the Overworld. Fortune and Silk Touch work.
 
-| Ruda | Wysokość Y | Kilof | Daje |
+| Ore | Y level | Pickaxe | Drops |
 |---|---|---|---|
-| Cyna | 0 – 80 | kamienny | surowa cyna → sztabka cyny |
-| Srebro | -48 – 32 | żelazny | surowe srebro → sztabka srebra |
-| Azuryt | -64 – 16 | żelazny | 4–5 azurytu (jak redstone) |
+| Tin | 0 – 80 | stone | raw tin → tin ingot |
+| Silver | -48 – 32 | iron | raw silver → silver ingot |
+| Azurite | -64 – 16 | iron | 4–5 azurite (like redstone) |
 
-Surowce i rudy przetapia się w piecu lub piecu hutniczym. **Stop energetyczny** robi się tak: sztabka srebra + 4 azuryt, wyłącznie w piecu do stopów.
-Przedmioty mają tagi `c:` (np. `c:ingots/tin`), więc działają w recepturach innych modów.
+Raw materials and ores are smelted in a furnace or blast furnace. **Power alloy** is made from a silver ingot + 4 azurite, only in the alloy furnace.
+Items have `c:` tags (e.g. `c:ingots/tin`), so they work in other mods' recipes.
 
-### Stół kreślarski i plany
-- **Stół kreślarski** – stół rzemieślniczy, który pamięta siatkę 3×3 (przedmioty zostają po zamknięciu) i ma 18 slotów magazynu. Przy wytwarzaniu składniki są brane **najpierw z magazynu**, więc siatka działa jak wzór i można craftować wielokrotnie. Shift+klik na wynik wytwarza do 64 razy.
-- **Pusty plan** (papier + niebieski barwnik) – włóż go do slotu po lewej, ułóż recepturę i kliknij przycisk ✎, żeby zapisać **plan**. Plan pokazuje w opisie wynik i składniki.
-- Zapisany plan w slocie + przycisk ✎ = wczytanie planu: puste pola siatki uzupełniają się przedmiotami z magazynu.
+### Blueprint table and plans
+- **Blueprint Table** – a crafting table that remembers its 3×3 grid (items stay after closing) and has 18 storage slots. When crafting, ingredients are taken **from the storage first**, so the grid acts as a pattern and you can craft repeatedly. Shift+click on the result crafts up to 64 times.
+- **Blank Plan** (paper + blue dye) – put it into the slot on the left, lay out a recipe and click the ✎ button to save a **plan**. The plan shows its result and ingredients in the tooltip.
+- A saved plan in the slot + the ✎ button = load the plan: empty grid slots are filled from the storage.
 
-### Piece do stopów
-- **Piec do stopów** (8 bloków cegieł w pierścieniu) – 9 slotów na składniki, slot paliwa (jak zwykły piec) i wynik. Składniki mogą leżeć w dowolnych slotach.
-- **Elektryczny piec do stopów** – to samo, ale na energię (25 FE/t) i 2× szybciej. Receptura: 5 sztabek stopu energetycznego, piec do stopów, 2 sztabki żelaza i przewód ze stopu energetycznego.
-- Stopy: **miedź + 4 redstone → stop sygnałowy**, **srebro + 4 azuryt → stop energetyczny**, **3 miedzi + 1 cyna → 4 sztabki mosiądzu**, **żelazo + 2 węgle (lub węgle drzewne) → stal** (2× dłużej).
-- Automatyzacja: góra – składniki, boki – paliwo (w wersji elektrycznej też składniki), dół – odbiór wyniku.
-- Własne receptury dodasz w datapacku, typ `redcircuit:alloying` (przykład w `data/redcircuit/recipe/alloying_signal_alloy_ingot.json`).
+### Alloy furnaces
+- **Alloy Furnace** (ring of 8 brick blocks) – 9 ingredient slots, a fuel slot (like a normal furnace) and an output. Ingredients may sit in any slots.
+- **Power Alloy Furnace** – the same, but runs on power (25 FE/t) and is 2× faster. Recipe: 5 power alloy ingots, an alloy furnace, 2 iron ingots and a power alloy wire.
+- Alloys: **copper + 4 redstone → signal alloy**, **silver + 4 azurite → power alloy**, **3 copper + 1 tin → 4 brass ingots**, **iron + 2 coal (or charcoal) → steel** (2× longer).
+- Automation: top – ingredients, sides – fuel (ingredients too in the electric version), bottom – output.
+- Add your own recipes in a datapack, type `redcircuit:alloying` (example: `data/redcircuit/recipe/alloying_signal_alloy_ingot.json`).
 
-### Piły ręczne
-- Kamienna, miedziana, złota, żelazna, srebrna i diamentowa: **2 sztuki materiału + patyk w rzędzie**. Netherytowa: ulepszenie diamentowej na stole kowalskim.
-- Piła zostaje w siatce po wytworzeniu i traci 1 punkt wytrzymałości (naprawisz ją w kowadle materiałem, z którego jest).
-- Piły są składnikiem **tartaku**.
+### Handsaws
+- Stone, copper, gold, iron, silver and diamond: **2 material + stick in a row**. Netherite: diamond upgrade on the smithing table.
+- The saw stays in the grid after crafting and loses 1 durability (repair it on an anvil with its material).
+- Saws are an ingredient of the **sawmill**.
 
-### Zębatki
-- **Kamienna:** 4 bruk/czarnokamień w kształcie plusa (pusty środek).
-- **Miedziana, złota, żelazna, mosiężna, srebrna, diamentowa:** 4 sztuki materiału wokół kamiennej zębatki.
-- **Netherytowa:** ulepszenie diamentowej na stole kowalskim.
-- Tagi `c:gears` / `c:gears/<materiał>` – działają w recepturach innych modów.
+### Gears
+- **Stone:** 4 cobblestone/blackstone in a plus shape (empty centre).
+- **Copper, gold, iron, brass, silver, diamond:** 4 of the material around a stone gear.
+- **Netherite:** diamond upgrade on the smithing table.
+- Tags `c:gears` / `c:gears/<material>` – work in other mods' recipes.
 
-### Obwody i obudowy maszyn energetycznej
-- **Obwód energetyczny** (dawniej silnik): **żelazo w narożnikach, stop energetyczny u góry, 2 cewki miedziane po bokach, żelazna zębatka w środku, przewód ze stopu energetycznego na dole**. Składnik narzędzi elektrycznych (wiertarka, piła łańcuchowa) i obudowy maszyny energetycznej.
-- **Obudowa maszyny energetycznej** (blok): żelazo w narożnikach, 4 sztabki mosiądzu, obwód energetyczny w środku. Jest korpusem maszyn na energię – zastępuje obwód w recepturach: pieca elektrycznego, elektrycznego pieca do stopów, generatora (wirnikowego), pompy, Requestera, akceleratora, maceratora i tartaka (w tym samym miejscu siatki, w którym był silnik).
-- **Obwód sygnałowy**: żelazo w narożnikach, stop sygnałowy u góry, 2 pochodnie redstone i płytka obwodu w środkowym rzędzie, przewód ze stopu sygnałowego na dole.
-- **Obudowa maszyny sygnałowej** (blok): żelazo w narożnikach, 4 sztabki cyny, obwód sygnałowy w środku. Korpus maszyn sterowanych redstone – zastępuje przewód sygnałowy w recepturach: ekstraktora (a więc i filtra oraz maszyny sortującej), regulatora, relay, wyrzutnika, detektora przedmiotów, zapalarki, aplikatora i niszczarki bloków, a w asemblerze płytkę obwodu.
+### Circuits and machine casings
+- **Power Circuit** (formerly motor): **iron in the corners, power alloy on top, 2 copper coils on the sides, an iron gear in the middle, a power alloy wire at the bottom**. Ingredient of electric tools (drill, chainsaw) and the power machine casing.
+- **Power Machine Casing** (block): iron in the corners, 4 brass ingots, a power circuit in the middle. The body of powered machines – replaces the circuit in the recipes of: electric furnace, power alloy furnace, (rotor) generator, pump, Requester, accelerator, macerator and sawmill (same grid position the motor used to be).
+- **Signal Circuit**: iron in the corners, signal alloy on top, 2 redstone torches and a circuit plate in the middle row, a signal alloy wire at the bottom.
+- **Signal Machine Casing** (block): iron in the corners, 4 tin ingots, a signal circuit in the middle. The body of redstone-controlled machines – replaces the signal wire in the recipes of: extractor (and therefore filter and sorting machine), regulator, relay, ejector, item detector, igniter, deployer and block breaker, and the circuit plate in the assembler.
 
-### Bateria
-- Przenośny magazyn Azurity: **50 000 FE**, pasek ładunku pod ikoną i stan w opisie.
-- **PPM na akumulatorze** ładuje baterię z akumulatora, **Shift + PPM** przelewa jej energię do akumulatora. W ten sam sposób akumulator ładuje przedmioty FE z innych modów.
-- **Slot baterii w urządzeniach**: piec elektryczny (w miejscu slotu paliwa) i elektryczny piec do stopów (pod paskiem energii). Bateria zasila urządzenie, gdy brakuje mu energii z sieci (do 400/500 FE/t).
-- **Okno akumulatora** (PPM): górny slot ładuje baterię z akumulatora, dolny rozładowuje ją do akumulatora (1000 FE/t), pasek i licznik energii. Automatyzacja: od góry wkładanie do ładowania, z boków do rozładowania, od dołu wyjmowanie naładowanych/rozładowanych baterii.
-- Bateria ma zdolność FE dla przedmiotów, więc działa też z ładowarkami innych modów (do 1000 FE/t).
-- W zakładce kreatywnej jest wersja pusta i naładowana. Receptura: miedź u góry, 4 sztabki cyny po bokach, 2 azuryty w środkowej kolumnie.
+### Battery
+- Portable Azurity storage: **50 000 FE**, charge bar under the icon and status in the tooltip.
+- **Right-click a battery box** to charge the battery from it, **Shift + right-click** to empty its energy into the battery box. The battery box charges FE items from other mods the same way.
+- **Battery slot in devices**: electric furnace (in place of the fuel slot) and power alloy furnace (under the energy bar). The battery powers the device when it lacks grid power (up to 400/500 FE/t).
+- **Battery box GUI** (right-click): the top slot charges a battery from the box, the bottom one discharges it into the box (1000 FE/t), energy bar and counter. Automation: insert from the top to charge, from the sides to discharge, extract charged/empty batteries from the bottom.
+- The battery has the item FE capability, so it also works with other mods' chargers (up to 1000 FE/t).
+- The creative tab has an empty and a charged version. Recipe: copper on top, 4 tin ingots on the sides, 2 azurite in the middle column.
 
-### Ładowarka, narzędzia elektryczne i miernik
-- **Ładowarka** – 4 sloty, ładuje baterie, narzędzia elektryczne i przedmioty FE innych modów (1000 FE/t na slot, bufor 50 000 FE). Okno z paskiem energii; lejki wkładają z góry/boków, od dołu wyjmują naładowane. Świeci podczas ładowania.
-- **Wiertarka elektryczna** – kilof + łopata (poziom diamentu, prędkość 10), **50 FE za blok** zamiast wytrzymałości (100 000 FE). Bez energii kopie bardzo wolno. Można ją zaklinać (wydajność, szczęście, jedwabny dotyk). **Tryby 1x1 / 3x3** – Shift + PPM przełącza; w trybie 3x3 rozbija 3×3 bloki w płaszczyźnie ściany, w którą celujesz (wolniej, 50 FE za każdy blok, pomija bloki dużo twardsze od środkowego); trzymanie Shift podczas kopania rozbija tylko jeden blok.
-- **Piła łańcuchowa** – siekiera tnąca też liście, wełnę i pajęczyny, mocny atak; 50 FE za blok.
-- **Miernik** – PPM na bloku wypisuje w czacie: sygnał (wejście/wyjście albo poziom przewodu), kanały kabla wiązkowego, energię (FE) i ciecze.
-- Receptury: ładowarka = żelazo, stop energetyczny, bateria, przewód energetyczny; wiertarka = 3 diamentowe kilofy u góry, żelazo, obwód energetyczny, bateria; piła łańcuchowa = 3 diamentowe siekiery u góry, żelazo, obwód energetyczny, bateria; miernik = komparator + oba przewody + szyba + żelazo.
+### Charger, electric tools and multimeter
+- **Charger** – 4 slots, charges batteries, electric tools and other mods' FE items (1000 FE/t per slot, 50 000 FE buffer). GUI with an energy bar; hoppers insert from the top/sides and extract charged items from the bottom. Lights up while charging.
+- **Electric Drill** – pickaxe + shovel (diamond tier, speed 10), **50 FE per block** instead of durability (100 000 FE). Mines very slowly without power. Can be enchanted (Efficiency, Fortune, Silk Touch). **1x1 / 3x3 modes** – Shift + right-click toggles; in 3x3 mode it breaks 3×3 blocks in the plane of the face you're looking at (slower, 50 FE per block, skips blocks much harder than the centre one); holding Shift while mining breaks a single block.
+- **Chainsaw** – an axe that also cuts leaves, wool and cobwebs, strong attack; 50 FE per block.
+- **Multimeter** – right-click a block to print in chat: signal (input/output or wire level), bundled cable channels, energy (FE) and fluids.
+- Recipes: charger = iron, power alloy, battery, power wire; drill = 3 diamond pickaxes on top, iron, power circuit, battery; chainsaw = 3 diamond axes on top, iron, power circuit, battery; multimeter = comparator + both wires + glass pane + iron.
 
-### Generatory Azurity
-- **Termostos (Thermopile)** – każda para sąsiadów „gorący” (lawa, ogień, blok magmy, zapalone ognisko) + „zimny” (woda, lód, blok śniegu, sypki śnieg) daje **8 FE/t** (maks. 3 pary = 24 FE/t). Receptura: miedź w narożnikach, cyna na bokach, przewód ze stopu energetycznego w środku.
-- **Generator na paliwo stałe** – spala wszystko, co pali się w piecu (węgiel, drewno, wiadro lawy…), i podczas spalania daje **20 FE/t** (węgiel = 32 000 FE, wiadro lawy = 400 000 FE). Bufor 20 000 FE, oddaje energię do sąsiadów (400 FE/t na stronę). Paliwo zużywa tylko, gdy jest miejsce w buforze; sygnał redstone go wstrzymuje. Okno: slot paliwa, płomień z pozostałym czasem, pasek energii i bieżąca produkcja. Lejki: paliwo z góry/boków, puste wiadra od dołu. Komparator czyta naładowanie. Receptura: żelazo (góra i narożniki), 2 cewki miedziane po bokach, piec w środku, przewód ze stopu energetycznego na dole. Moc w konfiguracji: `[generators] solid_fuel_generator`.
-- **Generator** – sam nic nie produkuje; z przodu montuje się wirnik (PPM wirnikiem, Shift+PPM pustą ręką zdejmuje):
-  - **Wiatrak** (wełna, patyki, żelazna zębatka) – obraca się w polu 5×5 przed generatorem, które musi być puste i pod gołym niebem. **6 FE/t nad poziomem morza, do 32 FE/t wysoko**, ×1,5 w deszczu, ×2 w burzy.
-  - **Koło wodne** (deski, patyki, żelazna zębatka) – pole 3×3 przed generatorem: każdy blok **płynącej wody 4 FE/t**, stojącej 1 FE/t (maks. 24 FE/t). Inne bloki w tym polu blokują koło.
-- PPM na generatorze pokazuje bieżącą produkcję i bufor.
+### Azurity generators
+- **Thermopile** – every pair of “hot” (lava, fire, magma block, lit campfire) + “cold” (water, ice, snow block, snow layer) neighbours gives **8 FE/t** (max. 3 pairs = 24 FE/t). Recipe: copper in the corners, tin on the sides, a power alloy wire in the middle.
+- **Solid Fuel Generator** – burns anything a furnace burns (coal, wood, lava bucket…) and produces **20 FE/t** while burning (coal = 32 000 FE, lava bucket = 400 000 FE). 20 000 FE buffer, outputs to neighbours (400 FE/t per side). Only uses fuel when there is room in the buffer; a redstone signal pauses it. GUI: fuel slot, flame with remaining time, energy bar and current output. Hoppers: fuel from the top/sides, empty buckets from the bottom. A comparator reads the charge. Recipe: iron (top and corners), 2 copper coils on the sides, a furnace in the middle, a power alloy wire at the bottom. Output in the config: `[generators] solid_fuel_generator`.
+- **Generator** – produces nothing by itself; a rotor is mounted on its front (right-click with a rotor, Shift+right-click with an empty hand removes it):
+  - **Windmill** (wool, sticks, iron gear) – turns in a 5×5 area in front of the generator, which must be empty and open to the sky. **6 FE/t at sea level, up to 32 FE/t high up**, ×1.5 in rain, ×2 in thunderstorms.
+  - **Water Wheel** (planks, sticks, iron gear) – 3×3 area in front of the generator: each **flowing water block gives 4 FE/t**, still water 1 FE/t (max. 24 FE/t). Other blocks in the area block the wheel.
+- Right-clicking the generator shows current output and the buffer.
 
-### Pompa
-- Stawia się ją, **klikając na źródło płynu** (zbiornik innego moda albo jezioro/staw): zasysa z tyłu, tłoczy do przodu.
-- Z jeziora wypompowuje bloki źródłowe (do 256 bloków połączonego płynu, od góry). Z przodu oddaje płyn do zbiornika/rury innego moda, a gdy jest tam pusto – wylewa blok płynu.
-- Zbiornik 8000 mB, **200 FE na wiadro** (1000 mB), wiadro co pół sekundy. Sygnał redstone zatrzymuje pompę. PPM pokazuje zawartość.
-- Receptura: żelazo w narożnikach, wiadro na górze, 2 mosiężne zębatki, obudowa maszyny energetycznej w środku, przewód ze stopu energetycznego na dole.
+### Pump
+- Placed by **clicking the fluid source** (another mod's tank or a lake/pond): it sucks from the back and pushes to the front.
+- From a lake it pumps source blocks (up to 256 blocks of connected fluid, from the top). At the front it gives the fluid to another mod's tank/pipe, and if there's nothing there – places a fluid block.
+- 8000 mB tank, **200 FE per bucket** (1000 mB), one bucket every half second. A redstone signal stops the pump. Right-click shows its contents.
+- Recipe: iron in the corners, a bucket on top, 2 brass gears, a power machine casing in the middle, a power alloy wire at the bottom.
 
-### Rura do płynów
-- Mosiężna rura łącząca się z pompą, innymi rurami i każdym zbiornikiem/maszyną obsługującą płyny (także z innych modów).
-- Każda rura mieści 1000 mB. Rury wyrównują poziom między sobą, a płyn wypychają do podłączonych zbiorników – z pominięciem strony, z której przyszedł (nie cofa się do źródła). Do 250 mB/t na stronę.
-- PPM pokazuje zawartość. Receptura: mosiądz + szkło + mosiądz → 8 rur.
+### Fluid pipe
+- A brass pipe that connects to the pump, other pipes and any tank/machine handling fluids (also from other mods).
+- Each pipe holds 1000 mB. Pipes level out between each other and push fluid into connected tanks – skipping the side it came from (it doesn't flow back to the source). Up to 250 mB/t per side.
+- Right-click shows the contents. Recipe: brass + glass + brass → 8 pipes.
 
-### Śrubokręt
-- PPM na bloku **obraca go**: bramki logiczne, maszyny, piece, generatory, pompy, ekstraktory oraz bloki vanilla z kierunkiem (przekaźniki, obserwatory, leje, kłody…). **Shift + PPM** obraca w drugą stronę.
-- Działa przed interakcją z blokiem – nie otwiera GUI i nie zmienia czasu timera. Nie obraca łóżek, drzwi, podwójnych skrzyń ani wysuniętych tłoków.
-- **Shift + PPM na bramce logicznej** zbiera ją do ekwipunku razem z ustawieniami (czas zegara/sekwencera/komórki stanu, strona wyjścia komórki stanu, maksimum licznika, wyciszenie). Postawiona ponownie ma te same ustawienia. Bramka z domyślnymi ustawieniami stackuje się ze zwykłymi.
-- Nie zużywa się (brak wytrzymałości). Receptura: sztabka żelaza nad patykiem (po skosie).
+### Screwdriver
+- Right-click a block to **rotate it**: logic gates, machines, furnaces, generators, pumps, extractors and directional vanilla blocks (repeaters, observers, hoppers, logs…). **Shift + right-click** rotates the other way.
+- Acts before the block's own interaction – it doesn't open GUIs or change the timer. Doesn't rotate beds, doors, double chests or extended pistons.
+- **Shift + right-click on a logic gate** picks it up together with its settings (timer/sequencer/state cell interval, state cell output side, counter maximum, mute). Placed again, it keeps the same settings. A gate with default settings stacks with normal ones.
+- Doesn't wear out (no durability). Recipe: iron ingot above a stick (diagonally).
 
-### Nożyce do drutu (Wire Cutters)
-- Narzędzie do wytwarzania – jak piła zostają w siatce i tracą 1 punkt wytrzymałości (256, widoczne w opisie). Naprawa sztabką stali.
-- Receptura: 3 sztabki stali w kształcie litery X (dwie u góry, jedna w środku) i 2 czerwone barwniki na dole (rączki).
-- Sztabka miedzi + nożyce do drutu → **cienki drut miedziany**; sztabka żelaza + nożyce do drutu → **cienki drut żelazny**.
-- **Cewka miedziana**: 4 cienkie druty miedziane na krzyż wokół sztabki żelaza. Składnik obwodu energetycznego.
+### Wire Cutters
+- A crafting tool – like saws, it stays in the grid and loses 1 durability (256, shown in the tooltip). Repaired with a steel ingot.
+- Recipe: 3 steel ingots in an X shape (two on top, one in the middle) and 2 red dyes at the bottom (handles).
+- Copper ingot + wire cutters → **fine copper wire**; iron ingot + wire cutters → **fine iron wire**.
+- **Copper Coil**: 4 fine copper wires in a cross around an iron ingot. Ingredient of the power circuit.
 
-### Rura restrykcyjna i Akcelerator
-- **Rura restrykcyjna** – zwykła rura, ale przy wyznaczaniu trasy liczy się jak bardzo długa (koszt 1000 zamiast 1), więc przedmioty jadą nią tylko wtedy, gdy nie ma innej drogi. Trasa jest teraz liczona jako najtańsza (algorytm Dijkstry), nie tylko najkrótsza. Receptura: rura + sztabka żelaza; sama w siatce oddaje rurę. Można ją malować jak zwykłą rurę.
-- **Akcelerator** – odcinek rury zasilany energią (przewód energetyczny). Każdy przejeżdżający stos przyspiesza do **4×** (0,5 bloku/tick), a potem zwalnia o 0,02 na każdej kolejnej rurze. Koszt: 20 FE za stos (`accelerator_per_item` w konfiguracji). PPM pokazuje energię, Shift + PPM pustą ręką zmywa farbę. Receptura: żelazo w narożnikach, rury góra/dół, przewody energetyczne po bokach, obwód energetyczny w środku.
+### Restriction tube and Accelerator
+- **Restriction Tube** – a normal tube, but routing treats it as very long (cost 1000 instead of 1), so items use it only when there is no other way. Routes are now the cheapest (Dijkstra's algorithm), not just the shortest. Recipe: tube + iron ingot; on its own in the grid it gives the tube back. Can be painted like a normal tube.
+- **Accelerator** – a powered tube segment (power wire). Every passing stack speeds up to **4×** (0.5 blocks/tick), then slows down by 0.02 on each following tube. Cost: 20 FE per stack (`accelerator_per_item` in the config). Right-click shows energy, Shift + right-click with an empty hand removes paint. Recipe: iron in the corners, tubes top/bottom, power wires on the sides, a power circuit in the middle.
 
 ### Requester
-- Stawia się go, **klikając na rurę**: tył jest podłączony do sieci rur, przód to wyjście (inwentarz, kolejna rura albo ziemia).
-- Na **impuls redstone** przeszukuje wszystkie inwentarze podłączone do tej sieci, wyciąga przedmiot pasujący do filtra i wysyła go rurami **do siebie** – przedmiot jedzie tylko do tego Requestera, który go zamówił, a potem wychodzi z przodu.
-- Filtr: 9 slotów (PPM), używanych po kolei; liczba sztuk w slocie = ile pobrać. Pusty filtr = cały stos dowolnego przedmiotu.
-- Zasilanie: **200 FE za pobranie** (bufor 10 000 FE), Shift + PPM pokazuje energię. Receptura: żelazo w narożnikach, filtr u góry, 2 sztabki złota, obudowa maszyny energetycznej w środku, przewód ze stopu energetycznego na dole.
+- Placed by **clicking a tube**: the back connects to the tube network, the front is the output (inventory, another tube or the ground).
+- On a **redstone pulse** it searches all inventories connected to that network, pulls an item matching the filter and sends it through the tubes **to itself** – the item travels only to the Requester that ordered it, then leaves from the front.
+- Filter: 9 slots (right-click), used in order; the stack size in a slot = how many to pull. Empty filter = a full stack of any item.
+- Power: **200 FE per request** (10 000 FE buffer), Shift + right-click shows energy. Recipe: iron in the corners, a filter on top, 2 gold ingots, a power machine casing in the middle, a power alloy wire at the bottom.
 
-### Maszyny logistyczne
-| Blok | Działanie |
+### Logistics machines
+| Block | Function |
 |---|---|
-| **Manager** | Stawiany na pilnowanym inwentarzu, przód w sieci rur. Filtr = lista przedmiotów z ilościami: brakujące zamawia z sieci, przedmioty spoza listy odsyła do sieci. 100 FE za zamówienie. |
-| **Regulator** | Przenosi z inwentarza z tyłu do inwentarza z przodu, aż ten zawiera ilości z filtra; gdy wszystko jest uzupełnione – sygnał redstone. |
-| **Relay** (Przekaźnik przedmiotów) | 9 slotów, przyjmuje z każdej strony poza przodem i stale wypycha przodem. |
-| **Item Detector** (Detektor przedmiotów) | W linii rur (tył → przód); każdy przejeżdżający stos daje impuls redstone. |
-| **Igniter** (Zapalarka) | Zasilony – zapala i podtrzymuje ogień przed sobą; bez sygnału gasi. |
-| **Assembler** (Asembler) | Kabel wiązkowy: kanał N włączony → stawia blok ze slotu N, wyłączony → zbiera go z powrotem. Zwykły impuls: stawia kolejny / zbiera. |
-| **Ejector** (Wyrzutnik) | 9 slotów; impuls redstone wypycha przodem jeden stos (sloty po kolei). |
-| **Deployer** (Aplikator) | 9 slotów; impuls redstone = PPM przedmiotem na blok przed sobą (stawianie, mączka kostna, wiadra, nożyce…). |
-| **Buffer** (Magazyn buforowy) | 18 slotów dostępnych z każdej strony; komparator czyta zapełnienie. |
-| **Block Breaker** (Niszczarka bloków) | Impuls redstone rozbija blok przed sobą (jak diamentowy kilof), dropy wychodzą tyłem. |
+| **Manager** | Placed on the inventory it manages, front in the tube network. Filter = list of items with amounts: missing ones are ordered from the network, items not on the list are sent back to the network. 100 FE per order. |
+| **Regulator** | Moves items from the inventory behind into the inventory in front until it contains the filter amounts; when everything is stocked – redstone signal. |
+| **Relay** | 9 slots, accepts from every side except the front and constantly pushes out the front. |
+| **Item Detector** | In a tube line (back → front); every passing stack gives a redstone pulse. |
+| **Igniter** | Powered – lights and keeps a fire in front of itself; without a signal it extinguishes it. |
+| **Assembler** | Bundled cable: channel N on → places the block from slot N, off → picks it back up. Plain pulse: places the next / picks up. |
+| **Ejector** | 9 slots; a redstone pulse pushes one stack out of the front (slots in order). |
+| **Deployer** | 9 slots; a redstone pulse = right-click with an item on the block in front (placing, bone meal, buckets, shears…). |
+| **Buffer** | 18 slots accessible from every side; a comparator reads the fill level. |
+| **Block Breaker** | A redstone pulse breaks the block in front (like a diamond pickaxe), drops come out of the back. |
 
-Maszyny kierunkowe stawia się tak jak ekstraktor – klikając blok, który ma być „z tyłu”; śrubokręt je obraca.
+Directional machines are placed like the extractor – by clicking the block that should be “behind” them; the screwdriver rotates them.
 
-### Modpacki
-**Plik konfiguracji** `config/redcircuit-common.properties` (tworzy się przy pierwszym uruchomieniu):
-- `[worldgen]` – `generate_tin`, `generate_silver`, `generate_azurite` – wyłączenie rudy (np. gdy cynę daje już inny mod). Zmiana działa po restarcie świata/serwera.
-- `[generators]` – FE/t: generator na paliwo stałe, panel słoneczny, termostos (za parę), wiatrak (minimum/maksimum), koło wodne (płynąca/stojąca woda, maksimum).
-- `[machines]` – zużycie: piec elektryczny, elektryczny piec do stopów (FE/t), pompa (FE/wiadro), Requester i Manager (FE za operację).
+### Modpacks
+**Config file** `config/redcircuit-common.properties` (created on first launch):
+- `[worldgen]` – `generate_tin`, `generate_silver`, `generate_azurite` – disable an ore (e.g. when another mod already provides tin). Takes effect after a world/server restart.
+- `[generators]` – FE/t: solid fuel generator, solar panel, thermopile (per pair), windmill (minimum/maximum), water wheel (flowing/still water, maximum).
+- `[machines]` – consumption: electric furnace, power alloy furnace (FE/t), pump (FE/bucket), Requester and Manager (FE per operation).
 
-**Wspólne tagi** – receptury używają tagów `c:` zamiast konkretnych przedmiotów (`#c:ingots/tin`, `#c:ingots/silver`, `#c:ingots/copper`, `#c:dusts/redstone`, `#c:gems/diamond`, `#c:glass_blocks`, `#c:chests/wooden`, `#c:dyes/...` itd.), więc cyna, srebro czy mosiądz z innych modów (Mekanism, Thermal, Create…) działają w recepturach i w piecach do stopów. Mod udostępnia też własne tagi: `c:ingots/signal_alloy`, `c:ingots/power_alloy`, `c:dusts/azurite`, `c:gears/*`, `c:wires/copper|iron`, a także rudy, surowce, bryłki i bloki.
+**Common tags** – recipes use `c:` tags instead of specific items (`#c:ingots/tin`, `#c:ingots/silver`, `#c:ingots/copper`, `#c:dusts/redstone`, `#c:gems/diamond`, `#c:glass_blocks`, `#c:chests/wooden`, `#c:dyes/...` etc.), so tin, silver or brass from other mods (Mekanism, Thermal, Create…) work in recipes and alloy furnaces. The mod also provides its own tags: `c:ingots/signal_alloy`, `c:ingots/power_alloy`, `c:dusts/azurite`, `c:gears/*`, `c:wires/copper|iron`, plus ores, raw materials, nuggets and storage blocks.
 
-**KubeJS / CraftTweaker** – receptury pieca do stopów to zwykły typ `redcircuit:alloying` (JSON w datapacku), więc można je dodawać i usuwać skryptami. Gotowe przykłady są w katalogu `examples/`:
+**KubeJS / CraftTweaker** – alloy furnace recipes are a regular `redcircuit:alloying` type (JSON in a datapack), so they can be added and removed with scripts. Ready examples are in `examples/`:
 - `examples/kubejs/server_scripts/redcircuit_alloying.js` – `event.custom({type: 'redcircuit:alloying', ...})`, `event.remove(...)`,
 - `examples/crafttweaker/scripts/redcircuit_alloying.zs` – `<recipetype:redcircuit:alloying>.addJsonRecipe(...)`, `removeByName(...)`.
 
-Format receptury:
+Recipe format:
 ```json
 {
   "type": "redcircuit:alloying",
@@ -164,156 +170,156 @@ Format receptury:
 }
 ```
 
-### Integracja z Jade (opcjonalna)
-Z zainstalowanym **Jade** podpowiedź po najechaniu na blok pokazuje dodatkowo:
-- przewody: poziom sygnału; kabel wiązkowy: aktywne kanały (kolorowe kwadraty z poziomem),
-- bramki: stan wyjścia, ustawiony czas (zegar, sekwencer, komórka stanu), stan licznika, wyciszenie dźwięku,
-- lampy: świeci / zgaszona, odwrócona,
-- generatory: bieżąca produkcja FE/t; rury: liczba przedmiotów w środku; piece: postęp i pozostałe paliwo.
-Energia (FE), płyny i zawartość inwentarzy są pokazywane przez Jade automatycznie. Każdą informację można wyłączyć w ustawieniach Jade (wtyczka RedCircuit). Do kompilacji Gradle pobiera Jade z repozytorium Modrinth (tylko `compileOnly`).
+### Jade integration (optional)
+With **Jade** installed, the block tooltip additionally shows:
+- wires: signal level; bundled cable: active channels (coloured squares with levels),
+- gates: output state, set interval (timer, sequencer, state cell), counter value, sound mute,
+- lamps: lit / off, inverted,
+- generators: current FE/t output; tubes: number of items inside; furnaces: progress and remaining fuel.
+Energy (FE), fluids and inventory contents are shown by Jade automatically. Each line can be disabled in the Jade settings (RedCircuit plugin). For compilation Gradle downloads Jade from the Modrinth repository (`compileOnly` only).
 
-### Bramki z pamięcią i czasem
-| Bramka | Działanie |
+### Gates with memory and timing
+| Gate | Function |
 |---|---|
-| **Licznik** (CNT) | Lewe wejście (zbocze) +1, prawe −1. Przód świeci przy maksimum, tył przy zerze. PPM otwiera okno: maksimum (1–1024) i zerowanie. Komparator czyta stan licznika. |
-| **Sekwencer** (SEQ) | Sygnał krąży po stronach: przód → prawo → tył → lewo, krok co ustawiony czas (okno ustawień, PPM). Sygnał z tyłu wstrzymuje. |
-| **Komórka stanu** (SC) | Impuls z tyłu startuje odliczanie; prawa strona świeci w trakcie (w oknie ustawień można przełączyć na lewą), po czasie przód daje impuls. PPM otwiera okno ustawień czasu i strony. |
-| **Synchronizator** (SYN) | Czeka na impuls z lewej i z prawej (w dowolnej kolejności), potem impuls z przodu. Tył kasuje. |
+| **Counter** (CNT) | Left input (edge) +1, right −1. The front lights at the maximum, the back at zero. Right-click opens a window: maximum (1–1024) and reset. A comparator reads the counter value. |
+| **Sequencer** (SEQ) | The signal rotates around the sides: front → right → back → left, one step per set interval (settings window, right-click). A signal at the back pauses it. |
+| **State Cell** (SC) | A pulse at the back starts a countdown; the right side is lit while counting (can be switched to the left in the settings window), after the time the front gives a pulse. Right-click opens the time and side settings. |
+| **Synchronizer** (SYN) | Waits for a pulse from the left and from the right (in any order), then pulses the front. The back resets. |
 
-**Okno ustawień bramek** (PPM na zegarze, sekwencerze, komórce stanu lub liczniku): czas wpisywany w sekundach (0,20 s – 1 h, z przyciskami ±0,1 s / ±1 s; pokazuje też ticki), a dla licznika maksimum (1–1024, przyciski ±1 / ±10), bieżący stan i przycisk zerowania. Ustawienia są zapisywane w bramce i synchronizowane z serwerem. Zegar, sekwencer, komórka stanu i licznik **tykają** cichym kliknięciem (zdarzenie dźwiękowe `redcircuit:gate_tick`, z napisem dla niesłyszących); przycisk „Dźwięk: wł./wyciszony” w oknie wycisza konkretną bramkę.
+**Gate settings window** (right-click on a timer, sequencer, state cell or counter): time entered in seconds (0.20 s – 1 h, with ±0.1 s / ±1 s buttons; also shows ticks), and for the counter the maximum (1–1024, ±1 / ±10 buttons), the current value and a reset button. Settings are stored in the gate and synced with the server. Timer, sequencer, state cell and counter **tick** with a quiet click (sound event `redcircuit:gate_tick`, with subtitles); the “Sound: on/muted” button in the window mutes a specific gate.
 
-### Redstone bezprzewodowy
-Częstotliwości **1–5000**, wspólne dla całego świata (wszystkie wymiary, także niezaładowane chunki).
-- **Nadajnik bezprzewodowy** (TX) – płytka z anteną; PPM ustawia częstotliwość; gdy dostaje sygnał redstone, nadaje.
-- **Odbiornik bezprzewodowy** (RX) – PPM ustawia częstotliwość; daje sygnał 15 na wszystkie strony (i mocny do bloku pod sobą), gdy na jego częstotliwości nadaje nadajnik albo pilot. Końcówka anteny świeci, gdy jest aktywny.
-- **Pilot bezprzewodowy** – trzymanie PPM nadaje (jak wciśnięty przycisk), Shift + PPM ustawia częstotliwość; częstotliwość widać w opisie.
-- Okno częstotliwości: pole liczbowe i przyciski ±1 / ±10 / ±100. Jade pokazuje częstotliwość i stan.
-- Receptury: płytka obwodu + przewód ze stopu sygnałowego + perła Endu + złoto + pochodnia redstone (nadajnik) / komparator (odbiornik); pilot = nadajnik + przycisk + żelazo.
+### Wireless redstone
+Frequencies **1–5000**, shared by the whole world (all dimensions, also unloaded chunks).
+- **Wireless Transmitter** (TX) – a plate with an antenna; right-click sets the frequency; transmits while it receives a redstone signal.
+- **Wireless Receiver** (RX) – right-click sets the frequency; outputs signal 15 on all sides (and strong power into the block below) when a transmitter or remote is transmitting on its frequency. The antenna tip glows while active.
+- **Wireless Remote** – holding right-click transmits (like a held button), Shift + right-click sets the frequency; the frequency is shown in the tooltip.
+- Frequency window: number field and ±1 / ±10 / ±100 buttons. Jade shows the frequency and state.
+- Recipes: circuit plate + signal alloy wire + ender pearl + gold + redstone torch (transmitter) / comparator (receiver); remote = transmitter + button + iron.
 
-### Lampy
-- **Lampy w 16 kolorach** – świecą (poziom 15) przy sygnale redstone, także z przewodów RedCircuit obok; zapalona lampa ma jasny, „świecący” klosz.
-- **Lampy odwrócone** – świecą bez sygnału, gasną przy sygnale. Lampa + pochodnia redstone zamienia zwykłą na odwróconą (i z powrotem).
-- Gaszenie z opóźnieniem 4 ticków (jak lampa z gry), więc krótkie impulsy nie powodują migotania.
-- Receptura: szyby po bokach, jasnopył u góry, barwnik w środku, redstone na dole.
+### Lamps
+- **Lamps in 16 colours** – light up (level 15) with a redstone signal, also from adjacent RedCircuit wires; a lit lamp has a bright, “glowing” shade.
+- **Inverted lamps** – lit without a signal, off with a signal. Lamp + redstone torch turns a normal lamp into an inverted one (and back).
+- Turning off is delayed by 4 ticks (like the vanilla lamp), so short pulses don't cause flicker.
+- Recipe: glass panes on the sides, glowstone dust on top, dye in the middle, redstone at the bottom.
 
-### Zbiornik na ciecz
-- Mieści **16 000 mB** (16 wiader) jednej cieczy; ciecz widać przez szklane ściany (poziom zależy od wypełnienia).
-- PPM wiadrem (lub innym pojemnikiem na ciecz) nalewa/zabiera, pustą ręką pokazuje zawartość.
-- Rury, pompy i maszyny innych modów łączą się z każdej strony. Ciecz sama spływa do zbiornika postawionego niżej (wieże zbiorników).
-- Po rozbiciu **zachowuje zawartość** (widoczną w opisie przedmiotu). Komparator odczytuje poziom, lawa w zbiorniku świeci.
-- Receptura: żelazo w narożnikach, szkło po bokach, pusty środek.
+### Fluid tank
+- Holds **16 000 mB** (16 buckets) of one fluid; the fluid is visible through the glass walls (level depends on fill).
+- Right-click with a bucket (or another fluid container) fills/drains, with an empty hand shows the contents.
+- Pipes, pumps and other mods' machines connect from every side. Fluid flows down into a tank placed below (tank towers).
+- **Keeps its contents** when broken (shown in the item tooltip). A comparator reads the level, lava in the tank emits light.
+- Recipe: iron in the corners, glass on the sides, empty middle.
 
-### Kable
-| Blok | Opis |
+### Cables
+| Block | Description |
 |---|---|
-| Przewód ze stopu sygnałowego | Przewodzi redstone **bez spadku mocy** na dowolną odległość. Łączy się z każdym przewodem izolowanym. |
-| Przewód izolowany (16 kolorów) | Łączy się tylko z tym samym kolorem, z Signal Alloy i z kablem wiązkowym. |
-| Kabel wiązkowy | 16 osobnych kanałów. Przewód izolowany koloru X podpięty do kabla nadaje/odbiera kanał X. |
+| Signal alloy wire | Carries redstone **without signal loss** over any distance. Connects to every insulated wire. |
+| Insulated wire (16 colours) | Connects only to the same colour, to signal alloy and to bundled cable. |
+| Bundled cable | 16 separate channels. An insulated wire of colour X attached to the cable sends/receives channel X. |
 
-Przewody **przyklejają się do powierzchni**: stawiasz je, klikając podłogę, ścianę lub sufit.
-Łączą się prosto, w narożnikach wewnętrznych (kilka przewodów tego samego typu w jednym bloku, np. podłoga + ściana)
-i zewnętrznych (zawijają się przez krawędź bloku). Niszcząc blok z kilkoma przewodami, usuwasz ten, w który celujesz.
-Ograniczenie: w jednej przestrzeni bloku może leżeć tylko jeden typ/kolor przewodu, a przewody w tym samym bloku są zawsze połączone elektrycznie.
+Wires **stick to surfaces**: place them by clicking a floor, wall or ceiling.
+They connect straight, around inner corners (several wires of the same type in one block, e.g. floor + wall)
+and outer corners (they wrap around a block edge). Breaking a block with several wires removes the one you're aiming at.
+Limitation: one block space can hold only one wire type/colour, and wires in the same block are always electrically connected.
 
-**Przewody w obudowie (Encased)** – każdy rodzaj przewodu (stop sygnałowy, 16 izolowanych, kabel wiązkowy, stop energetyczny) ma wersję w twardej obudowie, która biegnie **środkiem bloku jak rura**. Działa tak samo jak zwykły przewód tego rodzaju i łączy się zarówno z innymi przewodami w obudowie, jak i z przewodami przyklejonymi do ścian (po tej samej stronie). Czerwony/izolowany w obudowie łączy się też z urządzeniami redstone, azurytowy – z maszynami na energię. Receptura: 8 przewodów wokół płyty z gładkiego kamienia → 8 w obudowie; przewód w obudowie sam w siatce → zwykły przewód.
+**Encased wires** – every wire type (signal alloy, 16 insulated, bundled cable, power alloy) has a hard-cased version that runs **through the middle of the block like a pipe**. It works like the normal wire of that type and connects both to other encased wires and to face-mounted wires (on the same side). Red/insulated encased wires also connect to redstone devices, power ones – to powered machines. Recipe: 8 wires around a smooth stone slab → 8 encased; an encased wire alone in the grid → normal wire.
 
-### Bramki logiczne
-Płaskie bramki stawiane na podłodze. Wyjście = kierunek, w który patrzysz przy stawianiu.
-Wejścia: **L** (lewo), **B** (tył), **R** (prawo). Przewody łączą się tylko ze stronami, które są wejściami albo wyjściami bramki.
+### Logic gates
+Flat gates placed on the floor. Output = the direction you face when placing.
+Inputs: **L** (left), **B** (back), **R** (right). Wires connect only to sides that are inputs or outputs of the gate.
 
-| Bramka | Logika |
+| Gate | Logic |
 |---|---|
-| NOT | !B wychodzi z przodu, z lewej i z prawej; boczne wyjścia można wyłączyć w oknie |
-| Bufor | B wychodzi z przodu, z lewej i z prawej; boczne wyjścia można wyłączyć w oknie |
-| AND | L i B i R; tylne wejście domyślnie wyłączone |
-| NAND | nie (L i B i R); tylne wejście domyślnie wyłączone |
-| OR / NOR | L lub B lub R |
+| NOT | !B goes out of the front, left and right; side outputs can be disabled in the window |
+| Buffer | B goes out of the front, left and right; side outputs can be disabled in the window |
+| AND | L and B and R; back input disabled by default |
+| NAND | not (L and B and R); back input disabled by default |
+| OR / NOR | L or B or R |
 | XOR / XNOR | L xor R |
-| Zatrzask RS | L ustawia, R kasuje; wyjścia komplementarne: przód+lewo (stan 1) / tył+prawo (stan 0) |
-| Przerzutnik T | impuls na L albo R przełącza wyjście przód ↔ tył (zawsze świeci jedno); PPM przełącza ręcznie, Shift+PPM otwiera okno |
-| Formownik impulsu | zbocze na B → impuls 2 ticki |
-| Zegar | tyka, gdy B jest wyłączone; impuls wychodzi z przodu, z lewej i z prawej; **PPM otwiera okno ustawień** (okres 0,20 s – 1 h) |
-| Generator losowy | gdy B włączone, co 4 ticki przód, lewo i prawo dostają niezależnie losowy stan |
+| RS latch | L sets, R resets; complementary outputs: front+left (state 1) / back+right (state 0) |
+| Toggle (T flip-flop) | a pulse on L or R toggles the output front ↔ back (one is always lit); right-click toggles manually, Shift+right-click opens the window |
+| Pulse former | edge on B → 2-tick pulse |
+| Timer | ticks while B is off; the pulse goes out of the front, left and right; **right-click opens the settings window** (period 0.20 s – 1 h) |
+| Randomizer | while B is on, every 4 ticks the front, left and right get independent random states |
 
-**PPM na dowolnej bramce** otwiera okno: opis działania, podgląd wejść i wyjść na żywo oraz opcje:
-- wyłączanie pojedynczych wejść (AND, NAND, OR, NOR, XOR, XNOR, przerzutnik T) i bocznych wyjść bufora oraz NOT – tekstura traci wypustkę, przewody się od niego odłączają, a wyłączone wejście nie wpływa na wynik,
-- zatrzask RS: zamiana stron (prawe ustawia, lewe kasuje) i tryb „tylko przód/tył” (boki nie świecą; oba wejścia naraz = stan bez zmian),
-- komórka stanu: strona wyjścia w trakcie odliczania; czas / maksimum licznika; dźwięk tykania.
-Ustawienia zostają w przedmiocie po zebraniu bramki śrubokrętem (Shift + PPM).
+**Right-click on any gate** opens a window: description, live preview of inputs and outputs, and options:
+- disabling individual inputs (AND, NAND, OR, NOR, XOR, XNOR, T flip-flop) and the side outputs of buffer and NOT – the texture loses the nub, wires disconnect and a disabled input doesn't affect the result,
+- RS latch: swapped sides (right sets, left resets) and “front/back only” mode (sides don't light; both inputs at once = no change),
+- state cell: output side during the countdown; time / counter maximum; tick sound.
+Settings stay in the item after picking the gate up with a screwdriver (Shift + right-click).
 
-### Rury i sortowanie
-- **Rura pneumatyczna** – przedmioty same szukają najbliższego inwentarza, który je przyjmie.
-  PPM barwnikiem maluje rurę (przyjmuje wtedy tylko przedmioty w tym kolorze), Shift+PPM pustą ręką czyści farbę.
-  Lejki i inne mody mogą wkładać przedmioty do rur.
-- **Ekstraktor** – postaw go, **klikając na skrzynię**, z której ma pobierać. Impuls redstone → wyciąga stos i wypycha do przodu (rura / inwentarz / na ziemię).
-- **Filtr** – jak ekstraktor, ale pobiera tylko przedmioty z 9 slotów wzorców (PPM). Pusty filtr = wszystko.
-- **Maszyna sortująca** – PPM otwiera 9 kolumn × 3 rzędy:
-  rząd 1 = barwnik (kolor nadawany przedmiotom), rzędy 2–3 = wzorce przedmiotów.
-  Kolumna z barwnikiem bez wzorców łapie wszystko inne. Kolorowe przedmioty jadą tylko rurami w swoim kolorze lub niepomalowanymi.
+### Tubes and sorting
+- **Pneumatic Tube** – items find the nearest inventory that accepts them.
+  Right-click with a dye paints the tube (it then accepts only items of that colour), Shift+right-click with an empty hand removes paint.
+  Hoppers and other mods can insert items into tubes.
+- **Extractor** – place it by **clicking the chest** it should pull from. Redstone pulse → pulls a stack and pushes it out of the front (tube / inventory / ground).
+- **Filter** – like the extractor, but only pulls items matching its 9 pattern slots (right-click). Empty filter = everything.
+- **Sorting Machine** – right-click opens 9 columns × 3 rows:
+  row 1 = dye (colour given to items), rows 2–3 = item patterns.
+  A column with a dye but no patterns catches everything else. Coloured items travel only through tubes of their colour or unpainted ones.
 
 ### Azurity
-Azurity to **Forge Energy (FE)**, więc działa też z maszynami/kablami innych modów.
-- **Przewód ze stopu energetycznego** – przyklejany do ścian jak przewody redstone, przesyła energię (500 FE/t), PPM pokazuje stan.
-- **Panel słoneczny** – 10 FE/t w dzień pod gołym niebem (mniej w deszczu).
-- **Akumulator** – 1 000 000 FE.
-- **Macerator** – miele rudy i surowe rudy na **2 pyły** (10% szans na trzeci), sztabki na 1 pył; pyły (żelazo, złoto, miedź, cyna, srebro) przetapia się na sztabki. Kruszy też bruk→żwir→piasek (+krzemień), kamień, piaskowiec, jasnogłaz, kości, pręty płomienia, wełnę, trzcinę oraz rudy węgla, redstone, lapisu, kwarcu i azurytu. 16 FE/t (`macerator_per_tick`), slot baterii, wyjście główne i uboczne, lejki z każdej strony. Receptura: 3 krzemienie, 2 żelazne zębatki, obudowa maszyny energetycznej, żelazo, przewód ze stopu energetycznego. Własne receptury: typ `redcircuit:macerating` (`ingredient`, `result`, opcjonalnie `bonus` + `bonus_chance`, `time`), widoczne w REI.
-- **Tartak** – tnie kłody i trzony (wszystkie drewna z gry, także bambus) na **6 desek** zamiast 4 + trociny, a deski na 3 patyki (25% szans na trociny). 12 FE/t (`sawmill_per_tick`), slot baterii, lejki z każdej strony. **Trociny** palą się w piecu (5 s) i dają papier (3 w rzędzie → 2). Receptura: deski, piła ręczna, 2 żelazne zębatki, obudowa maszyny energetycznej, żelazo, przewód ze stopu energetycznego. Własne receptury: typ `redcircuit:sawing` (jak w maceratorze), widoczne w REI.
-- **Piec elektryczny** – przetapia jak piec, 2× szybciej, zużywa 20 FE/t.
+Azurity is **Forge Energy (FE)**, so it also works with other mods' machines and cables.
+- **Power alloy wire** – attached to faces like redstone wires, transfers energy (500 FE/t), right-click shows its state.
+- **Solar Panel** – 10 FE/t during the day under open sky (less in rain).
+- **Battery Box** – 1 000 000 FE.
+- **Macerator** – grinds ores and raw ores into **2 dusts** (10% chance of a third), ingots into 1 dust; dusts (iron, gold, copper, tin, silver) smelt into ingots. Also crushes cobblestone→gravel→sand (+flint), stone, sandstone, glowstone, bones, blaze rods, wool, sugar cane and coal, redstone, lapis, quartz and azurite ores. 16 FE/t (`macerator_per_tick`), battery slot, main and secondary output, hoppers from every side. Recipe: 3 flint, 2 iron gears, power machine casing, iron, power alloy wire. Custom recipes: type `redcircuit:macerating` (`ingredient`, `result`, optional `bonus` + `bonus_chance`, `time`), shown in REI.
+- **Sawmill** – cuts logs and stems (all vanilla woods, bamboo too) into **6 planks** instead of 4 + sawdust, and planks into 3 sticks (25% chance of sawdust). 12 FE/t (`sawmill_per_tick`), battery slot, hoppers from every side. **Sawdust** burns in a furnace (5 s) and makes paper (3 in a row → 2). Recipe: planks, handsaw, 2 iron gears, power machine casing, iron, power alloy wire. Custom recipes: type `redcircuit:sawing` (like the macerator), shown in REI.
+- **Electric Furnace** – smelts like a furnace, 2× faster, uses 20 FE/t.
 
-## Receptury (skrót)
-- Sztabki stopu sygnałowego i energetycznego robi się **tylko w piecu do stopów** (zwykłym lub elektrycznym): miedź + 4 redstone, srebro + 4 azuryt.
-- Przewód Signal Alloy: 3 sztabki w rzędzie → 12. Przewód Power Alloy: analogicznie.
-- Przewód izolowany: wełna + 4 przewody Signal Alloy → 4.
-- Kabel wiązkowy: 5 przewodów izolowanych + 4 nici (X) → 2.
-- Płytka obwodu: gładka płyta kamienna + redstone → 2. Bramki = płytka + pochodnie / przewody / dźwignia / przekaźnik / zegar / kwarc.
-- Rura: miedź, szkło, miedź → 8.
+## Recipes (summary)
+- Signal alloy and power alloy ingots are made **only in the alloy furnace** (normal or electric): copper + 4 redstone, silver + 4 azurite.
+- Signal alloy wire: 3 ingots in a row → 12. Power alloy wire: the same.
+- Insulated wire: wool + 4 signal alloy wires → 4.
+- Bundled cable: 5 insulated wires + 4 string (X) → 2.
+- Circuit plate: smooth stone slab + redstone → 2. Gates = plate + torches / wires / lever / repeater / clock / quartz.
+- Tube: copper, glass, copper → 8.
 
-Pełna lista: `src/main/resources/data/redcircuit/recipe/`. Najwygodniej podglądać w grze przez REI.
+Full list: `src/main/resources/data/redcircuit/recipe/`. The easiest way to browse them in game is REI.
 
-## Integracja z REI
-Jeśli zainstalujesz **REI (Roughly Enough Items)** dla Fabric 1.21.1, zobaczysz:
-- kategorie **Piec do stopów**, **Macerator** i **Tartak** ze wszystkimi recepturami (także z datapacków),
-- piece do stopów, piec elektryczny, macerator, tartak i stół kreślarski jako stacje wytwarzania,
-- opisy (strony informacyjne) dla generatorów, wirników, rur, maszyn, stołu kreślarskiego i pił.
+## REI integration
+With **REI (Roughly Enough Items)** for Fabric 1.21.1 installed you get:
+- **Alloy Furnace**, **Macerator** and **Sawmill** categories with all recipes (datapack ones too),
+- alloy furnaces, the electric furnace, macerator, sawmill and blueprint table as crafting stations,
+- descriptions (information pages) for generators, rotors, tubes, machines, the blueprint table and saws.
 
-Mod działa też bez REI. Przy `gradlew runClient` REI uruchamia się automatycznie.
+The mod also works without REI. With `gradlew runClient` REI starts automatically.
 
-## Rozwój
-Tekstury, modele, receptury i tłumaczenia generuje `tools/gen_assets.py` (Python 3 + Pillow):
+## Development
+Textures, models, recipes and translations are generated by `tools/gen_assets.py` (Python 3 + Pillow):
 ```
 python tools/gen_assets.py
 ```
 
 
-## Integracja z CC: Tweaked (opcjonalna)
-Działa automatycznie, gdy zainstalowany jest CC: Tweaked (testowane API 1.120.x dla 1.21.1).
-- **Kabel wiązkowy ↔ komputery i żółwie**: kabel (zwykły i w obudowie) łączy się wizualnie z komputerem. `redstone.setBundledOutput` zasila kanały kabla, a `redstone.getBundledInput` odczytuje kanały aktywne w sieci (kanał = kolor przewodu izolowanego, jak w `colors`). Działa też z przekaźnikiem redstone (Redstone Relay).
-- **Peryferium `redcircuit_gate`** (bramki z ustawieniami): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (komórka stanu: wyjście „w trakcie” po lewej).
-- **Peryferium `redcircuit_wireless`** (nadajnik/odbiornik): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.
-- Maszyny, baterie, zbiorniki itp. są dostępne jako peryferia ogólne CC (`inventory`, `energy_storage`, `fluid_storage`) – np. `peripheral.wrap("left").getEnergy()`.
-- Przykładowy program: `examples/computercraft/redcircuit_demo.lua`.
+## CC: Tweaked integration (optional)
+Works automatically when CC: Tweaked is installed (tested with API 1.120.x for 1.21.1).
+- **Bundled cable ↔ computers and turtles**: the cable (normal and encased) visually connects to a computer. `redstone.setBundledOutput` powers cable channels, and `redstone.getBundledInput` reads the channels active in the network (channel = insulated wire colour, as in `colors`). Also works with the Redstone Relay.
+- **`redcircuit_gate` peripheral** (gates with settings): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (state cell: “counting” output on the left).
+- **`redcircuit_wireless` peripheral** (transmitter/receiver): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.
+- Machines, batteries, tanks etc. are available as generic CC peripherals (`inventory`, `energy_storage`, `fluid_storage`) – e.g. `peripheral.wrap("left").getEnergy()`.
+- Example program: `examples/computercraft/redcircuit_demo.lua`.
 
-## Podręcznik Patchouli (opcjonalny)
-Z zainstalowanym **Patchouli** w grze jest książka **Podręcznik RedCircuit** (EN/PL, zależnie od języka gry):
-- receptura: **książka + redstone**; jest też w zakładce kreatywnej „RedCircuit: Narzędzia i wytwarzanie”,
-- 10 kategorii: Pierwsze kroki, Okablowanie, Logika, Logistyka, Maszyny, Azurity, Płyny, Redstone bezprzewodowy, Narzędzia, Inne mody,
-- strony z recepturami są pobierane z gry (zmiany w datapackach są widoczne od razu).
-Treść generuje `tools/gen_patchouli.py` (wywoływany z `gen_assets.py`): pliki w `data/redcircuit/patchouli_books/guide/` i `assets/redcircuit/patchouli_books/guide/<język>/`. Bez Patchouli mod działa normalnie, a receptura książki się nie ładuje.
+## Patchouli guide book (optional)
+With **Patchouli** installed there is a **RedCircuit Guide** book in game (EN/PL, depending on the game language):
+- recipe: **book + redstone**; it is also in the creative tab “RedCircuit: Tools & Crafting”,
+- 10 categories: Getting Started, Wiring, Logic, Logistics, Machines, Azurity, Fluids, Wireless Redstone, Tools, Other Mods,
+- recipe pages are taken from the game (datapack changes show up immediately).
+The content is generated by `tools/gen_patchouli.py` (called from `gen_assets.py`): files in `data/redcircuit/patchouli_books/guide/` and `assets/redcircuit/patchouli_books/guide/<language>/`. Without Patchouli the mod works normally and the book recipe is not loaded.
 
-## Osiągnięcia
-Zakładka **RedCircuit** w osiągnięciach (30 pozycji, EN/PL), tło z gładkiego kamienia. Startuje po znalezieniu pierwszej rudy z moda, dalej gałęzie:
-- **stopy i okablowanie** – piec do stopów → stop sygnałowy → przewód → izolowany → kabel wiązkowy; wyzwanie „Pełne spektrum” (16 kolorów przewodów, 50 XP),
-- **logika** – pierwsza bramka, zegar, licznik, lampa, redstone bezprzewodowy; wyzwanie „Układ scalony” (wszystkie 17 bramek, 100 XP),
-- **Azurity** – stop energetyczny, generator, wiatrak/koło wodne, akumulator, „W pełni naładowana” (bateria 50 000 FE), obwód i obudowa maszyny energetycznej, wiertarka, pompa, zbiornik,
-- **rury** – rura, maszyna sortująca, Requester, akcelerator,
-- **narzędzia** – nożyce do drutu, stół kreślarski, śrubokręt.
-Generator: `tools/gen_advancements.py` (dodaje też tagi `redcircuit:gates` i `lamps`).
+## Advancements
+A **RedCircuit** advancement tab (30 entries, EN/PL) with a smooth stone background. It starts when you find the first ore from the mod, then branches into:
+- **alloys and wiring** – alloy furnace → signal alloy → wire → insulated → bundled cable; challenge “Full Spectrum” (16 wire colours, 50 XP),
+- **logic** – first gate, timer, counter, lamp, wireless redstone; challenge “Integrated Circuit” (all 17 gates, 100 XP),
+- **Azurity** – power alloy, generator, windmill/water wheel, battery box, “Fully Charged” (50 000 FE battery), power circuit and casing, drill, pump, tank,
+- **tubes** – tube, sorting machine, Requester, accelerator,
+- **tools** – wire cutters, blueprint table, screwdriver.
+Generator: `tools/gen_advancements.py` (also adds the `redcircuit:gates` and `lamps` tags).
 
-## Zakładki trybu kreatywnego
-Przedmioty są podzielone na 5 zakładek (ustawionych za wszystkimi zakładkami Minecrafta):
-- **RedCircuit: Redstone** – przewody sygnałowe, izolowane, kable wiązkowe (też w obudowie), bramki, lampy, nadajnik i odbiornik bezprzewodowy,
-- **Logistyka i maszyny** – rury, akcelerator, ekstraktor, filtr, sortowanie, Requester, Manager, Regulator, Relay, Buffer, detektor, maszyny (aplikator, wyrzutnik, asembler, niszczarka, zapalarka),
-- **Energia i płyny** – przewody energetyczne, generatory (w tym na paliwo stałe), wiatrak i koło wodne, akumulator, baterie (pusta i naładowana), ładowarka, piece elektryczne, macerator, tartak, pompa, rury i zbiornik,
-- **Narzędzia i wytwarzanie** – śrubokręt, nożyce do drutu, piły, miernik, wiertarka i piła łańcuchowa (puste i naładowane), pilot, piec do stopów, stół kreślarski, plany, książka Patchouli,
-- **Materiały i bloki** – rudy, surowce, sztabki, bryłki, pyły, bloki, zębatki, druty, cewka, płytka obwodu, obwody i obudowy maszyn.
-Podział jest w `ModTabs.categoryOf()` (po ID przedmiotu); przedmioty bez kategorii trafiają do „Materiały i bloki”.
+## Creative tabs
+Items are split into 5 tabs (placed after all Minecraft tabs):
+- **RedCircuit: Redstone** – signal, insulated and bundled wires (also encased), gates, lamps, wireless transmitter and receiver,
+- **Logistics & Machines** – tubes, accelerator, extractor, filter, sorting, Requester, Manager, Regulator, Relay, Buffer, detector, machines (deployer, ejector, assembler, block breaker, igniter),
+- **Energy & Fluids** – power wires, generators (incl. solid fuel), windmill and water wheel, battery box, batteries (empty and charged), charger, electric furnaces, macerator, sawmill, pump, pipes and tank,
+- **Tools & Crafting** – screwdriver, wire cutters, saws, multimeter, drill and chainsaw (empty and charged), remote, alloy furnace, blueprint table, plans, Patchouli book,
+- **Materials & Blocks** – ores, raw materials, ingots, nuggets, dusts, blocks, gears, wires, coil, circuit plate, circuits and machine casings.
+The split is in `ModTabs.categoryOf()` (by item ID); items without a category go to “Materials & Blocks”.
