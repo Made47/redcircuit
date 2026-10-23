@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:pump"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.pump.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.pump.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:pump"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:power_machine_casing"
+}

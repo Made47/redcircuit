@@ -1,0 +1,30 @@
+{
+  "name": "Timers & Counters",
+  "icon": "redcircuit:timer_gate",
+  "category": "redcircuit:logic",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Timer$(): ticks while B is off, pulsing front, left and right $(li)$(item)Sequencer$(): signal walks front, right, back, left $(li)$(item)State Cell$(): a pulse on B starts a countdown, the right side (or left, set in the window) is on meanwhile, then the front pulses"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Counter$(): L +1, R -1; front on at maximum, back on at zero; comparators read the count"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Right-click these gates to open the $(l)settings window$(): time in seconds (0.2 s to 1 h) or the counter maximum (1-1024). They make a quiet tick sound, which can be muted per gate in the window."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:timer_gate",
+      "recipe2": "redcircuit:sequencer_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:state_cell_gate",
+      "recipe2": "redcircuit:counter_gate"
+    }
+  ]
+}

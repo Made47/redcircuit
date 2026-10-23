@@ -1,0 +1,17 @@
+{
+  "name": "Tartak",
+  "icon": "redcircuit:sawmill",
+  "category": "redcircuit:energy",
+  "sortnum": 29,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Tnie kłody i trzony na $(l)6 desek$() zamiast 4, zawsze z odrobiną $(item)trocin$(), a deski na 3 patyki. Zużywa 12 FE/t i ma slot baterii.$(br2)Trociny palą się w piecu, a 3 trociny w rzędzie dają 2 papiery. Datapacki mogą dodawać receptury typu $(item)redcircuit:sawing$()."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:sawmill",
+      "recipe2": "redcircuit:paper_from_sawdust"
+    }
+  ]
+}

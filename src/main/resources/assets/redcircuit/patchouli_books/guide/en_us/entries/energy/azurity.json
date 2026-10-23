@@ -1,0 +1,17 @@
+{
+  "name": "Azurity & Wires",
+  "icon": "redcircuit:power_alloy_wire",
+  "category": "redcircuit:energy",
+  "sortnum": 22,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Azurity is $(item)Forge Energy$() (FE), so it works with other mods' cables and machines.$(br2)$(item)Power Alloy Wire$() sticks to surfaces like redstone wire and carries 500 FE/t. Right-click shows its state."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:power_alloy_wire",
+      "recipe2": "redcircuit:encased_power_alloy_wire"
+    }
+  ]
+}

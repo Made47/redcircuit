@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "MMS"
+  ],
+  "key": {
+    "M": {
+      "tag": "c:gems/diamond"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "result": {
+    "id": "redcircuit:diamond_handsaw",
+    "count": 1
+  }
+}

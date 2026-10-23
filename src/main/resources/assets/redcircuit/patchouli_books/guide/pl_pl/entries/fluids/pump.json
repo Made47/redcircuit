@@ -1,0 +1,21 @@
+{
+  "name": "Pompa i rura do płynów",
+  "icon": "redcircuit:pump",
+  "category": "redcircuit:fluids",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Pompę$() stawia się, klikając źródło płynu (zbiornik albo jezioro): zasysa z tyłu i tłoczy do przodu. Z jeziora wypompowuje do 256 bloków źródłowych. 200 FE za wiadro; sygnał redstone ją zatrzymuje."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Rury do płynów$() mieszczą po 1000 mB, wyrównują poziom między sobą i wypychają płyn do każdego podłączonego zbiornika poza tym, z którego przyszedł (250 mB/t na stronę)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:pump",
+      "recipe2": "redcircuit:fluid_pipe"
+    }
+  ]
+}

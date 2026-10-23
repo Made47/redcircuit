@@ -1,0 +1,21 @@
+{
+  "name": "Placing & Using",
+  "icon": "redcircuit:deployer",
+  "category": "redcircuit:machines",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Deployer$(): on a pulse, right-clicks the block in front with its items (placing, bone meal, buckets, shears...)$(br)$(li)$(item)Ejector$(): pushes one stack out of the front per pulse$(br)$(li)$(item)Assembler$(): with a bundled cable, channel N on places the block from slot N, off picks it up again"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:deployer",
+      "recipe2": "redcircuit:ejector"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:assembler"
+    }
+  ]
+}

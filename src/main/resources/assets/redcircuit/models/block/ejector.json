@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/ejector_side",
+    "north": "redcircuit:block/ejector_front",
+    "south": "redcircuit:block/ejector_back",
+    "east": "redcircuit:block/ejector_side",
+    "west": "redcircuit:block/ejector_side",
+    "up": "redcircuit:block/ejector_side",
+    "down": "redcircuit:block/ejector_side"
+  }
+}

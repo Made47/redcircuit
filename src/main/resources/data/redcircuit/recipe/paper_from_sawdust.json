@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "redcircuit:sawdust"
+    }
+  },
+  "result": {
+    "id": "minecraft:paper",
+    "count": 2
+  }
+}

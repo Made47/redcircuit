@@ -1,0 +1,16 @@
+{
+  "name": "Sorting Machine",
+  "icon": "redcircuit:sorting_machine",
+  "category": "redcircuit:logistics",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "9 columns x 3 rows. Row 1 holds a dye (the colour given to items), rows 2-3 hold item patterns. A column with a dye but no patterns catches everything else.$(br2)Coloured items only travel through tubes of their colour or unpainted ones."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:sorting_machine"
+    }
+  ]
+}

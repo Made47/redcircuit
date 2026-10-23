@@ -1,0 +1,17 @@
+{
+  "name": "Ekstraktor i filtr",
+  "icon": "redcircuit:extractor",
+  "category": "redcircuit:logistics",
+  "sortnum": 15,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Ekstraktor$() stawia się, klikając skrzynię, z której ma pobierać. Impuls redstone wyciąga stos i wypycha go przodem (rura, inwentarz lub ziemia).$(br2)$(item)Filtr$() pobiera tylko przedmioty z 9 slotów wzorców (PPM). Pusty filtr = wszystko."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:extractor",
+      "recipe2": "redcircuit:filter"
+    }
+  ]
+}

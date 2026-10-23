@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/manager_side",
+    "north": "redcircuit:block/manager_front",
+    "south": "redcircuit:block/manager_back",
+    "east": "redcircuit:block/manager_side",
+    "west": "redcircuit:block/manager_side",
+    "up": "redcircuit:block/manager_side",
+    "down": "redcircuit:block/manager_side"
+  }
+}

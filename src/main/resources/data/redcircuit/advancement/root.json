@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:azurite"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.root.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/block/smooth_stone.png"
+  },
+  "criteria": {
+    "ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redcircuit:raw_tin",
+              "redcircuit:raw_silver",
+              "redcircuit:azurite"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

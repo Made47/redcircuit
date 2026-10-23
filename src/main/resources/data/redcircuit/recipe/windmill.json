@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "WSW",
+    "SGS",
+    "WSW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    },
+    "G": {
+      "tag": "c:gears/iron"
+    }
+  },
+  "result": {
+    "id": "redcircuit:windmill",
+    "count": 1
+  }
+}

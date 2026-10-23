@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SSS",
+    "PTP",
+    "PCP"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "T": {
+      "item": "minecraft:crafting_table"
+    },
+    "C": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "result": {
+    "id": "redcircuit:blueprint_table",
+    "count": 1
+  }
+}

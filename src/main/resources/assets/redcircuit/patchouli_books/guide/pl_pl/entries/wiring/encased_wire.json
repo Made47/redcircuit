@@ -1,0 +1,17 @@
+{
+  "name": "Przewody w obudowie",
+  "icon": "redcircuit:encased_signal_alloy_wire",
+  "category": "redcircuit:wiring",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Każdy rodzaj przewodu ma wersję w obudowie, która biegnie środkiem bloku jak rura. Działa jak zwykły przewód i łączy się z innymi przewodami w obudowie oraz z przewodami na ścianach.$(br2)8 przewodów wokół płyty z gładkiego kamienia daje 8 w obudowie; przewód w obudowie sam w siatce oddaje zwykły."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:encased_signal_alloy_wire",
+      "recipe2": "redcircuit:encased_bundled_cable"
+    }
+  ]
+}

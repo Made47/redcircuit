@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IFI",
+    "TCT",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "F": {
+      "item": "redcircuit:filter"
+    },
+    "T": {
+      "item": "redcircuit:extractor"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:regulator",
+    "count": 1
+  }
+}

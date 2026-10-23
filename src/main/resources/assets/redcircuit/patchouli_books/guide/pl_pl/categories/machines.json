@@ -1,0 +1,6 @@
+{
+  "name": "Maszyny",
+  "description": "Maszyny, które stawiają, niszczą i używają bloków.",
+  "icon": "redcircuit:deployer",
+  "sortnum": 4
+}

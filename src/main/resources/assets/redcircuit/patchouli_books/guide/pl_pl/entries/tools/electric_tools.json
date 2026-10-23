@@ -1,0 +1,21 @@
+{
+  "name": "Narzędzia elektryczne",
+  "icon": "redcircuit:electric_drill",
+  "category": "redcircuit:tools",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Wiertarka elektryczna$() to kilof i łopata w jednym (poziom diamentu), zużywa 50 FE za blok zamiast wytrzymałości. Shift + PPM przełącza kopanie 1x1 i 3x3; trzymanie Shift podczas kopania rozbija jeden blok."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Piła łańcuchowa$() tnie drewno, liście, wełnę i pajęczyny. Obie mieszczą 100 000 FE; ładuj je w ładowarce."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:electric_drill",
+      "recipe2": "redcircuit:electric_chainsaw"
+    }
+  ]
+}

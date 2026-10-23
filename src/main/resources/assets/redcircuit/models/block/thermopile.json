@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "redcircuit:block/thermopile_top",
+    "side": "redcircuit:block/thermopile_side"
+  }
+}

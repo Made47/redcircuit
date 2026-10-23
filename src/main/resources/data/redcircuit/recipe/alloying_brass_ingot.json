@@ -1,0 +1,17 @@
+{
+  "type": "redcircuit:alloying",
+  "ingredients": [
+    {
+      "tag": "c:ingots/copper",
+      "count": 3
+    },
+    {
+      "tag": "c:ingots/tin"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:brass_ingot",
+    "count": 4
+  },
+  "cooktime": 200
+}

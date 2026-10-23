@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "item": "minecraft:clock"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:timer_gate",
+    "count": 1
+  }
+}

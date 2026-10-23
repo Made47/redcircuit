@@ -1,0 +1,33 @@
+{
+  "name": "Piec do stopów",
+  "icon": "redcircuit:alloy_furnace",
+  "category": "redcircuit:basics",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Piec do stopów$() ma 9 slotów na składniki, slot paliwa i wynik. Składniki mogą leżeć w dowolnych slotach.$(br2)$(li)Miedź + 4 redstone = $(item)stop sygnałowy$()$(br)$(li)Srebro + 4 azuryt = $(item)stop energetyczny$()$(br)$(li)3 miedzi + cyna = 4 $(item)mosiądzu$()"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Elektryczny piec do stopów$() robi to samo na 25 FE/t, 2x szybciej, i ma slot baterii.$(br2)Automatyzacja: składniki od góry, paliwo z boków, wynik od dołu. Własne receptury: typ $(item)redcircuit:alloying$() (datapacki, KubeJS, CraftTweaker)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:alloy_furnace",
+      "recipe2": "redcircuit:power_alloy_furnace"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:signal_alloy_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:power_alloy_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:brass_ingot"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "redcircuit:block/insulated_wire_light_gray_flat"
+      }
+    }
+  ]
+}

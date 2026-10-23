@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "CTC",
+    "TWT",
+    "CTC"
+  ],
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "T": {
+      "tag": "c:ingots/tin"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:thermopile",
+    "count": 1
+  }
+}

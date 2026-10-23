@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:signal_machine_casing"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.signal_machine_casing.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.signal_machine_casing.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:signal_machine_casing"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:first_gate"
+}

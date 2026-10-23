@@ -1,0 +1,16 @@
+{
+  "name": "Introduction",
+  "icon": "minecraft:book",
+  "category": "redcircuit:basics",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)RedCircuit$() adds lossless redstone wiring, logic gates, pneumatic tubes and $(item)Azurity$() power.$(br2)Start by finding $(item)tin$(), $(item)silver$() and $(item)azurite$() ore, then build an $(l:basics/alloy_furnace)Alloy Furnace$(/l) to make $(item)Signal Alloy$() and $(item)Power Alloy$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Most directional blocks are placed by clicking the block that should be at their back (for example a chest). A $(l:basics/crafting_tools)Screwdriver$(/l) rotates them later.$(br2)With $(item)JEI$() installed you can look up every recipe; with $(item)Jade$() you see signal levels, energy and timer settings."
+    }
+  ]
+}

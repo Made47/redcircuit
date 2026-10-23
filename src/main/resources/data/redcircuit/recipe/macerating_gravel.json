@@ -1,0 +1,16 @@
+{
+  "type": "redcircuit:macerating",
+  "ingredient": {
+    "item": "minecraft:gravel"
+  },
+  "result": {
+    "id": "minecraft:sand",
+    "count": 1
+  },
+  "time": 100,
+  "bonus": {
+    "id": "minecraft:flint",
+    "count": 1
+  },
+  "bonus_chance": 0.1
+}

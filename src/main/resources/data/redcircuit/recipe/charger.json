@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IAI",
+    "ABA",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "A": {
+      "tag": "c:ingots/power_alloy"
+    },
+    "B": {
+      "item": "redcircuit:battery"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:charger",
+    "count": 1
+  }
+}

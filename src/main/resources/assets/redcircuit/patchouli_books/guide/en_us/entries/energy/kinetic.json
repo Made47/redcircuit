@@ -1,0 +1,25 @@
+{
+  "name": "Windmill & Water Wheel",
+  "icon": "redcircuit:windmill",
+  "category": "redcircuit:energy",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Generator$() needs a rotor on its front: right-click it with a Windmill or Water Wheel, Shift-right-click with an empty hand to remove it."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Windmill$(): needs a free 5x5 area in front, open to the sky. 6 FE/t at sea level, up to 32 FE/t high up; x1.5 in rain, x2 in storms.$(br2)$(item)Water Wheel$(): flowing water in the 3x3 area in front gives 4 FE/t per block, still water 1 FE/t (max 24 FE/t)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:generator",
+      "recipe2": "redcircuit:windmill"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:water_wheel"
+    }
+  ]
+}

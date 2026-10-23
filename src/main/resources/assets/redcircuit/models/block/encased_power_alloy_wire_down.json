@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "t": "redcircuit:block/encased_power_alloy_wire",
+    "particle": "redcircuit:block/encased_power_alloy_wire"
+  },
+  "elements": [
+    {
+      "from": [
+        5.0,
+        0,
+        5.0
+      ],
+      "to": [
+        11.0,
+        5.0,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t"
+        },
+        "south": {
+          "texture": "#t"
+        },
+        "east": {
+          "texture": "#t"
+        },
+        "west": {
+          "texture": "#t"
+        },
+        "up": {
+          "texture": "#t"
+        },
+        "down": {
+          "texture": "#t"
+        }
+      }
+    }
+  ]
+}

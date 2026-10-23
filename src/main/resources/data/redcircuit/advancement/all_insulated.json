@@ -1,0 +1,183 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:insulated_wire_lime"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.all_insulated.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.all_insulated.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "white": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_white"
+          }
+        ]
+      }
+    },
+    "orange": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_orange"
+          }
+        ]
+      }
+    },
+    "magenta": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_magenta"
+          }
+        ]
+      }
+    },
+    "light_blue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_light_blue"
+          }
+        ]
+      }
+    },
+    "yellow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_yellow"
+          }
+        ]
+      }
+    },
+    "lime": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_lime"
+          }
+        ]
+      }
+    },
+    "pink": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_pink"
+          }
+        ]
+      }
+    },
+    "gray": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_gray"
+          }
+        ]
+      }
+    },
+    "light_gray": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_light_gray"
+          }
+        ]
+      }
+    },
+    "cyan": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_cyan"
+          }
+        ]
+      }
+    },
+    "purple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_purple"
+          }
+        ]
+      }
+    },
+    "blue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_blue"
+          }
+        ]
+      }
+    },
+    "brown": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_brown"
+          }
+        ]
+      }
+    },
+    "green": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_green"
+          }
+        ]
+      }
+    },
+    "red": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_red"
+          }
+        ]
+      }
+    },
+    "black": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:insulated_wire_black"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:insulated",
+  "rewards": {
+    "experience": 50
+  }
+}

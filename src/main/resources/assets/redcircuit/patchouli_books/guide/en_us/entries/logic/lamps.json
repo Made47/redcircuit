@@ -1,0 +1,17 @@
+{
+  "name": "Lamps",
+  "icon": "redcircuit:lamp_red",
+  "category": "redcircuit:logic",
+  "sortnum": 13,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Lamps in 16 colours light up (level 15) with a redstone signal, also from RedCircuit wires. $(item)Inverted Lamps$() glow without a signal. A lamp with a redstone torch converts between the two.$(br2)They turn off with a 4-tick delay, so short pulses do not flicker."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:lamp_white",
+      "recipe2": "redcircuit:inverted_lamp_white"
+    }
+  ]
+}

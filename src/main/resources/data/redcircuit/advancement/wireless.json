@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:wireless_transmitter"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.wireless.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.wireless.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redcircuit:wireless_transmitter",
+              "redcircuit:wireless_receiver"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:red_wire"
+}

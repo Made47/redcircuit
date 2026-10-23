@@ -1,0 +1,39 @@
+{
+  "name": "Components",
+  "icon": "redcircuit:power_circuit",
+  "category": "redcircuit:basics",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Circuit Plates$() (smooth stone slab + redstone) are the base of every gate. $(item)Gears$(): stone (4 cobblestone in a plus), then copper, gold, iron, brass, silver and diamond around a stone gear; netherite by smithing."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Power Circuit$() goes into electric tools and the $(item)Power Machine Casing$() (iron, brass, circuit), the body of every powered machine."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Signal Circuit$() (signal alloy, redstone torches, circuit plate) makes the $(item)Signal Machine Casing$() (iron, tin, circuit), the body of redstone-driven machines: extractor, regulator, relay, ejector, detector, igniter, deployer, block breaker and assembler."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:circuit_plate",
+      "recipe2": "redcircuit:stone_gear"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:iron_gear",
+      "recipe2": "redcircuit:power_circuit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:power_machine_casing",
+      "recipe2": "redcircuit:signal_circuit"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:signal_machine_casing"
+    }
+  ]
+}

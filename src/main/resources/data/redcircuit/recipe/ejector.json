@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IDI",
+    "IHI",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:ejector",
+    "count": 1
+  }
+}

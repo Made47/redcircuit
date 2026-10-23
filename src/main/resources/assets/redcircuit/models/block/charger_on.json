@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "redcircuit:block/charger_top",
+    "bottom": "redcircuit:block/charger_top",
+    "side": "redcircuit:block/charger_side_on"
+  }
+}

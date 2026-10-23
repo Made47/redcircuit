@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:or_gate",
+    "count": 1
+  }
+}

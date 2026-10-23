@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "GSG",
+    "GDG",
+    "GRG"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "S": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "D": {
+      "tag": "c:dyes/lime"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "result": {
+    "id": "redcircuit:lamp_lime",
+    "count": 1
+  }
+}

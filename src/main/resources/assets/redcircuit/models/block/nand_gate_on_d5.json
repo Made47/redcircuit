@@ -1,0 +1,7 @@
+{
+  "parent": "redcircuit:block/gate_base",
+  "textures": {
+    "top": "redcircuit:block/gate_nand_on_d5",
+    "side": "redcircuit:block/gate_side"
+  }
+}

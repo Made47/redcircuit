@@ -1,0 +1,16 @@
+{
+  "name": "Piec elektryczny",
+  "icon": "redcircuit:electric_furnace",
+  "category": "redcircuit:energy",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Przetapia jak zwykły piec, 2x szybciej, zużywając 20 FE/t. Zamiast slotu paliwa ma slot baterii."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:electric_furnace"
+    }
+  ]
+}

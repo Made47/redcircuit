@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IFI",
+    "GMG",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "F": {
+      "item": "redcircuit:filter"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "M": {
+      "item": "redcircuit:power_machine_casing"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:requester",
+    "count": 1
+  }
+}

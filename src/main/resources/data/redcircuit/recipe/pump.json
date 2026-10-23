@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IBI",
+    "GMG",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "tag": "c:gears/brass"
+    },
+    "M": {
+      "item": "redcircuit:power_machine_casing"
+    },
+    "W": {
+      "item": "redcircuit:power_alloy_wire"
+    }
+  },
+  "result": {
+    "id": "redcircuit:pump",
+    "count": 1
+  }
+}

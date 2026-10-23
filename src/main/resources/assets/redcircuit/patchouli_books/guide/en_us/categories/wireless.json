@@ -1,0 +1,6 @@
+{
+  "name": "Wireless Redstone",
+  "description": "Transmitters, receivers and remotes on 5000 frequencies.",
+  "icon": "redcircuit:wireless_transmitter",
+  "sortnum": 7
+}

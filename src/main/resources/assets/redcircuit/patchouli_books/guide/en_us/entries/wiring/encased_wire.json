@@ -1,0 +1,17 @@
+{
+  "name": "Encased Wires",
+  "icon": "redcircuit:encased_signal_alloy_wire",
+  "category": "redcircuit:wiring",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Every wire type has an encased version that runs through the middle of the block like a pipe. It works like the normal wire and connects to other encased wires and to wires on faces.$(br2)8 wires around a smooth stone slab make 8 encased wires; an encased wire alone gives the plain wire back."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:encased_signal_alloy_wire",
+      "recipe2": "redcircuit:encased_bundled_cable"
+    }
+  ]
+}

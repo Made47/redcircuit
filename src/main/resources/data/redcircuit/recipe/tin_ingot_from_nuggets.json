@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "c:nuggets/tin"
+    }
+  },
+  "result": {
+    "id": "redcircuit:tin_ingot",
+    "count": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Logika",
+  "description": "Bramki logiczne, zegary, liczniki i lampy.",
+  "icon": "redcircuit:timer_gate",
+  "sortnum": 2
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "item": "minecraft:lever"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:rs_latch_gate",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Breaking & Fire",
+  "icon": "redcircuit:block_breaker",
+  "category": "redcircuit:machines",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Block Breaker$() breaks the block in front on a pulse, like a diamond pickaxe; drops come out of its back.$(br2)The $(item)Igniter$() lights and keeps a fire in front of itself while powered and puts it out without a signal."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:block_breaker",
+      "recipe2": "redcircuit:igniter"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "t": "redcircuit:block/encased_bundled_cable",
+    "particle": "redcircuit:block/encased_bundled_cable"
+  },
+  "elements": [
+    {
+      "from": [
+        4.0,
+        4.0,
+        12.0
+      ],
+      "to": [
+        12.0,
+        12.0,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#t"
+        },
+        "south": {
+          "texture": "#t"
+        },
+        "east": {
+          "texture": "#t"
+        },
+        "west": {
+          "texture": "#t"
+        },
+        "up": {
+          "texture": "#t"
+        },
+        "down": {
+          "texture": "#t"
+        }
+      }
+    }
+  ]
+}

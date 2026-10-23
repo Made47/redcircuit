@@ -1,0 +1,21 @@
+{
+  "name": "Blueprint Table & Plans",
+  "icon": "redcircuit:blueprint_table",
+  "category": "redcircuit:basics",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Blueprint Table$() remembers its 3x3 grid and has 18 storage slots. Ingredients are taken from storage first, so the grid works as a pattern. Shift-click the result to craft up to 64 times."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Put a $(item)Blank Plan$() in the left slot, lay out a recipe and press the pen button to save a $(item)Plan$(). A saved plan plus the button loads the recipe: empty grid slots are filled from storage."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:blueprint_table",
+      "recipe2": "redcircuit:blank_plan"
+    }
+  ]
+}

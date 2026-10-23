@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "GGG",
+    "LBL",
+    "SSS"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "B": {
+      "tag": "c:ingots/power_alloy"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    }
+  },
+  "result": {
+    "id": "redcircuit:solar_panel",
+    "count": 1
+  }
+}

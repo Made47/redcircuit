@@ -1,0 +1,17 @@
+{
+  "type": "redcircuit:alloying",
+  "ingredients": [
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "minecraft:coals",
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "redcircuit:steel_ingot",
+    "count": 1
+  },
+  "cooktime": 400
+}

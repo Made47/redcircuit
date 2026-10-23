@@ -1,0 +1,17 @@
+{
+  "name": "Solar Panel & Thermopile",
+  "icon": "redcircuit:solar_panel",
+  "category": "redcircuit:energy",
+  "sortnum": 23,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Solar Panel$() makes 10 FE/t in daylight under open sky (less in rain).$(br2)The $(item)Thermopile$() makes 8 FE/t for each pair of a hot neighbour (lava, fire, magma, lit campfire) and a cold one (water, ice, snow), up to 24 FE/t."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:solar_panel",
+      "recipe2": "redcircuit:thermopile"
+    }
+  ]
+}

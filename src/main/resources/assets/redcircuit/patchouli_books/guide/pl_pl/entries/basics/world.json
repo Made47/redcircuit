@@ -1,0 +1,24 @@
+{
+  "name": "Rudy",
+  "icon": "redcircuit:azurite_ore",
+  "category": "redcircuit:basics",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Każda ruda ma też wersję głębinową; działa szczęście i jedwabny dotyk.$(br2)$(li)$(item)Cyna$(): Y 0-80, kilof kamienny$(br)$(li)$(item)Srebro$(): Y -48-32, kilof żelazny$(br)$(li)$(item)Azuryt$(): Y -64-16, wypada 4-5 jak redstone$(br2)Każdą rudę można wyłączyć w $(item)config/redcircuit-common.toml$()."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:tin_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:silver_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:azurite"
+    }
+  ]
+}

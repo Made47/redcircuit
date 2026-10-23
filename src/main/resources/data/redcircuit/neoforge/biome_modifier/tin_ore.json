@@ -1,0 +1,7 @@
+{
+  "type": "redcircuit:configured_ore",
+  "ore": "tin",
+  "biomes": "#minecraft:is_overworld",
+  "features": "redcircuit:tin_ore",
+  "step": "underground_ores"
+}

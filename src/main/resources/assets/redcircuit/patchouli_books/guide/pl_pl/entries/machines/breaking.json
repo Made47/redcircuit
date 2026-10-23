@@ -1,0 +1,17 @@
+{
+  "name": "Niszczenie i ogień",
+  "icon": "redcircuit:block_breaker",
+  "category": "redcircuit:machines",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Niszczarka bloków$() na impuls rozbija blok przed sobą jak diamentowy kilof; dropy wychodzą tyłem.$(br2)$(item)Zapalarka$() zasilona zapala i podtrzymuje ogień przed sobą, a bez sygnału go gasi."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:block_breaker",
+      "recipe2": "redcircuit:igniter"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/extractor_side",
+    "north": "redcircuit:block/extractor_front",
+    "south": "redcircuit:block/extractor_back",
+    "east": "redcircuit:block/extractor_side",
+    "west": "redcircuit:block/extractor_side",
+    "up": "redcircuit:block/extractor_side",
+    "down": "redcircuit:block/extractor_side"
+  }
+}

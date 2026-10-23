@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#c:ingots/brass",
+    "#c:ingots/power_alloy",
+    "#c:ingots/signal_alloy",
+    "#c:ingots/silver",
+    "#c:ingots/steel",
+    "#c:ingots/tin"
+  ]
+}

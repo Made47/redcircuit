@@ -1,0 +1,12 @@
+{
+  "name": "CB Multipart",
+  "icon": "minecraft:smooth_stone_slab",
+  "category": "redcircuit:compat",
+  "sortnum": 36,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Z CB Multipart przewody na ścianach stają się częściami bloku wieloczęściowego: przewód i osłona z mikrobloku dzielą jeden blok. Części łączą się ze zwykłymi przewodami, przewodami w obudowie i ze sobą, w tych samych sieciach sygnałów, kanałów i energii."
+    }
+  ]
+}

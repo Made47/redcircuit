@@ -1,0 +1,12 @@
+{
+  "gate_tick": {
+    "subtitle": "subtitles.redcircuit.gate_tick",
+    "sounds": [
+      {
+        "name": "minecraft:random/click",
+        "volume": 0.6,
+        "pitch": 1.6
+      }
+    ]
+  }
+}

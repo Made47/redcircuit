@@ -1,0 +1,16 @@
+{
+  "name": "Electric Furnace",
+  "icon": "redcircuit:electric_furnace",
+  "category": "redcircuit:energy",
+  "sortnum": 27,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Smelts like a furnace, twice as fast, using 20 FE/t. The fuel slot is replaced by a battery slot."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:electric_furnace"
+    }
+  ]
+}

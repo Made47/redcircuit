@@ -1,0 +1,16 @@
+{
+  "name": "Maszyna sortująca",
+  "icon": "redcircuit:sorting_machine",
+  "category": "redcircuit:logistics",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "9 kolumn x 3 rzędy. Rząd 1 to barwnik (kolor nadawany przedmiotom), rzędy 2-3 to wzorce przedmiotów. Kolumna z barwnikiem bez wzorców łapie wszystko inne.$(br2)Kolorowe przedmioty jadą tylko rurami w swoim kolorze albo niepomalowanymi."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:sorting_machine"
+    }
+  ]
+}

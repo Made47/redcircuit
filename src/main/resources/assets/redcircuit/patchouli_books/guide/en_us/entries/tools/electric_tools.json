@@ -1,0 +1,21 @@
+{
+  "name": "Electric Tools",
+  "icon": "redcircuit:electric_drill",
+  "category": "redcircuit:tools",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Electric Drill$() is a pickaxe and shovel in one (diamond level), using 50 FE per block instead of durability. Shift-right-click switches between 1x1 and 3x3 mining; hold Shift while mining for a single block."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Electric Chainsaw$() cuts wood, leaves, wool and cobwebs. Both hold 100,000 FE; charge them in a Charger."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:electric_drill",
+      "recipe2": "redcircuit:electric_chainsaw"
+    }
+  ]
+}

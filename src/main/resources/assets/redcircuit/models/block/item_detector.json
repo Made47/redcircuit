@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "redcircuit:block/item_detector_side",
+    "north": "redcircuit:block/item_detector_front",
+    "south": "redcircuit:block/item_detector_back",
+    "east": "redcircuit:block/item_detector_side",
+    "west": "redcircuit:block/item_detector_side",
+    "up": "redcircuit:block/item_detector_side",
+    "down": "redcircuit:block/item_detector_side"
+  }
+}

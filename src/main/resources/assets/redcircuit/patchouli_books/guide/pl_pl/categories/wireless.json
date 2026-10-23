@@ -1,0 +1,6 @@
+{
+  "name": "Redstone bezprzewodowy",
+  "description": "Nadajniki, odbiorniki i piloty na 5000 częstotliwościach.",
+  "icon": "redcircuit:wireless_transmitter",
+  "sortnum": 7
+}

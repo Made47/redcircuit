@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:circuit_plate"
+    },
+    {
+      "item": "minecraft:repeater"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:pulse_gate",
+    "count": 1
+  }
+}

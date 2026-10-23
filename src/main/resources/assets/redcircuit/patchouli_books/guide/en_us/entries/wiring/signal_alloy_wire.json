@@ -1,0 +1,20 @@
+{
+  "name": "Signal Alloy Wire",
+  "icon": "redcircuit:signal_alloy_wire",
+  "category": "redcircuit:wiring",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Carries redstone $(l)without any loss$() over any distance. Wires stick to surfaces: click a floor, wall or ceiling. They connect straight, around inner corners (several faces in one block) and around outer corners over a block edge."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Breaking a block with several wires removes the one you aim at. Only one wire type or colour can share a block space. Wires strongly power the block they lie on, like a repeater."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:signal_alloy_wire"
+    }
+  ]
+}

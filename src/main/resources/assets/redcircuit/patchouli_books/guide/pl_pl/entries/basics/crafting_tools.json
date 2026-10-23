@@ -1,0 +1,30 @@
+{
+  "name": "Narzędzia do wytwarzania",
+  "icon": "redcircuit:iron_handsaw",
+  "category": "redcircuit:basics",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Piły ręczne$() (od kamiennej do netherytowej) zostają w siatce i tracą 1 punkt wytrzymałości. Piła jest składnikiem $(item)tartaku$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Nożyce do drutu$() (ze stali) działają tak samo: sztabka + nożyce = $(item)cienki drut$() miedziany lub żelazny. 4 cienkie druty miedziane wokół żelaza to $(item)cewka miedziana$().$(br2)$(item)Śrubokręt$() obraca bramki, maszyny i bloki vanilla; z Shift w drugą stronę. Shift + PPM na bramce zbiera ją razem z ustawieniami. Nie zużywa się."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:iron_handsaw",
+      "recipe2": "redcircuit:wire_cutters"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:fine_copper_wire",
+      "recipe2": "redcircuit:copper_coil"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:screwdriver"
+    }
+  ]
+}

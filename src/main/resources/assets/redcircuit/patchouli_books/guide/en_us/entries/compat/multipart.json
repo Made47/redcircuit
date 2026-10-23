@@ -1,0 +1,12 @@
+{
+  "name": "CB Multipart",
+  "icon": "minecraft:smooth_stone_slab",
+  "category": "redcircuit:compat",
+  "sortnum": 36,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "With CB Multipart, face wires become parts of a multipart block: a wire and a microblock cover can share one block. Parts connect to normal wires, encased wires and each other, in the same signal, channel and energy networks."
+    }
+  ]
+}

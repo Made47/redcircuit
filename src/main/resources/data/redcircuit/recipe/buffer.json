@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ICI",
+    "C C",
+    "ICI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "C": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "result": {
+    "id": "redcircuit:buffer",
+    "count": 1
+  }
+}

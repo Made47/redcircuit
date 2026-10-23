@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "redcircuit:silver_ore",
+    "redcircuit:deepslate_silver_ore",
+    "redcircuit:azurite_ore",
+    "redcircuit:deepslate_azurite_ore",
+    "redcircuit:silver_block",
+    "redcircuit:azurite_block"
+  ]
+}

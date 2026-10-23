@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:solar_panel"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.generator.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.generator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redcircuit:solar_panel",
+              "redcircuit:thermopile",
+              "redcircuit:generator",
+              "redcircuit:solid_fuel_generator"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:power_alloy"
+}

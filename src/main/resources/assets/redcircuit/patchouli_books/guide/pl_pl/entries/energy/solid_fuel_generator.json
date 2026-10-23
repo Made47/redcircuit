@@ -1,0 +1,16 @@
+{
+  "name": "Generator na paliwo stałe",
+  "icon": "redcircuit:solid_fuel_generator",
+  "category": "redcircuit:energy",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Spala wszystko, co pali się w piecu, i podczas spalania daje 20 FE/t: węgiel to 32 000 FE, wiadro lawy 400 000 FE. Energię oddaje do sąsiednich przewodów i maszyn.$(br2)Paliwo zużywa tylko wtedy, gdy w buforze 20 000 FE jest miejsce, więc nic się nie marnuje. Sygnał redstone go wstrzymuje."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:solid_fuel_generator"
+    }
+  ]
+}

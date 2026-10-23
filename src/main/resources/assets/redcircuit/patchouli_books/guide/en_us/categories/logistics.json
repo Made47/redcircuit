@@ -1,0 +1,6 @@
+{
+  "name": "Logistics",
+  "description": "Pneumatic tubes, sorting and item handling machines.",
+  "icon": "redcircuit:tube",
+  "sortnum": 3
+}

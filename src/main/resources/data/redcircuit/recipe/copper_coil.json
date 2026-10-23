@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " W ",
+    "WIW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "redcircuit:fine_copper_wire"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "result": {
+    "id": "redcircuit:copper_coil",
+    "count": 1
+  }
+}

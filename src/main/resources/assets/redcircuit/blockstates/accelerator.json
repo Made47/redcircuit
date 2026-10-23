@@ -1,0 +1,188 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "paint": "16"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "0"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "1"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "2"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "3"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "4"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "5"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "6"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "7"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "8"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "9"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "10"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "11"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "12"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "13"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "14"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "paint": "15"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_center"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_south"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_east"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_west"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_up"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "redcircuit:block/accelerator_down"
+      }
+    }
+  ]
+}

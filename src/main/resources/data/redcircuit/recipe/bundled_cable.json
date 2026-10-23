@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "SIS",
+    "III",
+    "SIS"
+  ],
+  "key": {
+    "S": {
+      "tag": "c:strings"
+    },
+    "I": {
+      "tag": "redcircuit:insulated_wires"
+    }
+  },
+  "result": {
+    "id": "redcircuit:bundled_cable",
+    "count": 2
+  }
+}

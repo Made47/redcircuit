@@ -1,0 +1,16 @@
+{
+  "name": "Kabel wiązkowy",
+  "icon": "redcircuit:bundled_cable",
+  "category": "redcircuit:wiring",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "16 niezależnych kanałów w jednym kablu. Przewód izolowany koloru X podłączony do kabla nadaje i odbiera kanał X.$(br2)Kanały odczytują $(item)asembler$(), komputery CC: Tweaked i miernik."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:bundled_cable"
+    }
+  ]
+}

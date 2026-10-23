@@ -1,0 +1,20 @@
+{
+  "name": "Przewód ze stopu sygnałowego",
+  "icon": "redcircuit:signal_alloy_wire",
+  "category": "redcircuit:wiring",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Przewodzi redstone $(l)bez spadku mocy$() na dowolną odległość. Przewody przyklejają się do powierzchni: kliknij podłogę, ścianę lub sufit. Łączą się prosto, w narożnikach wewnętrznych (kilka ścian w jednym bloku) i zewnętrznych, przez krawędź bloku."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Rozbijając blok z kilkoma przewodami, usuwasz ten, w który celujesz. W jednym bloku może leżeć tylko jeden typ lub kolor przewodu. Przewody mocno zasilają blok, na którym leżą, jak przekaźnik."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:signal_alloy_wire"
+    }
+  ]
+}

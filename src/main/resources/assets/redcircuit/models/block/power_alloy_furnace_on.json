@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "redcircuit:block/power_alloy_furnace_top",
+    "front": "redcircuit:block/power_alloy_furnace_front_on",
+    "side": "redcircuit:block/power_alloy_furnace_side"
+  }
+}

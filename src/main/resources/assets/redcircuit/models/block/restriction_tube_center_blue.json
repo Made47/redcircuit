@@ -1,0 +1,8 @@
+{
+  "parent": "redcircuit:block/restriction_tube_center",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "t": "redcircuit:block/tube_blue",
+    "particle": "redcircuit:block/tube_blue"
+  }
+}

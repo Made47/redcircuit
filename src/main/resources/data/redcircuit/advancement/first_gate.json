@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:and_gate"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.first_gate.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.first_gate.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "#redcircuit:gates"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:red_wire"
+}

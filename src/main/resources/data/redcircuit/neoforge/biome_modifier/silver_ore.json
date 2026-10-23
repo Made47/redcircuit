@@ -1,0 +1,7 @@
+{
+  "type": "redcircuit:configured_ore",
+  "ore": "silver",
+  "biomes": "#minecraft:is_overworld",
+  "features": "redcircuit:silver_ore",
+  "step": "underground_ores"
+}

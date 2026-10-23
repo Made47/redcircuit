@@ -1,0 +1,17 @@
+{
+  "type": "redcircuit:alloying",
+  "ingredients": [
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "tag": "c:dusts/redstone",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "redcircuit:signal_alloy_ingot",
+    "count": 1
+  },
+  "cooktime": 200
+}

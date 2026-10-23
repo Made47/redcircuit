@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:battery_box"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.battery_box.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.battery_box.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:battery_box"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:generator"
+}

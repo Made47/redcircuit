@@ -1,0 +1,17 @@
+{
+  "name": "Przewód izolowany",
+  "icon": "redcircuit:insulated_wire_red",
+  "category": "redcircuit:wiring",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "16 kolorów. Przewód izolowany łączy się tylko z tym samym kolorem, z przewodem ze stopu sygnałowego i z kablem wiązkowym, więc różne sygnały mogą biec obok siebie."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:insulated_wire_red",
+      "recipe2": "redcircuit:insulated_wire_blue"
+    }
+  ]
+}

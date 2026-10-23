@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IPI",
+    "CMC",
+    "IBI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "C": {
+      "tag": "c:chests/wooden"
+    },
+    "M": {
+      "item": "redcircuit:signal_machine_casing"
+    },
+    "B": {
+      "item": "redcircuit:bundled_cable"
+    }
+  },
+  "result": {
+    "id": "redcircuit:assembler",
+    "count": 1
+  }
+}

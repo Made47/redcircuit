@@ -1,0 +1,25 @@
+{
+  "name": "Wiatrak i koło wodne",
+  "icon": "redcircuit:windmill",
+  "category": "redcircuit:energy",
+  "sortnum": 25,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Generator$() potrzebuje wirnika z przodu: PPM wiatrakiem albo kołem wodnym, Shift + PPM pustą ręką go zdejmuje."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Wiatrak$(): wolne pole 5x5 przed generatorem, pod gołym niebem. 6 FE/t nad poziomem morza, do 32 FE/t wysoko; x1,5 w deszczu, x2 w burzy.$(br2)$(item)Koło wodne$(): płynąca woda w polu 3x3 daje 4 FE/t za blok, stojąca 1 FE/t (maks. 24 FE/t)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:generator",
+      "recipe2": "redcircuit:windmill"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:water_wheel"
+    }
+  ]
+}

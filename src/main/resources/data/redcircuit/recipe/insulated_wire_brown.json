@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:brown_wool"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    },
+    {
+      "item": "redcircuit:signal_alloy_wire"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:insulated_wire_brown",
+    "count": 4
+  }
+}

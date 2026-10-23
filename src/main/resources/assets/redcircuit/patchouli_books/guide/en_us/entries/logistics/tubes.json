@@ -1,0 +1,16 @@
+{
+  "name": "Pneumatic Tubes",
+  "icon": "redcircuit:tube",
+  "category": "redcircuit:logistics",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Items in tubes find the cheapest route to an inventory that accepts them. Hoppers and other mods can insert into tubes.$(br2)Right-click a tube with a $(item)dye$() to paint it: it then only carries items of that colour. Shift-right-click with an empty hand removes paint."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:tube"
+    }
+  ]
+}

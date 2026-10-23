@@ -1,0 +1,33 @@
+{
+  "name": "Alloy Furnace",
+  "icon": "redcircuit:alloy_furnace",
+  "category": "redcircuit:basics",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Alloy Furnace$() has 9 ingredient slots, a fuel slot and an output. Ingredients may lie in any slots.$(br2)$(li)Copper + 4 Redstone = $(item)Signal Alloy Ingot$()$(br)$(li)Silver + 4 Azurite = $(item)Power Alloy Ingot$()$(br)$(li)3 Copper + Tin = 4 $(item)Brass$()"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Power Alloy Furnace$() does the same on 25 FE/t, twice as fast, and has a battery slot.$(br2)Automation: ingredients from the top, fuel from the sides, results from the bottom. Custom recipes use the $(item)redcircuit:alloying$() recipe type (datapacks, KubeJS, CraftTweaker)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:alloy_furnace",
+      "recipe2": "redcircuit:power_alloy_furnace"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:signal_alloy_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:power_alloy_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "redcircuit:brass_ingot"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IPI",
+    "GOG",
+    "IWI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "minecraft:stone_pressure_plate"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "O": {
+      "item": "minecraft:observer"
+    },
+    "W": {
+      "item": "redcircuit:signal_machine_casing"
+    }
+  },
+  "result": {
+    "id": "redcircuit:item_detector",
+    "count": 1
+  }
+}

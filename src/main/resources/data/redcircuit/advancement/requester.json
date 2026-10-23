@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:requester"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.requester.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.requester.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:requester"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:tube"
+}

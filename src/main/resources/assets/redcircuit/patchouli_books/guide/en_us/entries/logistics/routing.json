@@ -1,0 +1,26 @@
+{
+  "name": "Regulator, Relay & Buffer",
+  "icon": "redcircuit:regulator",
+  "category": "redcircuit:logistics",
+  "sortnum": 18,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Regulator$(): moves items from the back inventory to the front until it holds the filter amounts, then emits redstone $(li)$(item)Relay$(): 9 slots, accepts from every side but the front and keeps pushing out the front $(li)$(item)Buffer$(): 18 slots open on all sides; comparators read the fill level"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Item Detector$(): pulses for every stack passing through"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:regulator",
+      "recipe2": "redcircuit:relay"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:buffer",
+      "recipe2": "redcircuit:item_detector"
+    }
+  ]
+}

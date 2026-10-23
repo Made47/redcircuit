@@ -1,0 +1,6 @@
+{
+  "name": "Okablowanie",
+  "description": "Przewody przenoszące redstone bez strat, przewody izolowane i kable wiązkowe.",
+  "icon": "redcircuit:signal_alloy_wire",
+  "sortnum": 1
+}

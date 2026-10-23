@@ -1,0 +1,25 @@
+{
+  "name": "Batteries & Charger",
+  "icon": "redcircuit:battery_box",
+  "category": "redcircuit:energy",
+  "sortnum": 26,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Battery Box$() stores 1,000,000 FE. The portable $(item)Battery$() holds 50,000 FE and powers machines from their battery slot when grid power runs out."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the battery box window the top slot charges a battery and the bottom slot discharges it. The $(item)Charger$() has 4 slots and charges batteries, electric tools and FE items from other mods (1000 FE/t per slot)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:battery_box",
+      "recipe2": "redcircuit:battery"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:charger"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "type": "redcircuit:configured_ore",
+  "ore": "azurite",
+  "biomes": "#minecraft:is_overworld",
+  "features": "redcircuit:azurite_ore",
+  "step": "underground_ores"
+}

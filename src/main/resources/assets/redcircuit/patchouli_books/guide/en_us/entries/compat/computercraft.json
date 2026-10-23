@@ -1,0 +1,16 @@
+{
+  "name": "CC: Tweaked",
+  "icon": "minecraft:command_block",
+  "category": "redcircuit:compat",
+  "sortnum": 35,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "With CC: Tweaked installed, bundled cables connect to computers and turtles: $(item)redstone.setBundledOutput$() drives the cable channels and $(item)redstone.getBundledInput$() reads them."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Peripherals: $(item)redcircuit_gate$() (timer interval, counter, mute) and $(item)redcircuit_wireless$() (frequency, state). Machines, tanks and batteries appear as generic $(item)inventory$(), $(item)fluid_storage$() and $(item)energy_storage$() peripherals."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Modpacki",
+  "icon": "minecraft:writable_book",
+  "category": "redcircuit:compat",
+  "sortnum": 37,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)config/redcircuit-common.toml$() pozwala wyłączyć każdą rudę i zmienić moc generatorów oraz koszty maszyn.$(br2)Receptury używają wspólnych tagów $(item)c:$(), więc cyna, srebro czy mosiądz z innych modów działają. Receptury stopów ($(item)redcircuit:alloying$()) zmienisz datapackiem, KubeJS lub CraftTweakerem."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Jade$() pokazuje poziomy sygnału, kanały kabla, ustawienia bramek i moc generatorów. $(item)JEI$() pokazuje receptury stopów i strony z opisami."
+    }
+  ]
+}

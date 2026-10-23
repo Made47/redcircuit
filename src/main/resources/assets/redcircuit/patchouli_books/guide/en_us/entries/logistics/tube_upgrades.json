@@ -1,0 +1,17 @@
+{
+  "name": "Restriction Tube & Accelerator",
+  "icon": "redcircuit:accelerator",
+  "category": "redcircuit:logistics",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A $(item)Restriction Tube$() counts as a very long route, so items only use it when there is no other way.$(br2)The $(item)Accelerator$() is a powered tube section: every stack passing through is boosted to 4x speed, then slows down along the following tubes. 20 FE per stack."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:restriction_tube",
+      "recipe2": "redcircuit:accelerator"
+    }
+  ]
+}

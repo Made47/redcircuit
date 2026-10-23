@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "redcircuit:encased_signal_alloy_wire"
+    }
+  ],
+  "result": {
+    "id": "redcircuit:signal_alloy_wire",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Solid Fuel Generator",
+  "icon": "redcircuit:solid_fuel_generator",
+  "category": "redcircuit:energy",
+  "sortnum": 24,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Burns anything that works in a furnace and makes 20 FE/t while burning: one coal gives 32,000 FE, a lava bucket 400,000 FE. It pushes energy into neighbouring cables and machines.$(br2)Fuel is only used when there is room in its 20,000 FE buffer, so nothing is wasted. A redstone signal pauses it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:solid_fuel_generator"
+    }
+  ]
+}

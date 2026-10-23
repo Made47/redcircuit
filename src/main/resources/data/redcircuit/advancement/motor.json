@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "redcircuit:power_circuit"
+    },
+    "title": {
+      "translate": "advancements.redcircuit.motor.title"
+    },
+    "description": {
+      "translate": "advancements.redcircuit.motor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "c": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "redcircuit:power_circuit"
+          }
+        ]
+      }
+    }
+  },
+  "parent": "redcircuit:power_alloy"
+}

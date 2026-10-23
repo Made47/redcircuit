@@ -1,0 +1,21 @@
+{
+  "values": [
+    "redcircuit:not_gate",
+    "redcircuit:buffer_gate",
+    "redcircuit:and_gate",
+    "redcircuit:nand_gate",
+    "redcircuit:or_gate",
+    "redcircuit:nor_gate",
+    "redcircuit:xor_gate",
+    "redcircuit:xnor_gate",
+    "redcircuit:rs_latch_gate",
+    "redcircuit:toggle_gate",
+    "redcircuit:pulse_gate",
+    "redcircuit:timer_gate",
+    "redcircuit:randomizer_gate",
+    "redcircuit:counter_gate",
+    "redcircuit:sequencer_gate",
+    "redcircuit:state_cell_gate",
+    "redcircuit:synchronizer_gate"
+  ]
+}

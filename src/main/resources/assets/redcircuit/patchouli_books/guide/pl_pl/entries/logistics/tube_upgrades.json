@@ -1,0 +1,17 @@
+{
+  "name": "Rura restrykcyjna i akcelerator",
+  "icon": "redcircuit:accelerator",
+  "category": "redcircuit:logistics",
+  "sortnum": 19,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(item)Rura restrykcyjna$() liczy się jak bardzo długa trasa, więc przedmioty jadą nią tylko, gdy nie ma innej drogi.$(br2)$(item)Akcelerator$() to zasilany odcinek rury: każdy stos przyspiesza do 4x, a potem zwalnia na kolejnych rurach. 20 FE za stos."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:restriction_tube",
+      "recipe2": "redcircuit:accelerator"
+    }
+  ]
+}

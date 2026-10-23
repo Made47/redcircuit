@@ -1,0 +1,25 @@
+{
+  "name": "Transmitters & Receivers",
+  "icon": "redcircuit:wireless_transmitter",
+  "category": "redcircuit:wireless",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Frequencies 1-5000 are shared by the whole world, across dimensions and unloaded chunks. Right-click to set the frequency.$(br2)A powered $(item)Transmitter$() broadcasts; a $(item)Receiver$() outputs 15 on every side while its frequency is active."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Wireless Remote$() transmits while you hold right-click; Shift-right-click sets its frequency."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:wireless_transmitter",
+      "recipe2": "redcircuit:wireless_receiver"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:wireless_remote"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Logic",
+  "description": "Logic gates, timers, counters and lamps.",
+  "icon": "redcircuit:timer_gate",
+  "sortnum": 2
+}

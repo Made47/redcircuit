@@ -1,0 +1,30 @@
+{
+  "name": "Zatrzaski i impulsy",
+  "icon": "redcircuit:rs_latch_gate",
+  "category": "redcircuit:logic",
+  "sortnum": 11,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Zatrzask RS$(): L ustawia, R kasuje; przód+lewo świecą po ustawieniu, tył+prawo po skasowaniu (w oknie: zamiana stron, tryb tylko przód/tył) $(li)$(item)Przerzutnik T$(): impuls na L albo R przełącza wyjście przód <-> tył; PPM przełącza ręcznie $(li)$(item)Formownik impulsu$(): zbocze na B daje impuls 2 ticki"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)$(item)Generator losowy$(): gdy B włączone, przód, lewo i prawo losowo co 4 ticki $(li)$(item)Synchronizator$(): czeka na impuls z L i z R, potem impuls; B kasuje"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:rs_latch_gate",
+      "recipe2": "redcircuit:toggle_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:pulse_gate",
+      "recipe2": "redcircuit:randomizer_gate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "redcircuit:synchronizer_gate"
+    }
+  ]
+}
