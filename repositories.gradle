@@ -1,0 +1,3 @@
+// Dodatkowe repozytoria (te popularne są już włączone przez includeWellKnownRepositories)
+repositories {
+}

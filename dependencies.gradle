@@ -1,0 +1,12 @@
+// Zależności (składnia GTNH: devOnlyNonPublishable = kompilacja + uruchomienie w runClient, bez publikacji)
+dependencies {
+    // NEI (wymaga CodeChickenCore w wersji :dev, inaczej crash NoSuchFieldError przy runClient)
+    devOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.165-GTNH:dev")
+    devOnlyNonPublishable("com.github.GTNewHorizons:CodeChickenCore:1.4.22:dev")
+
+    // Etap 10: integracje
+    devOnlyNonPublishable("com.github.GTNewHorizons:ForgeMultipart:1.7.18:dev")
+    devOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.2:dev")
+    compileOnly(rfg.deobf("curse.maven:computercraft-67504:2269339")) // ComputerCraft 1.75
+    compileOnly("com.github.GTNewHorizons:OpenComputers:1.10.27-GTNH:dev") { transitive = false }
+}
