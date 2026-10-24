@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:encased_power_alloy_wire"
-    }
+    "redcircuit:encased_power_alloy_wire"
   ],
   "result": {
     "id": "redcircuit:power_alloy_wire",

@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -35,12 +36,12 @@ public class BufferBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
             player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> new ChestMenu(MenuType.GENERIC_9x2, id, inv, be.items, 2),
                     Component.translatable("container.redcircuit.buffer")));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -49,16 +50,9 @@ public class BufferBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return level.getBlockEntity(pos) instanceof MachineBlockEntity be
                 ? AbstractContainerMenu.getRedstoneSignalFromContainer(be.items) : 0;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
-            Containers.dropContents(level, pos, be.items);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

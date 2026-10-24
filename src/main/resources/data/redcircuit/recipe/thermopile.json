@@ -7,15 +7,9 @@
     "CTC"
   ],
   "key": {
-    "C": {
-      "tag": "c:ingots/copper"
-    },
-    "T": {
-      "tag": "c:ingots/tin"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "C": "#c:ingots/copper",
+    "T": "#c:ingots/tin",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:thermopile",

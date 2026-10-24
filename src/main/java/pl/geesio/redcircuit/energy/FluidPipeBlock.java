@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.LevelReader;
+import pl.geesio.redcircuit.util.transfer.IFluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -30,13 +32,13 @@ public class FluidPipeBlock extends CableBlock implements EntityBlock {
     }
 
     @Override
-    protected boolean canConnectTo(LevelAccessor level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
+    protected boolean canConnectTo(LevelReader level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
         Block b = neighbor.getBlock();
         if (b instanceof FluidPipeBlock) return true;
         if (b instanceof CableBlock || b instanceof FaceWireBlock) return false;
         if (b instanceof PumpBlock) return true;
         if (level instanceof Level lvl && !neighbor.isAir() && neighbor.hasBlockEntity()) {
-            return lvl.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, dir.getOpposite()) != null;
+            return IFluidHandler.wrap(lvl.getCapability(Capabilities.Fluid.BLOCK, neighborPos, dir.getOpposite())) != null;
         }
         return false;
     }
@@ -49,17 +51,17 @@ public class FluidPipeBlock extends CableBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.FLUID_PIPE.get(), FluidPipeBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.FLUID_PIPE.get(), FluidPipeBlockEntity::tick);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
             var fluid = be.getTank().getFluid();
             Component name = fluid.isEmpty() ? Component.translatable("message.redcircuit.pump_empty") : fluid.getHoverName();
-            player.displayClientMessage(Component.translatable("message.redcircuit.pipe", name,
-                    be.getTank().getFluidAmount(), FluidPipeBlockEntity.CAPACITY), true);
+            player.sendOverlayMessage(Component.translatable("message.redcircuit.pipe", name,
+                    be.getTank().getFluidAmount(), FluidPipeBlockEntity.CAPACITY));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

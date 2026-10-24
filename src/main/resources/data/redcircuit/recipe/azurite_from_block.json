@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:azurite_block"
-    }
+    "redcircuit:azurite_block"
   ],
   "result": {
     "id": "redcircuit:azurite",

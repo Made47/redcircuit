@@ -5,12 +5,8 @@
     "MMS"
   ],
   "key": {
-    "M": {
-      "tag": "minecraft:stone_tool_materials"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "M": "#minecraft:stone_tool_materials",
+    "S": "#c:rods/wooden"
   },
   "result": {
     "id": "redcircuit:stone_handsaw",

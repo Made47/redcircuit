@@ -1,6 +1,6 @@
 package pl.geesio.redcircuit.client;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +17,8 @@ public class BatteryBoxScreen extends AbstractContainerScreen<BatteryBoxMenu> {
     }
 
     @Override
-    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = leftPos, y = topPos;
         g.fill(x, y, x + imageWidth, y + imageHeight, 0xFF000000);
         g.fill(x + 1, y + 1, x + imageWidth - 1, y + imageHeight - 1, LIGHT);
@@ -47,7 +48,7 @@ public class BatteryBoxScreen extends AbstractContainerScreen<BatteryBoxMenu> {
     }
 
     /** Mała strzałka: w lewo (do baterii) albo w prawo (do akumulatora). */
-    private static void arrow(GuiGraphics g, int ax, int ay, boolean right) {
+    private static void arrow(GuiGraphicsExtractor g, int ax, int ay, boolean right) {
         int c = 0xFF555555;
         g.fill(ax + 3, ay + 3, ax + 11, ay + 5, c);
         for (int i = 0; i < 4; i++) {
@@ -57,21 +58,20 @@ public class BatteryBoxScreen extends AbstractContainerScreen<BatteryBoxMenu> {
     }
 
     @Override
-    protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        super.renderLabels(g, mouseX, mouseY);
-        g.drawString(font, Component.translatable("gui.redcircuit.charge"), 104, 21, 0x404040, false);
-        g.drawString(font, Component.translatable("gui.redcircuit.discharge"), 104, 57, 0x404040, false);
+    protected void extractLabels(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+        super.extractLabels(g, mouseX, mouseY);
+        g.text(font, Component.translatable("gui.redcircuit.charge"), 104, 21, 0xFF404040, false);
+        g.text(font, Component.translatable("gui.redcircuit.discharge"), 104, 57, 0xFF404040, false);
         String fe = String.format(java.util.Locale.ROOT, "%,d FE", menu.getEnergy()).replace(',', ' ');
-        g.drawString(font, fe, 104, 39, 0x2A5FD0, false);
+        g.text(font, fe, 104, 39, 0xFF2A5FD0, false);
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
-        renderTooltip(g, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
         int rx = mouseX - leftPos, ry = mouseY - topPos;
         if (rx >= BAR_X && rx < BAR_X + BAR_W && ry >= BAR_Y && ry < BAR_Y + BAR_H) {
-            g.renderTooltip(font, Component.translatable("message.redcircuit.energy",
+            g.setTooltipForNextFrame(font, Component.translatable("message.redcircuit.energy",
                     menu.getEnergy(), menu.getMaxEnergy()), mouseX, mouseY);
         }
     }

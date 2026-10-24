@@ -1,9 +1,7 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "ingredient": {
-    "item": "redcircuit:raw_silver"
-  },
+  "ingredient": "redcircuit:raw_silver",
   "result": {
     "id": "redcircuit:silver_ingot"
   },

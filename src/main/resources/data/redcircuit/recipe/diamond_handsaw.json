@@ -5,12 +5,8 @@
     "MMS"
   ],
   "key": {
-    "M": {
-      "tag": "c:gems/diamond"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "M": "#c:gems/diamond",
+    "S": "#c:rods/wooden"
   },
   "result": {
     "id": "redcircuit:diamond_handsaw",

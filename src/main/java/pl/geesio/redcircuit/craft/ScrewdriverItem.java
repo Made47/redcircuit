@@ -1,5 +1,10 @@
 package pl.geesio.redcircuit.craft;
 
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueOutput;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BlockItem;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import pl.geesio.redcircuit.util.transfer.ItemHandlerHelper;
 import pl.geesio.redcircuit.gate.GateBlock;
 import pl.geesio.redcircuit.gate.GateBlockEntity;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -23,7 +28,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import java.util.ArrayList;
@@ -51,20 +55,20 @@ public class ScrewdriverItem extends Item {
 
         boolean sneaking = player != null && player.isShiftKeyDown();
         if (sneaking && state.getBlock() instanceof GateBlock) {
-            if (!level.isClientSide) pickUpGate(level, pos, state, player);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            if (!level.isClientSide()) pickUpGate(level, pos, state, player);
+            return InteractionResult.SUCCESS;
         }
 
         BlockState rotated = rotate(level, pos, state, sneaking);
         if (rotated == null) return InteractionResult.PASS;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.setBlock(pos, rotated, Block.UPDATE_ALL);
             // Blok sam przelicza swoje wejścia/wyjścia po zmianie kierunku
-            level.neighborChanged(pos, rotated.getBlock(), pos);
+            level.neighborChanged(pos, rotated.getBlock(), null);
             level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 0.8f, 1.2f);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     /** Zbiera bramkę do ekwipunku gracza; niestandardowe ustawienia zapisuje w przedmiocie. */
@@ -72,7 +76,7 @@ public class ScrewdriverItem extends Item {
         ItemStack drop = new ItemStack(state.getBlock().asItem());
         if (level.getBlockEntity(pos) instanceof GateBlockEntity be
                 && withStateSettings(be, state).hasCustomSettings()) {
-            CompoundTag tag = new CompoundTag();
+            TagValueOutput tag = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, level.registryAccess());
             tag.putInt("Interval", be.interval);
             tag.putInt("MaxValue", be.max);
             tag.putBoolean("Muted", be.muted);
@@ -104,7 +108,7 @@ public class ScrewdriverItem extends Item {
             return null;
         }
 
-        DirectionProperty prop = findFacing(state);
+        EnumProperty<Direction> prop = findFacing(state);
         if (prop != null) {
             List<Direction> values = new ArrayList<>(prop.getPossibleValues());
             int idx = values.indexOf(state.getValue(prop));
@@ -124,19 +128,22 @@ public class ScrewdriverItem extends Item {
         return null;
     }
 
-    private static DirectionProperty findFacing(BlockState state) {
+    private static EnumProperty<Direction> findFacing(BlockState state) {
         if (state.hasProperty(BlockStateProperties.FACING)) return BlockStateProperties.FACING;
         if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) return BlockStateProperties.HORIZONTAL_FACING;
         if (state.hasProperty(BlockStateProperties.FACING_HOPPER)) return BlockStateProperties.FACING_HOPPER;
         for (Property<?> p : state.getProperties()) {
-            if (p instanceof DirectionProperty dp && p.getName().equals("facing")) return dp;
+            if (p instanceof EnumProperty<?> ep && ep.getValueClass() == Direction.class && p.getName().equals("facing")) {
+                @SuppressWarnings("unchecked") EnumProperty<Direction> dp = (EnumProperty<Direction>) ep;
+                return dp;
+            }
         }
         return null;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.redcircuit.screwdriver").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip.redcircuit.screwdriver_gate").withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+        tooltip.accept(Component.translatable("tooltip.redcircuit.screwdriver").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.redcircuit.screwdriver_gate").withStyle(ChatFormatting.GRAY));
     }
 }

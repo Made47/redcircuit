@@ -1,6 +1,6 @@
 package pl.geesio.redcircuit.client;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +17,8 @@ public class MaceratorScreen extends AbstractContainerScreen<MaceratorMenu> {
     }
 
     @Override
-    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = leftPos, y = topPos;
         g.fill(x, y, x + imageWidth, y + imageHeight, 0xFF000000);
         g.fill(x + 1, y + 1, x + imageWidth - 1, y + imageHeight - 1, LIGHT);
@@ -58,12 +59,11 @@ public class MaceratorScreen extends AbstractContainerScreen<MaceratorMenu> {
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
-        renderTooltip(g, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
         int rx = mouseX - leftPos, ry = mouseY - topPos;
         if (rx >= BAR_X && rx < BAR_X + BAR_W && ry >= BAR_Y && ry < BAR_Y + BAR_H) {
-            g.renderTooltip(font, Component.translatable("message.redcircuit.energy", menu.getEnergy(), menu.getMaxEnergy()), mouseX, mouseY);
+            g.setTooltipForNextFrame(font, Component.translatable("message.redcircuit.energy", menu.getEnergy(), menu.getMaxEnergy()), mouseX, mouseY);
         }
     }
 }

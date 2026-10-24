@@ -1,9 +1,7 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "ingredient": {
-    "item": "redcircuit:tin_dust"
-  },
+  "ingredient": "redcircuit:tin_dust",
   "result": {
     "id": "redcircuit:tin_ingot"
   },

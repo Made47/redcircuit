@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "tag": "c:ingots/signal_alloy"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
-    },
-    "P": {
-      "item": "redcircuit:circuit_plate"
-    },
-    "W": {
-      "item": "redcircuit:signal_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "S": "#c:ingots/signal_alloy",
+    "T": "minecraft:redstone_torch",
+    "P": "redcircuit:circuit_plate",
+    "W": "redcircuit:signal_alloy_wire"
   },
   "result": {
     "id": "redcircuit:signal_circuit",

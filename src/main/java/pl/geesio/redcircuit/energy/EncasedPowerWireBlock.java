@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -33,7 +34,7 @@ public class EncasedPowerWireBlock extends EncasedWireBlock implements EntityBlo
     }
 
     @Override
-    protected boolean connectsToDevice(LevelAccessor level, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor) {
+    protected boolean connectsToDevice(LevelReader level, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor) {
         return EnergyConnect.hasEnergy(level, neighborPos, neighbor, dir.getOpposite());
     }
 
@@ -45,7 +46,7 @@ public class EncasedPowerWireBlock extends EncasedWireBlock implements EntityBlo
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.POWER_WIRE.get(), EnergyNodeBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.POWER_WIRE.get(), EnergyNodeBlockEntity::tick);
     }
 
     @Override

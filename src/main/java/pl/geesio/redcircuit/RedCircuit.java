@@ -36,10 +36,10 @@ public class RedCircuit {
         ModRecipes.SERIALIZERS.register(modBus);
         modBus.addListener(ModCapabilities::register);
         modBus.addListener(pl.geesio.redcircuit.network.ModNetwork::register);
-        // Opcjonalna integracja z CB Multipart (przewody jako części bloku wieloczęściowego)
-        if (net.neoforged.fml.ModList.get().isLoaded("cb_multipart")) {
-            pl.geesio.redcircuit.compat.cbm.CbmCompat.init(modBus);
-        }
+        // Od 1.21.2 serwer nie wysyła receptur klientom - wysyłamy własne typy (dla JEI)
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent e) ->
+                e.sendRecipes(ModRecipes.ALLOYING.get(), ModRecipes.MACERATING.get(), ModRecipes.SAWING.get()));
+        // CB Multipart nie jest dostępny dla Minecraft 26.x - integracja wyłączona w tej gałęzi.
         // Opcjonalna integracja z CC: Tweaked (kabel wiązkowy + peryferia)
         if (net.neoforged.fml.ModList.get().isLoaded("computercraft")) {
             pl.geesio.redcircuit.compat.cc.CcCompat.init(modBus);

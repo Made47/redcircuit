@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "R": {
-      "item": "redcircuit:requester"
-    },
-    "C": {
-      "item": "minecraft:comparator"
-    },
-    "H": {
-      "tag": "c:chests/wooden"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "R": "redcircuit:requester",
+    "C": "minecraft:comparator",
+    "H": "#c:chests/wooden",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:manager",

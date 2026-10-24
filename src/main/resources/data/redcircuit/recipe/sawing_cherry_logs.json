@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:sawing",
-  "ingredient": {
-    "tag": "minecraft:cherry_logs"
-  },
+  "ingredient": "#minecraft:cherry_logs",
   "result": {
     "id": "minecraft:cherry_planks",
     "count": 6

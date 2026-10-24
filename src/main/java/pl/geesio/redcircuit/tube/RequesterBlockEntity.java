@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.tube;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -8,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.energy.ModEnergyStorage;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -110,18 +113,25 @@ public class RequesterBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        filter.save(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("Next", nextSlot);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        filter.save(output);
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("Next", nextSlot);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        filter.load(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
-        nextSlot = tag.getInt("Next");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        filter.load(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        nextSlot = input.getIntOr("Next", 0);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            Containers.dropContents(level, pos, this.filter);
     }
 }

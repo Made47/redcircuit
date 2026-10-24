@@ -53,7 +53,7 @@ public final class WireNetwork {
     }
 
     public static void update(Level level, BlockPos pos) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         if (busy) {
             if (!currentComponent.contains(pos)) PENDING.add(pos.immutable());
             return;
@@ -363,7 +363,7 @@ public final class WireNetwork {
                 BlockState ns = level.getBlockState(np);
                 if (WireTypes.typeOf(ns.getBlock()) != null) continue;
                 if (ns.isRedstoneConductor(level, np)) {
-                    level.updateNeighborsAtExceptFromFacing(np, block, d.getOpposite());
+                    level.updateNeighborsAtExceptFromFacing(np, block, d.getOpposite(), null);
                 }
             }
         }

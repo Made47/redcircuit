@@ -5,14 +5,21 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.data.AtlasIds;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import pl.geesio.redcircuit.energy.GeneratorBlockEntity;
@@ -23,41 +30,63 @@ import pl.geesio.redcircuit.energy.KineticGeneratorBlock;
  * Model składa się z prostopadłościanów liczonych w pikselach (1/16 bloku) i jest oteksturowany
  * teksturami bloków vanilla z atlasu (drewno, wełna, żelazo) - bez kopiowania plików.
  */
-public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity> {
-    private static final ResourceLocation PLANKS = ResourceLocation.withDefaultNamespace("block/oak_planks");
-    private static final ResourceLocation BEAM = ResourceLocation.withDefaultNamespace("block/stripped_spruce_log");
-    private static final ResourceLocation DARK = ResourceLocation.withDefaultNamespace("block/spruce_planks");
-    private static final ResourceLocation CLOTH = ResourceLocation.withDefaultNamespace("block/white_wool");
-    private static final ResourceLocation METAL = ResourceLocation.withDefaultNamespace("block/iron_block");
+public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, RotorRenderer.State> {
+    public static class State extends BlockEntityRenderState {
+        KineticGeneratorBlock.Rotor rotor = KineticGeneratorBlock.Rotor.NONE;
+        Direction facing = Direction.NORTH;
+        float angle;
+        int frontLight;
+    }
+
+    private static final Identifier PLANKS = Identifier.withDefaultNamespace("block/oak_planks");
+    private static final Identifier BEAM = Identifier.withDefaultNamespace("block/stripped_spruce_log");
+    private static final Identifier DARK = Identifier.withDefaultNamespace("block/spruce_planks");
+    private static final Identifier CLOTH = Identifier.withDefaultNamespace("block/white_wool");
+    private static final Identifier METAL = Identifier.withDefaultNamespace("block/iron_block");
 
     public RotorRenderer(BlockEntityRendererProvider.Context ctx) {
     }
 
     @Override
-    public void render(GeneratorBlockEntity be, float partialTick, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
+    public State createRenderState() {
+        return new State();
+    }
+
+    @Override
+    public void extractRenderState(GeneratorBlockEntity be, State st, float partialTick, Vec3 camera,
+                                   ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(be, st, partialTick, camera, breakProgress);
         BlockState state = be.getBlockState();
+        st.rotor = KineticGeneratorBlock.Rotor.NONE;
         if (!(state.getBlock() instanceof KineticGeneratorBlock) || be.getLevel() == null) return;
-        KineticGeneratorBlock.Rotor rotor = state.getValue(KineticGeneratorBlock.ROTOR);
-        if (rotor == KineticGeneratorBlock.Rotor.NONE) return;
-
-        Direction facing = state.getValue(KineticGeneratorBlock.FACING);
-        boolean windmill = rotor == KineticGeneratorBlock.Rotor.WINDMILL;
-        float speed = windmill ? 2.0f : 3.5f;                      // stopnie na tick
-        float angle = state.getValue(KineticGeneratorBlock.RUNNING)
+        st.rotor = state.getValue(KineticGeneratorBlock.ROTOR);
+        if (st.rotor == KineticGeneratorBlock.Rotor.NONE) return;
+        st.facing = state.getValue(KineticGeneratorBlock.FACING);
+        float speed = st.rotor == KineticGeneratorBlock.Rotor.WINDMILL ? 2.0f : 3.5f;   // stopnie na tick
+        st.angle = state.getValue(KineticGeneratorBlock.RUNNING)
                 ? ((be.getLevel().getGameTime() % 3600) + partialTick) * speed : 0f;
-        int frontLight = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(facing));
+        st.frontLight = LevelRenderer.getLightCoords(be.getLevel(), be.getBlockPos().relative(st.facing));
+    }
 
+    @Override
+    public void submit(State st, PoseStack pose, SubmitNodeCollector collector, CameraRenderState camera) {
+        if (st.rotor == KineticGeneratorBlock.Rotor.NONE) return;
+        boolean windmill = st.rotor == KineticGeneratorBlock.Rotor.WINDMILL;
         pose.pushPose();
         pose.translate(0.5, 0.5, 0.5);
-        pose.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));   // lokalne +Z = przód generatora
-        pose.translate(0, 0, 0.5);                                 // płaszczyzna przedniej ściany
-        pose.scale(1 / 16f, 1 / 16f, 1 / 16f);                     // dalej wszystko w pikselach
+        pose.mulPose(Axis.YP.rotationDegrees(-st.facing.toYRot()));   // lokalne +Z = przód generatora
+        pose.translate(0, 0, 0.5);                                    // płaszczyzna przedniej ściany
+        pose.scale(1 / 16f, 1 / 16f, 1 / 16f);                        // dalej wszystko w pikselach
         // Wiatrak obraca się w prawo (patrząc od przodu), koło wodne - z nurtem
-        pose.mulPose(Axis.ZP.rotationDegrees(windmill ? -angle : angle));
-
-        Parts p = new Parts(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(InventoryMenu.BLOCK_ATLAS)), frontLight, overlay);
-        if (windmill) windmill(p);
-        else waterWheel(p);
+        pose.mulPose(Axis.ZP.rotationDegrees(windmill ? -st.angle : st.angle));
+        int light = st.frontLight;
+        collector.submitCustomGeometry(pose, RenderTypes.entityCutout(TextureAtlas.LOCATION_BLOCKS), (last, vc) -> {
+            PoseStack ps = new PoseStack();
+            ps.last().set(last);
+            Parts p = new Parts(ps, vc, light, OverlayTexture.NO_OVERLAY);
+            if (windmill) windmill(p);
+            else waterWheel(p);
+        });
         pose.popPose();
     }
 
@@ -116,8 +145,8 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity> 
         }
     }
 
-    private static TextureAtlasSprite sprite(ResourceLocation id) {
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(id);
+    private static TextureAtlasSprite sprite(Identifier id) {
+        return Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS).getSprite(id);
     }
 
     // ------------------------------------------------------------------ prostopadłościany
@@ -169,7 +198,7 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity> 
     }
 
     @Override
-    public boolean shouldRenderOffScreen(GeneratorBlockEntity be) {
+    public boolean shouldRenderOffScreen() {
         return true;
     }
 

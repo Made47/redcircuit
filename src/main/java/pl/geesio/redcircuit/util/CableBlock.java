@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.util;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -69,7 +72,7 @@ public abstract class CableBlock extends Block {
     }
 
     /** Czy ten blok łączy się z sąsiadem w kierunku {@code dir}. */
-    protected abstract boolean canConnectTo(LevelAccessor level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor);
+    protected abstract boolean canConnectTo(LevelReader level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor);
 
     public BlockState computeConnections(LevelAccessor level, BlockPos pos, BlockState state) {
         for (Direction dir : Direction.values()) {
@@ -85,7 +88,7 @@ public abstract class CableBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbor, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor, RandomSource random) {
         return state.setValue(PROPS.get(dir), canConnectTo(level, pos, state, dir, neighborPos, neighbor));
     }
 

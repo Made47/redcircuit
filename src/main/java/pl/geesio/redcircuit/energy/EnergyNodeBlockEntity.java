@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -9,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import pl.geesio.redcircuit.wire.FaceWireBlock;
 
 /**
@@ -32,7 +34,7 @@ public abstract class EnergyNodeBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         be.distribute(level, pos);
     }
 
@@ -45,7 +47,7 @@ public abstract class EnergyNodeBlockEntity extends BlockEntity {
             if (nbe instanceof EnergyNodeBlockEntity other) {
                 equalize(other);
             } else if (nbe != null) {
-                IEnergyStorage dst = level.getCapability(Capabilities.EnergyStorage.BLOCK, np, d.getOpposite());
+                IEnergyStorage dst = IEnergyStorage.wrap(level.getCapability(Capabilities.Energy.BLOCK, np, d.getOpposite()));
                 if (dst != null && dst.canReceive()) {
                     int sent = dst.receiveEnergy(Math.min(energy.getEnergyStored(), rate), false);
                     if (sent > 0) energy.setEnergy(energy.getEnergyStored() - sent);
@@ -82,14 +84,14 @@ public abstract class EnergyNodeBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

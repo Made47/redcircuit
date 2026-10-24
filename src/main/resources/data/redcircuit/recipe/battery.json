@@ -7,15 +7,9 @@
     "TNT"
   ],
   "key": {
-    "C": {
-      "tag": "c:ingots/copper"
-    },
-    "T": {
-      "tag": "c:ingots/tin"
-    },
-    "N": {
-      "tag": "c:dusts/azurite"
-    }
+    "C": "#c:ingots/copper",
+    "T": "#c:ingots/tin",
+    "N": "#c:dusts/azurite"
   },
   "result": {
     "id": "redcircuit:battery",

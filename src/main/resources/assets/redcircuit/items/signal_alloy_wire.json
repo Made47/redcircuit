@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "redcircuit:item/signal_alloy_wire"
+  }
+}

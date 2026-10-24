@@ -1,6 +1,6 @@
 package pl.geesio.redcircuit.client;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +18,8 @@ public class FuelGeneratorScreen extends AbstractContainerScreen<FuelGeneratorMe
     }
 
     @Override
-    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = leftPos, y = topPos;
         g.fill(x, y, x + imageWidth, y + imageHeight, 0xFF000000);
         g.fill(x + 1, y + 1, x + imageWidth - 1, y + imageHeight - 1, LIGHT);
@@ -48,7 +49,7 @@ public class FuelGeneratorScreen extends AbstractContainerScreen<FuelGeneratorMe
     }
 
     /** Prosty płomień z prostokątów (szerszy u dołu, węższy u góry). */
-    private static void drawFlame(GuiGraphics g, int x, int y, int size, int color) {
+    private static void drawFlame(GuiGraphicsExtractor g, int x, int y, int size, int color) {
         for (int row = 0; row < size; row++) {
             float t = row / (float) (size - 1);              // 0 = góra, 1 = dół
             int half = Math.max(1, Math.round((size / 2f) * (0.25f + 0.75f * (float) Math.sin(t * Math.PI * 0.62))));
@@ -58,18 +59,17 @@ public class FuelGeneratorScreen extends AbstractContainerScreen<FuelGeneratorMe
     }
 
     @Override
-    protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        super.renderLabels(g, mouseX, mouseY);
-        g.drawString(font, Component.translatable("gui.redcircuit.generating", menu.getRate()), 8, 22, 0xFF404040, false);
+    protected void extractLabels(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+        super.extractLabels(g, mouseX, mouseY);
+        g.text(font, Component.translatable("gui.redcircuit.generating", menu.getRate()), 8, 22, 0xFF404040, false);
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
-        renderTooltip(g, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
         int rx = mouseX - leftPos, ry = mouseY - topPos;
         if (rx >= BAR_X && rx < BAR_X + BAR_W && ry >= BAR_Y && ry < BAR_Y + BAR_H) {
-            g.renderTooltip(font, Component.translatable("message.redcircuit.energy", menu.getEnergy(), menu.getMaxEnergy()), mouseX, mouseY);
+            g.setTooltipForNextFrame(font, Component.translatable("message.redcircuit.energy", menu.getEnergy(), menu.getMaxEnergy()), mouseX, mouseY);
         }
     }
 }

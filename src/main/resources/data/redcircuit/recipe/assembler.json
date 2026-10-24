@@ -7,21 +7,11 @@
     "IBI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "C": {
-      "tag": "c:chests/wooden"
-    },
-    "M": {
-      "item": "redcircuit:signal_machine_casing"
-    },
-    "B": {
-      "item": "redcircuit:bundled_cable"
-    }
+    "I": "#c:ingots/iron",
+    "P": "minecraft:piston",
+    "C": "#c:chests/wooden",
+    "M": "redcircuit:signal_machine_casing",
+    "B": "redcircuit:bundled_cable"
   },
   "result": {
     "id": "redcircuit:assembler",

@@ -10,9 +10,9 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.energy.BatteryHelper;
 import pl.geesio.redcircuit.registry.ModMenus;
@@ -56,7 +56,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             addSlot(new SlotItemHandler(items, AlloyFurnaceBlockEntity.FUEL, FUEL_X, FUEL_Y) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.getBurnTime(RecipeType.SMELTING) > 0;
+                    return stack.getBurnTime(RecipeType.SMELTING, inventory.player.level().fuelValues()) > 0;
                 }
             });
         } else {
@@ -111,7 +111,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             if (!moveItemStackTo(stack, invStart, invEnd, true)) return ItemStack.EMPTY;
         } else {
             boolean moved = false;
-            if (electric ? BatteryHelper.isBattery(stack) : stack.getBurnTime(RecipeType.SMELTING) > 0) {
+            if (electric ? BatteryHelper.isBattery(stack) : stack.getBurnTime(RecipeType.SMELTING, player.level().fuelValues()) > 0) {
                 moved = moveItemStackTo(stack, 10, 11, false);
             }
             if (!moved && !moveItemStackTo(stack, 0, 9, false)) return ItemStack.EMPTY;

@@ -7,15 +7,9 @@
     "ITI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "T": {
-      "tag": "c:ingots/tin"
-    },
-    "C": {
-      "item": "redcircuit:signal_circuit"
-    }
+    "I": "#c:ingots/iron",
+    "T": "#c:ingots/tin",
+    "C": "redcircuit:signal_circuit"
   },
   "result": {
     "id": "redcircuit:signal_machine_casing",

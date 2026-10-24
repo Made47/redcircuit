@@ -1,9 +1,7 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "ingredient": {
-    "item": "redcircuit:silver_dust"
-  },
+  "ingredient": "redcircuit:silver_dust",
   "result": {
     "id": "redcircuit:silver_ingot"
   },

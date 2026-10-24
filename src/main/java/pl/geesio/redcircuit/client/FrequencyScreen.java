@@ -1,7 +1,8 @@
 package pl.geesio.redcircuit.client;
 
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -69,23 +70,23 @@ public class FrequencyScreen extends Screen {
         }
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> {
             read();
-            PacketDistributor.sendToServer(new FrequencyPayload(target, pos, frequency));
+            ClientPacketDistributor.sendToServer(new FrequencyPayload(target, pos, frequency));
             onClose();
         }).bounds(x + W - 108, y + H - 26, 100, 18).build());
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
         int x = (width - W) / 2, y = (height - H) / 2;
-        g.drawCenteredString(font, title, width / 2, y + 10, 0xFFFFFF);
-        g.drawString(font, Component.translatable("screen.redcircuit.frequency"), x + 10, y + 35, 0xE0E0E0);
-        g.drawString(font, "1-" + WirelessNetwork.MAX_FREQ, x + 160, y + 35, 0xA0A0A0);
+        g.centeredText(font, title, width / 2, y + 10, 0xFFFFFFFF);
+        g.text(font, Component.translatable("screen.redcircuit.frequency"), x + 10, y + 35, 0xFFE0E0E0);
+        g.text(font, "1-" + WirelessNetwork.MAX_FREQ, x + 160, y + 35, 0xFFA0A0A0);
     }
 
     @Override
-    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(g, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = (width - W) / 2, y = (height - H) / 2;
         g.fill(x - 1, y - 1, x + W + 1, y + H + 1, 0xFF000000);
         g.fill(x, y, x + W, y + H, 0xFF3A3A40);

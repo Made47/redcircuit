@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.tube;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -14,10 +18,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemHandlerHelper;
 
 /**
  * Extractor: na impuls redstone wyciąga stos przedmiotów z inwentarza za sobą
@@ -25,7 +28,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
  * Stawia się go, klikając na inwentarz, z którego ma pobierać.
  */
 public class ExtractorBlock extends Block implements TubeConnectable {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public ExtractorBlock(Properties properties) {
@@ -60,8 +63,8 @@ public class ExtractorBlock extends Block implements TubeConnectable {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean powered = level.hasNeighborSignal(pos);
         if (powered != state.getValue(POWERED)) {
             level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
@@ -89,7 +92,7 @@ public class ExtractorBlock extends Block implements TubeConnectable {
     protected void transfer(Level level, BlockPos pos, BlockState state) {
         Direction facing = state.getValue(FACING);
         BlockPos source = pos.relative(facing.getOpposite());
-        IItemHandler src = level.getCapability(Capabilities.ItemHandler.BLOCK, source, facing);
+        IItemHandler src = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, source, facing));
         if (src == null) return;
 
         for (int slot = 0; slot < src.getSlots(); slot++) {
@@ -110,7 +113,7 @@ public class ExtractorBlock extends Block implements TubeConnectable {
         if (level.getBlockEntity(front) instanceof TubeBlockEntity tube) {
             return tube.canAccept(color) ? stack.getCount() : 0;
         }
-        IItemHandler dst = level.getCapability(Capabilities.ItemHandler.BLOCK, front, facing.getOpposite());
+        IItemHandler dst = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, front, facing.getOpposite()));
         if (dst != null) {
             return stack.getCount() - ItemHandlerHelper.insertItem(dst, stack.copy(), true).getCount();
         }
@@ -126,7 +129,7 @@ public class ExtractorBlock extends Block implements TubeConnectable {
             tube.insert(stack, facing.getOpposite(), color);
             return;
         }
-        IItemHandler dst = level.getCapability(Capabilities.ItemHandler.BLOCK, front, facing.getOpposite());
+        IItemHandler dst = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, front, facing.getOpposite()));
         if (dst != null) {
             stack = ItemHandlerHelper.insertItem(dst, stack, false);
             if (stack.isEmpty()) return;

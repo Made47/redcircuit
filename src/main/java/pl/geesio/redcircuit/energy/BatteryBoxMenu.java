@@ -8,9 +8,9 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModMenus;
 

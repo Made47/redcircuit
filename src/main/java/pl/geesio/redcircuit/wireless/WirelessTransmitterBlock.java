@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.wireless;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -12,7 +15,7 @@ public class WirelessTransmitterBlock extends WirelessBlock {
     }
 
     private void update(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide || level.getServer() == null) return;
+        if (level.isClientSide() || level.getServer() == null) return;
         boolean powered = level.hasNeighborSignal(pos);
         if (powered != state.getValue(POWERED)) {
             level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
@@ -25,7 +28,7 @@ public class WirelessTransmitterBlock extends WirelessBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         if (!state.canSurvive(level, pos)) {
             dropResources(state, level, pos);
             level.removeBlock(pos, false);
@@ -40,11 +43,11 @@ public class WirelessTransmitterBlock extends WirelessBlock {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!level.isClientSide && level.getServer() != null && !state.is(newState.getBlock())) {
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        if (level.getServer() != null) {
             WirelessNetwork.get(level.getServer()).removeTransmitter(level, pos);
         }
-        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override

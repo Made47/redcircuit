@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.neoforged.neoforge.items.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.tube.ExtractorBlock;
 
@@ -40,7 +41,7 @@ public class ItemDetectorBlock extends ExtractorBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         // Nie reaguje na sygnał - sam go wysyła.
     }
 

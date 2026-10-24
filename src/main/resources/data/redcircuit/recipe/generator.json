@@ -7,18 +7,10 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "G": {
-      "tag": "c:gears/iron"
-    },
-    "M": {
-      "item": "redcircuit:power_machine_casing"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "G": "#c:gears/iron",
+    "M": "redcircuit:power_machine_casing",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:generator",

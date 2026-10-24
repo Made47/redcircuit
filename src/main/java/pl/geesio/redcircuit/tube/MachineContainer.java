@@ -1,8 +1,8 @@
 package pl.geesio.redcircuit.tube;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
@@ -30,15 +30,15 @@ public class MachineContainer extends SimpleContainer {
         return Container.stillValidBlockEntity(owner, player);
     }
 
-    public void save(CompoundTag tag, HolderLookup.Provider registries) {
+    public void save(ValueOutput output) {
         NonNullList<ItemStack> list = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         for (int i = 0; i < getContainerSize(); i++) list.set(i, getItem(i));
-        ContainerHelper.saveAllItems(tag, list, registries);
+        ContainerHelper.saveAllItems(output, list);
     }
 
-    public void load(CompoundTag tag, HolderLookup.Provider registries) {
+    public void load(ValueInput input) {
         NonNullList<ItemStack> list = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, list, registries);
+        ContainerHelper.loadAllItems(input, list);
         for (int i = 0; i < getContainerSize(); i++) super.setItem(i, list.get(i));
     }
 }

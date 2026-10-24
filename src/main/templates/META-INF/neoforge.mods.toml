@@ -81,17 +81,11 @@ Redstone wires without signal loss, logic gates, pneumatic tubes with sorting an
 [[dependencies.${mod_id}]]
     modId="jade"
     type="optional"
-    versionRange="[15,)"
+    versionRange="[26,)"
     ordering="NONE"
     side="BOTH"
 
 # CB Multipart - opcjonalnie: przewody mogą dzielić blok z mikroblokami
-[[dependencies.${mod_id}]]
-    modId="cb_multipart"
-    type="optional"
-    versionRange="[3.5,)"
-    ordering="AFTER"
-    side="BOTH"
 
 # Here's another dependency
 [[dependencies.${mod_id}]]

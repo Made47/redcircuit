@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.energy;
 
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -22,6 +23,6 @@ public final class EnergyConnect {
         BlockEntity be = level.getBlockEntity(np);
         if (lvl == null && be != null) lvl = be.getLevel();
         if (lvl == null) return false;
-        return lvl.getCapability(Capabilities.EnergyStorage.BLOCK, np, ns, be, side) != null;
+        return IEnergyStorage.wrap(lvl.getCapability(Capabilities.Energy.BLOCK, np, ns, be, side)) != null;
     }
 }

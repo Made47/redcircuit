@@ -7,18 +7,10 @@
     "SWS"
   ],
   "key": {
-    "S": {
-      "tag": "c:cobblestones/normal"
-    },
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "K": {
-      "item": "minecraft:iron_pickaxe"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "S": "#c:cobblestones/normal",
+    "P": "minecraft:piston",
+    "K": "minecraft:iron_pickaxe",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:block_breaker",

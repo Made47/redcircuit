@@ -7,15 +7,9 @@
     "WSW"
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:wool"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    },
-    "G": {
-      "tag": "c:gears/iron"
-    }
+    "W": "#minecraft:wool",
+    "S": "#c:rods/wooden",
+    "G": "#c:gears/iron"
   },
   "result": {
     "id": "redcircuit:windmill",

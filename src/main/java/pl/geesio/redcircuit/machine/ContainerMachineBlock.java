@@ -53,7 +53,7 @@ public abstract class ContainerMachineBlock extends ExtractorBlock implements En
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> t) {
-        if (level.isClientSide || !ticks()) return null;
+        if (level.isClientSide() || !ticks()) return null;
         return TickerUtil.create(t, type.get(), (l, p, s, be) -> serverTick(l, p, s, be));
     }
 
@@ -67,20 +67,13 @@ public abstract class ContainerMachineBlock extends ExtractorBlock implements En
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
             MenuType<?> menu = rows == 2 ? MenuType.GENERIC_9x2 : MenuType.GENERIC_9x1;
             player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> new ChestMenu(menu, id, inv, be.items, rows),
                     Component.translatable(title)));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
-            Containers.dropContents(level, pos, be.items);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

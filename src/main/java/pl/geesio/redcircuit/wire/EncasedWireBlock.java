@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.wire;
 
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -22,12 +24,12 @@ public abstract class EncasedWireBlock extends CableBlock {
     public abstract int wireType();
 
     /** Połączenie z urządzeniem niebędącym przewodem. */
-    protected boolean connectsToDevice(LevelAccessor level, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor) {
+    protected boolean connectsToDevice(LevelReader level, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor) {
         return false;
     }
 
     @Override
-    protected boolean canConnectTo(LevelAccessor level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
+    protected boolean canConnectTo(LevelReader level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
         Block b = neighbor.getBlock();
         Integer t = WireTypes.typeOf(b);
         if (t != null) {
@@ -60,12 +62,12 @@ public abstract class EncasedWireBlock extends CableBlock {
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-        if (!level.isClientSide && !oldState.is(this)) onNetworkChanged(level, pos);
+        if (!level.isClientSide() && !oldState.is(this)) onNetworkChanged(level, pos);
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!level.isClientSide && !state.is(newState.getBlock())) onNetworkRemoved(level, pos);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        onNetworkRemoved(level, pos);
     }
 }

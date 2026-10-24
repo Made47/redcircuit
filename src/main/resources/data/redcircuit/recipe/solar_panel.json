@@ -7,18 +7,10 @@
     "SSS"
   ],
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "L": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "B": {
-      "tag": "c:ingots/power_alloy"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone_slab"
-    }
+    "G": "#c:glass_blocks",
+    "L": "minecraft:lapis_lazuli",
+    "B": "#c:ingots/power_alloy",
+    "S": "minecraft:smooth_stone_slab"
   },
   "result": {
     "id": "redcircuit:solar_panel",

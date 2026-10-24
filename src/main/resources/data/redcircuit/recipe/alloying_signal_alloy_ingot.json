@@ -2,10 +2,10 @@
   "type": "redcircuit:alloying",
   "ingredients": [
     {
-      "tag": "c:ingots/copper"
+      "ingredient": "#c:ingots/copper"
     },
     {
-      "tag": "c:dusts/redstone",
+      "ingredient": "#c:dusts/redstone",
       "count": 4
     }
   ],

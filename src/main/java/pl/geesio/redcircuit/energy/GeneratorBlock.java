@@ -35,7 +35,7 @@ public class GeneratorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
+        if (level.isClientSide()) return null;
         return TickerUtil.create(type,
                 kind == GeneratorBlockEntity.Kind.THERMOPILE ? ModBlockEntities.THERMOPILE.get() : ModBlockEntities.KINETIC_GENERATOR.get(),
                 GeneratorBlockEntity::tick);
@@ -43,10 +43,10 @@ public class GeneratorBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof GeneratorBlockEntity be) {
-            player.displayClientMessage(Component.translatable("message.redcircuit.solar",
-                    be.getLastRate(), be.getEnergy().getEnergyStored()), true);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof GeneratorBlockEntity be) {
+            player.sendOverlayMessage(Component.translatable("message.redcircuit.solar",
+                    be.getLastRate(), be.getEnergy().getEnergyStored()));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

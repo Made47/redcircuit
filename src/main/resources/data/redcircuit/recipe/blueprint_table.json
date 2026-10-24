@@ -7,18 +7,10 @@
     "PCP"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:smooth_stone"
-    },
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "T": {
-      "item": "minecraft:crafting_table"
-    },
-    "C": {
-      "tag": "c:chests/wooden"
-    }
+    "S": "minecraft:smooth_stone",
+    "P": "#minecraft:planks",
+    "T": "minecraft:crafting_table",
+    "C": "#c:chests/wooden"
   },
   "result": {
     "id": "redcircuit:blueprint_table",

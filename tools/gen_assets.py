@@ -3682,4 +3682,6 @@ if __name__ == "__main__":
     from gen_advancements import gen_advancements
     gen_advancements(ROOT, write_json)
     gen_tag_names()
+    from mc26_format import convert
+    convert(RES, MODID)
     print("OK - zasoby wygenerowane w", os.path.abspath(RES))

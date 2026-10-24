@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:sawing",
-  "ingredient": {
-    "tag": "minecraft:dark_oak_logs"
-  },
+  "ingredient": "#minecraft:dark_oak_logs",
   "result": {
     "id": "minecraft:dark_oak_planks",
     "count": 6

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "redcircuit:item/power_alloy_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": 5931775
+      }
+    ]
+  }
+}

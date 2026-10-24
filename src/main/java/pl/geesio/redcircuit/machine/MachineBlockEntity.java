@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -7,8 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.tube.MachineContainer;
 import pl.geesio.redcircuit.tube.ExtractorBlock;
@@ -38,24 +41,31 @@ public class MachineBlockEntity extends BlockEntity {
         if (side != null && state.hasProperty(ExtractorBlock.FACING) && side == state.getValue(ExtractorBlock.FACING)) {
             return null;
         }
-        return new InvWrapper(items);
+        return ItemHandlers.of(items);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        items.save(tag, registries);
-        tag.putInt("Timer", timer);
-        tag.putInt("Next", next);
-        tag.putInt("Channels", lastChannels);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output);
+        output.putInt("Timer", timer);
+        output.putInt("Next", next);
+        output.putInt("Channels", lastChannels);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        items.load(tag, registries);
-        timer = tag.getInt("Timer");
-        next = tag.getInt("Next");
-        lastChannels = tag.getInt("Channels");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        items.load(input);
+        timer = input.getIntOr("Timer", 0);
+        next = input.getIntOr("Next", 0);
+        lastChannels = input.getIntOr("Channels", 0);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+        Containers.dropContents(level, pos, this.items);
     }
 }

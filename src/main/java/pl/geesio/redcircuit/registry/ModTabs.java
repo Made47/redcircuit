@@ -3,7 +3,7 @@ package pl.geesio.redcircuit.registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -51,7 +51,7 @@ public final class ModTabs {
             else b.withTabsBefore(CreativeModeTabs.SPAWN_EGGS);
             return b
                 .title(Component.translatable(title))
-                .icon(() -> new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, icon))))
+                .icon(() -> new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath(RedCircuit.MODID, icon))))
                 .displayItems((params, output) -> ModItems.ITEMS.getEntries().forEach(h -> {
                     Item item = h.get();
                     if (categoryOf(h.getId().getPath()) != category) return;

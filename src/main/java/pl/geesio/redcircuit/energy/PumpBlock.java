@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -28,7 +28,7 @@ import pl.geesio.redcircuit.util.TickerUtil;
  * PPM pokazuje zawartość zbiornika i energię.
  */
 public class PumpBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     public PumpBlock(Properties properties) {
         super(properties);
@@ -63,17 +63,17 @@ public class PumpBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.PUMP.get(), PumpBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.PUMP.get(), PumpBlockEntity::tick);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof PumpBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof PumpBlockEntity be) {
             var fluid = be.getTank().getFluid();
             Component name = fluid.isEmpty() ? Component.translatable("message.redcircuit.pump_empty") : fluid.getHoverName();
-            player.displayClientMessage(Component.translatable("message.redcircuit.pump", name,
-                    be.getTank().getFluidAmount(), PumpBlockEntity.CAPACITY, be.getEnergy().getEnergyStored()), true);
+            player.sendOverlayMessage(Component.translatable("message.redcircuit.pump", name,
+                    be.getTank().getFluidAmount(), PumpBlockEntity.CAPACITY, be.getEnergy().getEnergyStored()));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

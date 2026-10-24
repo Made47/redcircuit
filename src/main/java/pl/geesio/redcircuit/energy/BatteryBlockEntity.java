@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,8 +16,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
 
@@ -71,7 +74,7 @@ public class BatteryBlockEntity extends EnergyNodeBlockEntity implements MenuPro
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BatteryBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         BatteryHelper.charge(be.items.getStackInSlot(CHARGE), be.energy, ITEM_RATE);
         BatteryHelper.discharge(be.items.getStackInSlot(DISCHARGE), be.energy, ITEM_RATE);
         EnergyNodeBlockEntity.tick(level, pos, state, be);
@@ -130,14 +133,23 @@ public class BatteryBlockEntity extends EnergyNodeBlockEntity implements MenuPro
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains("Items")) BatteryHelper.loadItems(items, registries, tag.getCompound("Items"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.child("Items").isPresent()) items.load(input.childOrEmpty("Items"));
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            for (int i = 0; i < this.getItems().getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.getItems().getStackInSlot(i));
+            }
     }
 }

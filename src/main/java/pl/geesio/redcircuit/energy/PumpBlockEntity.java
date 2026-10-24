@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,8 +15,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import pl.geesio.redcircuit.util.transfer.IFluidHandler;
+import pl.geesio.redcircuit.util.transfer.FluidTank;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
 
@@ -54,7 +56,7 @@ public class PumpBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PumpBlockEntity be) {
-        if (level.isClientSide || level.getGameTime() % INTERVAL != 0) return;
+        if (level.isClientSide() || level.getGameTime() % INTERVAL != 0) return;
         if (level.hasNeighborSignal(pos)) return;              // redstone = stop
         Direction facing = state.getValue(PumpBlock.FACING);
         be.intake(level, pos.relative(facing.getOpposite()), facing);
@@ -66,7 +68,7 @@ public class PumpBlockEntity extends BlockEntity {
     private void intake(Level level, BlockPos back, Direction facing) {
         if (tank.getSpace() < 1000 || energy.getEnergyStored() < pl.geesio.redcircuit.config.RedCircuitConfig.PUMP_FE_PER_BUCKET.get() || !level.isLoaded(back)) return;
 
-        IFluidHandler src = level.getCapability(Capabilities.FluidHandler.BLOCK, back, facing);
+        IFluidHandler src = IFluidHandler.wrap(level.getCapability(Capabilities.Fluid.BLOCK, back, facing));
         if (src != null) {
             FluidStack sim = src.drain(Math.min(1000, tank.getSpace()), IFluidHandler.FluidAction.SIMULATE);
             if (sim.isEmpty()) return;
@@ -118,7 +120,7 @@ public class PumpBlockEntity extends BlockEntity {
 
     private void output(Level level, BlockPos front, Direction facing) {
         if (tank.isEmpty() || !level.isLoaded(front)) return;
-        IFluidHandler dst = level.getCapability(Capabilities.FluidHandler.BLOCK, front, facing.getOpposite());
+        IFluidHandler dst = IFluidHandler.wrap(level.getCapability(Capabilities.Fluid.BLOCK, front, facing.getOpposite()));
         if (dst != null) {
             FluidStack sim = tank.drain(1000, IFluidHandler.FluidAction.SIMULATE);
             int accepted = dst.fill(sim, IFluidHandler.FluidAction.EXECUTE);
@@ -140,16 +142,16 @@ public class PumpBlockEntity extends BlockEntity {
     // ------------------------------------------------------------------ zapis
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        tank.save(output.child("Tank"));
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        tank.readFromNBT(registries, tag.getCompound("Tank"));
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        tank.load(input.childOrEmpty("Tank"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

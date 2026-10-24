@@ -1,14 +1,8 @@
 {
   "type": "minecraft:smithing_transform",
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  },
-  "base": {
-    "item": "redcircuit:diamond_handsaw"
-  },
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": "redcircuit:diamond_handsaw",
+  "addition": "minecraft:netherite_ingot",
   "result": {
     "id": "redcircuit:netherite_handsaw",
     "count": 1

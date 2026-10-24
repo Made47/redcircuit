@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.craft;
 
+import pl.geesio.redcircuit.util.Recipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,9 +14,9 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModItems;
 import pl.geesio.redcircuit.registry.ModMenus;
@@ -95,19 +96,19 @@ public class BlueprintTableMenu extends AbstractContainerMenu {
     }
 
     private Optional<RecipeHolder<CraftingRecipe>> findRecipe(Level level, CraftingInput input) {
-        return level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, input, level);
+        return Recipes.find(level, RecipeType.CRAFTING, input);
     }
 
     /** Przelicza wynik (tylko na serwerze; slot wyniku synchronizuje się sam). */
     private void updateResult(boolean force) {
         Level level = player.level();
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         List<ItemStack> now = gridItems();
         if (!force && sameItems(now, lastGrid)) return;
         lastGrid = now;
         CraftingInput input = CraftingInput.of(3, 3, now);
         ItemStack out = findRecipe(level, input)
-                .map(r -> r.value().assemble(input, level.registryAccess()))
+                .map(r -> r.value().assemble(input))
                 .orElse(ItemStack.EMPTY);
         result.setItem(0, out);
     }
@@ -173,8 +174,8 @@ public class BlueprintTableMenu extends AbstractContainerMenu {
 
         @Override
         public void onTake(Player p, ItemStack stack) {
-            stack.onCraftedBy(p.level(), p, stack.getCount());
-            if (!p.level().isClientSide) {
+            stack.onCraftedBy(p, stack.getCount());
+            if (!p.level().isClientSide()) {
                 consumeIngredients();
                 updateResult(true);
             }
@@ -186,7 +187,7 @@ public class BlueprintTableMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player p, int id) {
-        if (id != BUTTON_PLAN || p.level().isClientSide) return id == BUTTON_PLAN;
+        if (id != BUTTON_PLAN || p.level().isClientSide()) return id == BUTTON_PLAN;
         ItemStack planStack = plan.getStackInSlot(0);
         if (planStack.is(ModItems.BLANK_PLAN.get())) {
             ItemStack out = result.getItem(0);

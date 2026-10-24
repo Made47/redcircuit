@@ -1,13 +1,14 @@
 package pl.geesio.redcircuit.tube;
 
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.util.CableBlock;
 
@@ -95,7 +96,7 @@ public final class TubeRouter {
         } else if (ns.getBlock() instanceof TargetOnly) {
             return false;   // Requester/Manager przyjmują tylko przedmioty, które same zamówiły
         }
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, np, dir.getOpposite());
+        IItemHandler handler = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, np, dir.getOpposite()));
         if (handler == null) return false;
         ItemStack rest = ItemHandlerHelper.insertItem(handler, item.stack.copy(), true);
         return rest.getCount() < item.stack.getCount();

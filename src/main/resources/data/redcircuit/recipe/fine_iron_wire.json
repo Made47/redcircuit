@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "tag": "c:ingots/iron"
-    },
-    {
-      "item": "redcircuit:wire_cutters"
-    }
+    "#c:ingots/iron",
+    "redcircuit:wire_cutters"
   ],
   "result": {
     "id": "redcircuit:fine_iron_wire",

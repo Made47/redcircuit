@@ -1,4 +1,4 @@
-# RedCircuit (NeoForge 1.21.1)
+# RedCircuit (NeoForge 26.1.2)
 
 *[Polska wersja: README.pl.md](README.pl.md)*
 
@@ -9,16 +9,22 @@ Includes redstone cables, logic gates, sorting tubes and Azurity energy.
 > The source code, the texture-generating scripts, translations and this documentation were largely written by AI,
 > under the direction of the author, who designed, reviewed and play-tested the mod. Expect occasional bugs – reports are welcome.
 
+## Minecraft 26.1.2 notes
+- Requires **Java 25** (bundled with the Minecraft 26.1.2 launcher).
+- Items, energy and fluids use the new NeoForge transfer API (`ResourceHandler`, `EnergyHandler`) – compatible with other 26.x mods; machine inventories and tanks saved by the 1.21.1 version are read correctly.
+- **CB Multipart** has no release for Minecraft 26.x, so wires as multipart parts are not available in this version.
+- Recipes use the 1.21.2+ JSON format (`"key": {"A": "minecraft:iron_ingot"}`, tags as `"#c:ingots/tin"`; alloy furnace ingredients as `{"ingredient": "...", "count": n}`).
+
 ## Building the `.jar`
 
 ### Option A – on your own computer (Windows)
-1. Install **JDK 21**, e.g. Temurin: https://adoptium.net (tick “Set JAVA_HOME”).
+1. Install **JDK 25**, e.g. Temurin: https://adoptium.net (tick “Set JAVA_HOME”).
 2. Unpack the project, open a terminal (PowerShell) in its folder and run:
    ```
    .\gradlew.bat build
    ```
    The first build takes a few minutes because it downloads Minecraft and NeoForge.
-3. The finished file: `build\libs\redcircuit-0.1.0.jar` → put it into `mods/` (NeoForge 21.1.x for MC 1.21.1).
+3. The finished file: `build\libs\redcircuit-0.1.0.jar` → put it into `mods/` (NeoForge 26.1.2.122 or newer for MC 26.1.2).
 
 To test in game without installing: `.\gradlew.bat runClient`.
 
@@ -172,12 +178,7 @@ With **Jade** installed, the block tooltip additionally shows:
 Energy (FE), fluids and inventory contents are shown by Jade automatically. Each line can be disabled in the Jade settings (RedCircuit plugin). For compilation Gradle downloads Jade from the Modrinth repository (`compileOnly` only).
 
 ### CB Multipart integration (optional)
-When **CB Multipart** is installed (with CodeChickenLib, and e.g. CB Microblocks), face-mounted wires
-(signal alloy, insulated, bundled cable, power alloy) can be **parts of a multipart block**:
-- inserting a microblock (cover, panel) into a block with wires turns the wires into parts – the wire and the cover share one block,
-- a wire placed in a block with microblocks (e.g. next to a cover on a wall) becomes a part right away,
-- parts connect to block wires, encased wires and each other (straight, inner and outer corners) and work in the same signal/channel/energy network.
-Without CB Multipart the mod works exactly as before. For compilation Gradle downloads the API from `https://maven.covers1624.net/` (`compileOnly` only).
+**Not available for Minecraft 26.x** – CB Multipart has no 26.x release. The integration exists in the `neoforge-1.21.1` branch.
 
 ### Gates with memory and timing
 | Gate | Function |
@@ -278,7 +279,7 @@ Azurity is **Forge Energy (FE)**, so it also works with other mods' machines and
 Full list: `src/main/resources/data/redcircuit/recipe/`. The easiest way to browse them in game is JEI/EMI.
 
 ## JEI integration
-With **JEI (Just Enough Items)** for NeoForge 1.21.1 installed you get:
+With **JEI (Just Enough Items)** for NeoForge 26.1.2 installed you get:
 - a separate **Alloy Furnace** category with all alloy recipes (datapack ones too),
 - alloy furnaces, the electric furnace and the blueprint table as crafting stations,
 - descriptions (“Information” tab) for generators, rotors, tubes, the sorting machine, the blueprint table and saws.
@@ -293,7 +294,7 @@ python tools/gen_assets.py
 
 
 ## CC: Tweaked integration (optional)
-Works automatically when CC: Tweaked is installed (tested with API 1.120.x for 1.21.1).
+Works automatically when CC: Tweaked is installed (tested with CC: Tweaked 1.120.x for 26.1.2).
 - **Bundled cable ↔ computers and turtles**: the cable (normal, encased and as a CB Multipart part) visually connects to a computer. `redstone.setBundledOutput` powers cable channels, and `redstone.getBundledInput` reads the channels active in the network (channel = insulated wire colour, as in `colors`). Also works with the Redstone Relay.
 - **`redcircuit_gate` peripheral** (gates with settings): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (state cell: “counting” output on the left).
 - **`redcircuit_wireless` peripheral** (transmitter/receiver): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.

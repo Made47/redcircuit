@@ -1,6 +1,6 @@
 package pl.geesio.redcircuit.client;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,9 +14,7 @@ public class BlueprintTableScreen extends AbstractContainerScreen<BlueprintTable
     private static final int BG = 0xFFC6C6C6, LIGHT = 0xFFFFFFFF, DARK = 0xFF555555, SLOT = 0xFF8B8B8B;
 
     public BlueprintTableScreen(BlueprintTableMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title);
-        this.imageWidth = 176;
-        this.imageHeight = 222;
+        super(menu, inventory, title, 176, 222);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
@@ -34,7 +32,8 @@ public class BlueprintTableScreen extends AbstractContainerScreen<BlueprintTable
     }
 
     @Override
-    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = leftPos, y = topPos;
         // Panel z obramowaniem w stylu okien Minecrafta
         g.fill(x, y, x + imageWidth, y + imageHeight, 0xFF000000);
@@ -59,12 +58,11 @@ public class BlueprintTableScreen extends AbstractContainerScreen<BlueprintTable
             g.fill(ax + 16 + i, ay - 4 + i, ax + 17 + i, ay + 8 - i, DARK);
         }
         // Podpis magazynu
-        g.drawString(font, Component.translatable("gui.redcircuit.blueprint_table.storage"), x + 8, y + 79, 0xFF404040, false);
+        g.text(font, Component.translatable("gui.redcircuit.blueprint_table.storage"), x + 8, y + 79, 0xFF404040, false);
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
-        renderTooltip(g, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
     }
 }

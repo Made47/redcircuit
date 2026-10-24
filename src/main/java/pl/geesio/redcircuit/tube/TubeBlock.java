@@ -1,29 +1,57 @@
 package pl.geesio.redcircuit.tube;
 
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.component.DataComponents;
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.Containers;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.DyeItem;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.Level;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.core.component.DataComponents;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.minecraft.core.component.DataComponents;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.component.DataComponents;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
+import net.minecraft.core.component.DataComponents;
 import pl.geesio.redcircuit.util.CableBlock;
+import net.minecraft.core.component.DataComponents;
 import pl.geesio.redcircuit.util.TickerUtil;
 
 /**
@@ -58,7 +86,7 @@ public class TubeBlock extends CableBlock implements EntityBlock {
     }
 
     @Override
-    protected boolean canConnectTo(LevelAccessor level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
+    protected boolean canConnectTo(LevelReader level, BlockPos pos, BlockState self, Direction dir, BlockPos neighborPos, BlockState neighbor) {
         Block b = neighbor.getBlock();
         if (b instanceof TubeBlock) {
             int p1 = self.getValue(PAINT), p2 = neighbor.getValue(PAINT);
@@ -67,7 +95,7 @@ public class TubeBlock extends CableBlock implements EntityBlock {
         if (b instanceof TubeConnectable tc) return tc.connectsToTube(neighbor, dir);
         if (b instanceof CableBlock || b instanceof pl.geesio.redcircuit.wire.FaceWireBlock) return false;
         if (level instanceof Level lvl && !neighbor.isAir()) {
-            return lvl.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, dir.getOpposite()) != null;
+            return ItemHandlers.wrap(lvl.getCapability(Capabilities.Item.BLOCK, neighborPos, dir.getOpposite())) != null;
         }
         return false;
     }
@@ -84,21 +112,21 @@ public class TubeBlock extends CableBlock implements EntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (stack.getItem() instanceof DyeItem dye) {
-            int color = dye.getDyeColor().getId();
-            if (state.getValue(PAINT) == color) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            if (!level.isClientSide) repaint(level, pos, state, color);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (stack.getItem() instanceof DyeItem && stack.get(DataComponents.DYE) != null) {
+            int color = stack.get(DataComponents.DYE).getId();
+            if (state.getValue(PAINT) == color) return InteractionResult.TRY_WITH_EMPTY_HAND;
+            if (!level.isClientSide()) repaint(level, pos, state, color);
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isShiftKeyDown() && state.getValue(PAINT) != NO_PAINT) {
-            if (!level.isClientSide) repaint(level, pos, state, NO_PAINT);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            if (!level.isClientSide()) repaint(level, pos, state, NO_PAINT);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
@@ -106,16 +134,5 @@ public class TubeBlock extends CableBlock implements EntityBlock {
     public void repaint(Level level, BlockPos pos, BlockState state, int paint) {
         BlockState painted = computeConnections(level, pos, state.setValue(PAINT, paint));
         level.setBlock(pos, painted, Block.UPDATE_ALL);
-    }
-
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof TubeBlockEntity tube) {
-            for (TubeItem item : tube.getItems()) {
-                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, item.stack);
-            }
-            tube.getItems().clear();
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.client.jei;
 
+import pl.geesio.redcircuit.client.ClientRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -8,7 +9,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ItemLike;
@@ -28,10 +29,10 @@ import java.util.List;
  */
 @JeiPlugin
 public class RedCircuitJeiPlugin implements IModPlugin {
-    private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, "jei_plugin");
+    private static final Identifier UID = Identifier.fromNamespaceAndPath(RedCircuit.MODID, "jei_plugin");
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public Identifier getPluginUid() {
         return UID;
     }
 
@@ -44,16 +45,9 @@ public class RedCircuitJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        var level = Minecraft.getInstance().level;
-        if (level != null) {
-            List<AlloyRecipe> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipes.ALLOYING.get())
-                    .stream().map(RecipeHolder::value).toList();
-            registration.addRecipes(AlloyRecipeCategory.TYPE, recipes);
-            registration.addRecipes(MaceratingRecipeCategory.TYPE, level.getRecipeManager()
-                    .getAllRecipesFor(ModRecipes.MACERATING.get()).stream().map(RecipeHolder::value).toList());
-            registration.addRecipes(SawingRecipeCategory.TYPE, level.getRecipeManager()
-                    .getAllRecipesFor(ModRecipes.SAWING.get()).stream().map(RecipeHolder::value).toList());
-        }
+        registration.addRecipes(AlloyRecipeCategory.TYPE, ClientRecipes.all(ModRecipes.ALLOYING.get()));
+        registration.addRecipes(MaceratingRecipeCategory.TYPE, ClientRecipes.all(ModRecipes.MACERATING.get()));
+        registration.addRecipes(SawingRecipeCategory.TYPE, ClientRecipes.all(ModRecipes.SAWING.get()));
 
         info(registration, ModBlocks.THERMOPILE.get(), "thermopile");
         info(registration, ModBlocks.MACERATOR.get(), "macerator");
@@ -115,11 +109,11 @@ public class RedCircuitJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALLOY_FURNACE.get()), AlloyRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.POWER_ALLOY_FURNACE.get()), AlloyRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.MACERATOR.get()), MaceratingRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.SAWMILL.get()), SawingRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.BLUEPRINT_TABLE.get()), RecipeTypes.CRAFTING);
+        registration.addCraftingStation(AlloyRecipeCategory.TYPE, ModBlocks.ALLOY_FURNACE.get());
+        registration.addCraftingStation(AlloyRecipeCategory.TYPE, ModBlocks.POWER_ALLOY_FURNACE.get());
+        registration.addCraftingStation(RecipeTypes.SMELTING, ModBlocks.ELECTRIC_FURNACE.get());
+        registration.addCraftingStation(MaceratingRecipeCategory.TYPE, ModBlocks.MACERATOR.get());
+        registration.addCraftingStation(SawingRecipeCategory.TYPE, ModBlocks.SAWMILL.get());
+        registration.addCraftingStation(RecipeTypes.CRAFTING, ModBlocks.BLUEPRINT_TABLE.get());
     }
 }

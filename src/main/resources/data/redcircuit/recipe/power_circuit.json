@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "tag": "c:ingots/power_alloy"
-    },
-    "C": {
-      "item": "redcircuit:copper_coil"
-    },
-    "G": {
-      "tag": "c:gears/iron"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "B": "#c:ingots/power_alloy",
+    "C": "redcircuit:copper_coil",
+    "G": "#c:gears/iron",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:power_circuit",

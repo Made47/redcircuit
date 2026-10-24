@@ -2,11 +2,11 @@
   "type": "redcircuit:alloying",
   "ingredients": [
     {
-      "tag": "c:ingots/copper",
+      "ingredient": "#c:ingots/copper",
       "count": 3
     },
     {
-      "tag": "c:ingots/tin"
+      "ingredient": "#c:ingots/tin"
     }
   ],
   "result": {

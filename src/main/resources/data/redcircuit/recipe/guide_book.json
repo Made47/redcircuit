@@ -8,12 +8,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    }
+    "minecraft:book",
+    "#c:dusts/redstone"
   ],
   "result": {
     "id": "patchouli:guide_book",

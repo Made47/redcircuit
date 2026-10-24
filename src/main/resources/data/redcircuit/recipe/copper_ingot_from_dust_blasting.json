@@ -1,9 +1,7 @@
 {
   "type": "minecraft:blasting",
   "category": "misc",
-  "ingredient": {
-    "item": "redcircuit:copper_dust"
-  },
+  "ingredient": "redcircuit:copper_dust",
   "result": {
     "id": "minecraft:copper_ingot"
   },

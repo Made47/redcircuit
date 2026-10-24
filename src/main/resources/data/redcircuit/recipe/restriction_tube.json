@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:tube"
-    },
-    {
-      "tag": "c:ingots/iron"
-    }
+    "redcircuit:tube",
+    "#c:ingots/iron"
   ],
   "result": {
     "id": "redcircuit:restriction_tube",

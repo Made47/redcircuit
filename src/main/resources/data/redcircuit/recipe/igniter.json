@@ -7,18 +7,10 @@
     "IWI"
   ],
   "key": {
-    "N": {
-      "tag": "c:netherracks"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "F": {
-      "item": "minecraft:flint_and_steel"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "N": "#c:netherracks",
+    "I": "#c:ingots/iron",
+    "F": "minecraft:flint_and_steel",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:igniter",

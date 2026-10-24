@@ -1,13 +1,16 @@
 package pl.geesio.redcircuit.energy;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.neoforge.energy.ComponentEnergyStorage;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import pl.geesio.redcircuit.registry.ModDataComponents;
 
 import java.util.List;
@@ -24,8 +27,8 @@ public class BatteryItem extends Item {
         super(properties);
     }
 
-    public static IEnergyStorage storage(ItemStack stack) {
-        return new ComponentEnergyStorage(stack, ModDataComponents.ENERGY.get(), CAPACITY, RATE, RATE);
+    public static ItemAccessEnergyHandler storage(ItemAccess access) {
+        return new ItemAccessEnergyHandler(access, ModDataComponents.ENERGY.get(), CAPACITY, RATE, RATE);
     }
 
     public static int getEnergy(ItemStack stack) {
@@ -58,9 +61,9 @@ public class BatteryItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.redcircuit.battery", getEnergy(stack), CAPACITY)
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+        tooltip.accept(Component.translatable("tooltip.redcircuit.battery", getEnergy(stack), CAPACITY)
                 .withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("tooltip.redcircuit.battery_hint").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.redcircuit.battery_hint").withStyle(ChatFormatting.GRAY));
     }
 }

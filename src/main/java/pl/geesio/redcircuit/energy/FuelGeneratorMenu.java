@@ -8,9 +8,9 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModMenus;
 
@@ -32,7 +32,7 @@ public class FuelGeneratorMenu extends AbstractContainerMenu {
         addSlot(new SlotItemHandler(items, 0, SLOT_X, SLOT_Y) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return FuelGeneratorBlockEntity.isFuel(stack);
+                return FuelGeneratorBlockEntity.isFuel(stack, inventory.player.level());
             }
         });
         for (int row = 0; row < 3; row++) {
@@ -73,7 +73,7 @@ public class FuelGeneratorMenu extends AbstractContainerMenu {
         if (index == 0) {
             if (!moveItemStackTo(stack, 1, slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            if (!FuelGeneratorBlockEntity.isFuel(stack) || !moveItemStackTo(stack, 0, 1, false)) return ItemStack.EMPTY;
+            if (!FuelGeneratorBlockEntity.isFuel(stack, player.level()) || !moveItemStackTo(stack, 0, 1, false)) return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) slot.setByPlayer(ItemStack.EMPTY);
         else slot.setChanged();

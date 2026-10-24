@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:tin_block"
-    }
+    "redcircuit:tin_block"
   ],
   "result": {
     "id": "redcircuit:tin_ingot",

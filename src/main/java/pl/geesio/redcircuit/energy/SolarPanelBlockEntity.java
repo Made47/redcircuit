@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -8,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
 
 /** Panel słoneczny: produkuje energię w dzień pod gołym niebem. */
@@ -31,9 +33,9 @@ public class SolarPanelBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SolarPanelBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         int gen = 0;
-        if (level.isDay() && level.canSeeSky(pos.above())) {
+        if (level.isBrightOutside() && level.canSeeSky(pos.above())) {
             gen = level.isRaining() ? pl.geesio.redcircuit.config.RedCircuitConfig.SOLAR_FE.get() / 3 : pl.geesio.redcircuit.config.RedCircuitConfig.SOLAR_FE.get();
         }
         be.lastGeneration = gen;
@@ -43,7 +45,7 @@ public class SolarPanelBlockEntity extends BlockEntity {
             if (be.energy.getEnergyStored() <= 0) break;
             BlockPos np = pos.relative(d);
             if (!level.isLoaded(np)) continue;
-            IEnergyStorage dst = level.getCapability(Capabilities.EnergyStorage.BLOCK, np, d.getOpposite());
+            IEnergyStorage dst = IEnergyStorage.wrap(level.getCapability(Capabilities.Energy.BLOCK, np, d.getOpposite()));
             if (dst != null && dst.canReceive()) {
                 int sent = dst.receiveEnergy(Math.min(be.energy.getEnergyStored(), 200), false);
                 if (sent > 0) be.energy.setEnergy(be.energy.getEnergyStored() - sent);
@@ -52,14 +54,14 @@ public class SolarPanelBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

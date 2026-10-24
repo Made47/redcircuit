@@ -13,9 +13,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import pl.geesio.redcircuit.util.transfer.IFluidHandler;
 import pl.geesio.redcircuit.wire.BundledCableBlockEntity;
 import pl.geesio.redcircuit.wire.RedWireBlock;
 
@@ -32,7 +32,7 @@ public class MultimeterItem extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level level = ctx.getLevel();
         Player player = ctx.getPlayer();
-        if (level.isClientSide || player == null) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.isClientSide() || player == null) return InteractionResult.SUCCESS;
         BlockPos pos = ctx.getClickedPos();
         Direction side = ctx.getClickedFace();
         BlockState state = level.getBlockState(pos);
@@ -64,16 +64,16 @@ public class MultimeterItem extends Item {
         }
 
         // Energia
-        IEnergyStorage es = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, side);
-        if (es == null) es = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, null);
+        IEnergyStorage es = IEnergyStorage.wrap(level.getCapability(Capabilities.Energy.BLOCK, pos, side));
+        if (es == null) es = IEnergyStorage.wrap(level.getCapability(Capabilities.Energy.BLOCK, pos, null));
         if (es != null) {
             player.sendSystemMessage(Component.translatable("meter.redcircuit.energy", es.getEnergyStored(), es.getMaxEnergyStored())
                     .withStyle(ChatFormatting.AQUA));
         }
 
         // Ciecze
-        IFluidHandler fh = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, side);
-        if (fh == null) fh = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, null);
+        IFluidHandler fh = IFluidHandler.wrap(level.getCapability(Capabilities.Fluid.BLOCK, pos, side));
+        if (fh == null) fh = IFluidHandler.wrap(level.getCapability(Capabilities.Fluid.BLOCK, pos, null));
         if (fh != null) {
             for (int t = 0; t < fh.getTanks(); t++) {
                 FluidStack fs = fh.getFluidInTank(t);

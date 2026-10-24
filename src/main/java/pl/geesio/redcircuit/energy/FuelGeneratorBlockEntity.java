@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.energy;
 
+import pl.geesio.redcircuit.util.Recipes;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,9 +20,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.config.RedCircuitConfig;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -41,7 +45,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return isFuel(stack);
+            return level != null && isFuel(stack, level);
         }
     };
 
@@ -72,8 +76,8 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
         super(ModBlockEntities.SOLID_FUEL_GENERATOR.get(), pos, state);
     }
 
-    public static boolean isFuel(ItemStack stack) {
-        return stack.getBurnTime(RecipeType.SMELTING) > 0;
+    public static boolean isFuel(ItemStack stack, Level level) {
+        return stack.getBurnTime(RecipeType.SMELTING, level.fuelValues()) > 0;
     }
 
     public ModEnergyStorage getEnergy() {
@@ -89,17 +93,17 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FuelGeneratorBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         int rate = RedCircuitConfig.SOLID_FUEL_GENERATOR_FE.get();
         boolean powered = level.hasNeighborSignal(pos);
 
         // Nowe paliwo tylko, gdy jest miejsce na energię i brak sygnału redstone
         if (be.burnTime <= 0 && !powered && be.energy.getEnergyStored() + rate <= CAPACITY) {
             ItemStack fuel = be.items.getStackInSlot(0);
-            int time = fuel.getBurnTime(RecipeType.SMELTING);
+            int time = fuel.getBurnTime(RecipeType.SMELTING, level.fuelValues());
             if (time > 0) {
                 be.burnTime = be.burnTotal = time;
-                ItemStack remainder = fuel.getCraftingRemainingItem();   // np. pusty kubeł po lawie
+                ItemStack remainder = Recipes.remainder(fuel);   // np. pusty kubeł po lawie
                 fuel.shrink(1);
                 if (fuel.isEmpty() && !remainder.isEmpty()) be.items.setStackInSlot(0, remainder);
                 else be.items.setStackInSlot(0, fuel);
@@ -123,7 +127,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
             if (be.energy.getEnergyStored() <= 0) break;
             BlockPos np = pos.relative(d);
             if (!level.isLoaded(np)) continue;
-            IEnergyStorage dst = level.getCapability(Capabilities.EnergyStorage.BLOCK, np, d.getOpposite());
+            IEnergyStorage dst = IEnergyStorage.wrap(level.getCapability(Capabilities.Energy.BLOCK, np, d.getOpposite()));
             if (dst != null && dst.canReceive()) {
                 int sent = dst.receiveEnergy(Math.min(be.energy.getEnergyStored(), OUTPUT), false);
                 if (sent > 0) be.energy.setEnergy(be.energy.getEnergyStored() - sent);
@@ -152,7 +156,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 if (side != Direction.DOWN && side != null) return ItemStack.EMPTY;
-                return isFuel(items.getStackInSlot(slot)) ? ItemStack.EMPTY : items.extractItem(slot, amount, simulate);
+                return level != null && isFuel(items.getStackInSlot(slot), level) ? ItemStack.EMPTY : items.extractItem(slot, amount, simulate);
             }
 
             @Override
@@ -162,7 +166,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
 
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return isFuel(stack);
+                return level != null && isFuel(stack, level);
             }
         };
     }
@@ -179,20 +183,27 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("BurnTime", burnTime);
-        tag.putInt("BurnTotal", burnTotal);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("BurnTime", burnTime);
+        output.putInt("BurnTotal", burnTotal);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains("Items")) items.deserializeNBT(registries, tag.getCompound("Items"));
-        energy.setEnergy(tag.getInt("Energy"));
-        burnTime = tag.getInt("BurnTime");
-        burnTotal = tag.getInt("BurnTotal");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.child("Items").isPresent()) items.load(input.childOrEmpty("Items"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        burnTime = input.getIntOr("BurnTime", 0);
+        burnTotal = input.getIntOr("BurnTotal", 0);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.getItems().getStackInSlot(0));
     }
 }

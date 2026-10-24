@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:sawing",
-  "ingredient": {
-    "tag": "minecraft:mangrove_logs"
-  },
+  "ingredient": "#minecraft:mangrove_logs",
   "result": {
     "id": "minecraft:mangrove_planks",
     "count": 6

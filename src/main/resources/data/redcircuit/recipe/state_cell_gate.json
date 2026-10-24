@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:circuit_plate"
-    },
-    {
-      "item": "minecraft:clock"
-    },
-    {
-      "item": "minecraft:lever"
-    }
+    "redcircuit:circuit_plate",
+    "minecraft:clock",
+    "minecraft:lever"
   ],
   "result": {
     "id": "redcircuit:state_cell_gate",

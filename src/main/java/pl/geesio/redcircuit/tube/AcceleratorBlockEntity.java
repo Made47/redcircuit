@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.tube;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +26,7 @@ public class AcceleratorBlockEntity extends TubeBlockEntity {
 
     @Override
     protected void onItemEnter(TubeItem item) {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide()) return;
         int cost = RedCircuitConfig.ACCELERATOR_FE.get();
         if (energy.getEnergyStored() < cost) return;
         energy.setEnergy(energy.getEnergyStored() - cost);
@@ -32,14 +34,14 @@ public class AcceleratorBlockEntity extends TubeBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

@@ -1,11 +1,9 @@
 package pl.geesio.redcircuit.energy;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import pl.geesio.redcircuit.util.transfer.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 /** Wspólna obsługa slotów na baterie (i inne przedmioty z energią FE) w urządzeniach. */
@@ -14,7 +12,7 @@ public final class BatteryHelper {
 
     @Nullable
     public static IEnergyStorage energyOf(ItemStack stack) {
-        return stack.isEmpty() ? null : stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        return stack.isEmpty() ? null : IEnergyStorage.wrap(ItemAccess.forStack(stack).getCapability(Capabilities.Energy.ITEM));
     }
 
     /** Czy przedmiot można włożyć do slotu baterii. */
@@ -56,15 +54,4 @@ public final class BatteryHelper {
         return item == null || !item.canExtract() || item.getEnergyStored() <= 0;
     }
 
-    /**
-     * Wczytuje sloty z zapisu, zachowując rozmiar handlera
-     * (stare zapisy miały mniej slotów - deserializeNBT zmniejszyłby handler).
-     */
-    public static void loadItems(ItemStackHandler items, HolderLookup.Provider registries, CompoundTag tag) {
-        ItemStackHandler tmp = new ItemStackHandler(items.getSlots());
-        tmp.deserializeNBT(registries, tag);
-        for (int i = 0; i < items.getSlots(); i++) {
-            items.setStackInSlot(i, i < tmp.getSlots() ? tmp.getStackInSlot(i) : ItemStack.EMPTY);
-        }
-    }
 }

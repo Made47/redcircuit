@@ -35,7 +35,7 @@ public class ManagerBlock extends ExtractorBlock implements EntityBlock, TargetO
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.MANAGER.get(), ManagerBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.MANAGER.get(), ManagerBlockEntity::tick);
     }
 
     @Override
@@ -44,24 +44,17 @@ public class ManagerBlock extends ExtractorBlock implements EntityBlock, TargetO
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ManagerBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ManagerBlockEntity be) {
             if (player.isShiftKeyDown()) {
-                player.displayClientMessage(Component.translatable("message.redcircuit.energy",
-                        be.getEnergy().getEnergyStored(), be.getEnergy().getMaxEnergyStored()), true);
+                player.sendOverlayMessage(Component.translatable("message.redcircuit.energy",
+                        be.getEnergy().getEnergyStored(), be.getEnergy().getMaxEnergyStored()));
             } else {
                 player.openMenu(new SimpleMenuProvider(
                         (id, inv, p) -> new ChestMenu(MenuType.GENERIC_9x1, id, inv, be.filter, 1),
                         Component.translatable("container.redcircuit.manager")));
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof ManagerBlockEntity be) {
-            Containers.dropContents(level, pos, be.filter);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:ingots/tin"
-  },
+  "ingredient": "#c:ingots/tin",
   "result": {
     "id": "redcircuit:tin_dust",
     "count": 1

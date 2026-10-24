@@ -7,10 +7,10 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -23,7 +23,7 @@ import java.util.List;
 
 /** Kategoria JEI dla receptur pieca do stopów. */
 public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
-    public static final RecipeType<AlloyRecipe> TYPE = RecipeType.create(RedCircuit.MODID, "alloying", AlloyRecipe.class);
+    public static final IRecipeType<AlloyRecipe> TYPE = IRecipeType.create(RedCircuit.MODID, "alloying", AlloyRecipe.class);
 
     private static final int WIDTH = 130, HEIGHT = 58;
     private static final int OUT_X = 102, OUT_Y = 19;
@@ -37,7 +37,7 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
     }
 
     @Override
-    public RecipeType<AlloyRecipe> getRecipeType() {
+    public IRecipeType<AlloyRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -68,14 +68,15 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
             int x = 1 + (i % 3) * 18, y = 1 + (i / 3) * 18;
             var slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, x, y);
             if (i < inputs.size()) {
-                slotBuilder.addItemStacks(Arrays.asList(inputs.get(i).getItems()));
+                SizedIngredient in = inputs.get(i);
+                slotBuilder.addItemStacks(in.ingredient().items().map(h -> new ItemStack(h, in.count())).toList());
             }
         }
-        builder.addSlot(RecipeIngredientRole.OUTPUT, OUT_X, OUT_Y).addItemStack(recipe.result());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, OUT_X, OUT_Y).add(recipe.result());
     }
 
     @Override
-    public void draw(AlloyRecipe recipe, IRecipeSlotsView slots, GuiGraphics g, double mouseX, double mouseY) {
+    public void draw(AlloyRecipe recipe, IRecipeSlotsView slots, GuiGraphicsExtractor g, double mouseX, double mouseY) {
         for (int i = 0; i < 9; i++) {
             slot.draw(g, (i % 3) * 18, (i / 3) * 18);
         }
@@ -86,6 +87,6 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
         for (int i = 0; i < 6; i++) g.fill(ax + 16 + i, ay + 2 + i, ax + 17 + i, ay + 14 - i, 0xFF8B8B8B);
         String time = String.format(java.util.Locale.ROOT, "%.1f s", recipe.cookTime() / 20.0);
         var font = Minecraft.getInstance().font;
-        g.drawString(font, time, 66 + (24 - font.width(time)) / 2, 40, 0xFF808080, false);
+        g.text(font, time, 66 + (24 - font.width(time)) / 2, 40, 0xFF808080, false);
     }
 }

@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:sawing",
-  "ingredient": {
-    "tag": "minecraft:acacia_logs"
-  },
+  "ingredient": "#minecraft:acacia_logs",
   "result": {
     "id": "minecraft:acacia_planks",
     "count": 6

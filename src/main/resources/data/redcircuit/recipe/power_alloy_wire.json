@@ -5,9 +5,7 @@
     "III"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/power_alloy"
-    }
+    "I": "#c:ingots/power_alloy"
   },
   "result": {
     "id": "redcircuit:power_alloy_wire",

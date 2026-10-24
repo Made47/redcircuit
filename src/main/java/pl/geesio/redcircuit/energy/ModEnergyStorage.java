@@ -1,8 +1,8 @@
 package pl.geesio.redcircuit.energy;
 
-import net.neoforged.neoforge.energy.EnergyStorage;
+import pl.geesio.redcircuit.util.transfer.EnergyStorage;
 
-/** EnergyStorage z powiadamianiem o zmianach i bezpośrednim ustawianiem wartości. */
+/** Magazyn energii z powiadamianiem o zmianach i bezpośrednim ustawianiem wartości. */
 public class ModEnergyStorage extends EnergyStorage {
     private final Runnable onChange;
 
@@ -12,17 +12,8 @@ public class ModEnergyStorage extends EnergyStorage {
     }
 
     @Override
-    public int receiveEnergy(int toReceive, boolean simulate) {
-        int r = super.receiveEnergy(toReceive, simulate);
-        if (r > 0 && !simulate) onChange.run();
-        return r;
-    }
-
-    @Override
-    public int extractEnergy(int toExtract, boolean simulate) {
-        int r = super.extractEnergy(toExtract, simulate);
-        if (r > 0 && !simulate) onChange.run();
-        return r;
+    protected void onEnergyChanged(int previousAmount) {
+        onChange.run();
     }
 
     public void setEnergy(int value) {

@@ -1,22 +1,26 @@
 package pl.geesio.redcircuit.alloy;
 
+import pl.geesio.redcircuit.util.Recipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import pl.geesio.redcircuit.util.transfer.IItemHandlerModifiable;
 
 import java.util.List;
 
@@ -25,12 +29,12 @@ import java.util.List;
  * JSON:
  * <pre>{
  *   "type": "redcircuit:alloying",
- *   "ingredients": [{"item": "minecraft:copper_ingot"}, {"item": "minecraft:redstone", "count": 4}],
+ *   "ingredients": [{"ingredient": "minecraft:copper_ingot"}, {"ingredient": "minecraft:redstone", "count": 4}],
  *   "result": {"id": "redcircuit:signal_alloy_ingot"},
  *   "cooktime": 200
  * }</pre>
  */
-public record AlloyRecipe(List<SizedIngredient> inputs, ItemStack result, int cookTime) implements Recipe<AlloyRecipe.Input> {
+public record AlloyRecipe(List<SizedIngredient> inputs, ItemStackTemplate output, int cookTime) implements Recipe<AlloyRecipe.Input> {
 
     /** Wejście receptury: zawartość 9 slotów pieca. */
     public record Input(List<ItemStack> items) implements RecipeInput {
@@ -73,10 +77,15 @@ public record AlloyRecipe(List<SizedIngredient> inputs, ItemStack result, int co
         for (int i = 0; i < slots; i++) {
             if (take[i] <= 0) continue;
             ItemStack s = handler.getStackInSlot(firstSlot + i).copy();
-            ItemStack remainder = s.hasCraftingRemainingItem() ? s.getCraftingRemainingItem() : ItemStack.EMPTY;
+            ItemStack remainder = pl.geesio.redcircuit.util.Recipes.remainder(s);
             s.shrink(take[i]);
             handler.setStackInSlot(firstSlot + i, s.isEmpty() ? remainder : s);
         }
+    }
+
+    /** Wynik (nowa kopia). */
+    public ItemStack result() {
+        return output.create();
     }
 
     @Override
@@ -85,21 +94,11 @@ public record AlloyRecipe(List<SizedIngredient> inputs, ItemStack result, int co
     }
 
     @Override
-    public ItemStack assemble(Input input, HolderLookup.Provider registries) {
-        return result.copy();
+    public ItemStack assemble(Input input) {
+        return result();
     }
 
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return result;
-    }
-
-    @Override
+    /** Składniki (dla JEI). */
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> list = NonNullList.create();
         for (SizedIngredient s : inputs) list.add(s.ingredient());
@@ -113,36 +112,50 @@ public record AlloyRecipe(List<SizedIngredient> inputs, ItemStack result, int co
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public boolean showNotification() {
+        return false;
+    }
+
+    @Override
+    public String group() {
+        return "";
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public RecipeSerializer<AlloyRecipe> getSerializer() {
         return ModRecipes.ALLOYING_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<AlloyRecipe> getType() {
         return ModRecipes.ALLOYING.get();
     }
 
-    public static class Serializer implements RecipeSerializer<AlloyRecipe> {
-        private static final MapCodec<AlloyRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-                SizedIngredient.FLAT_CODEC.listOf().fieldOf("ingredients").forGetter(AlloyRecipe::inputs),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(AlloyRecipe::result),
+    public static final class Serializer {
+        static final MapCodec<AlloyRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+                SizedIngredient.NESTED_CODEC.listOf().fieldOf("ingredients").forGetter(AlloyRecipe::inputs),
+                ItemStackTemplate.CODEC.fieldOf("result").forGetter(AlloyRecipe::output),
                 Codec.INT.optionalFieldOf("cooktime", 200).forGetter(AlloyRecipe::cookTime)
         ).apply(i, AlloyRecipe::new));
 
-        private static final StreamCodec<RegistryFriendlyByteBuf, AlloyRecipe> STREAM_CODEC = StreamCodec.composite(
+        static final StreamCodec<RegistryFriendlyByteBuf, AlloyRecipe> STREAM_CODEC = StreamCodec.composite(
                 SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), AlloyRecipe::inputs,
-                ItemStack.STREAM_CODEC, AlloyRecipe::result,
+                ItemStackTemplate.STREAM_CODEC, AlloyRecipe::output,
                 ByteBufCodecs.VAR_INT, AlloyRecipe::cookTime,
                 AlloyRecipe::new);
 
-        @Override
-        public MapCodec<AlloyRecipe> codec() {
-            return CODEC;
-        }
+        public static final RecipeSerializer<AlloyRecipe> INSTANCE = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, AlloyRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+        private Serializer() {}
     }
 }

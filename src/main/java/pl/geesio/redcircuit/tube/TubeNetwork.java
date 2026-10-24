@@ -1,12 +1,13 @@
 package pl.geesio.redcircuit.tube;
 
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
 import pl.geesio.redcircuit.util.CableBlock;
 
 import java.util.ArrayDeque;
@@ -47,7 +48,7 @@ public final class TubeNetwork {
                     continue;
                 }
                 if (ns.getBlock() instanceof TargetOnly) continue;
-                IItemHandler src = level.getCapability(Capabilities.ItemHandler.BLOCK, np, dir.getOpposite());
+                IItemHandler src = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, np, dir.getOpposite()));
                 if (src == null || !tube.canAccept(-1)) continue;
                 for (int slot = 0; slot < src.getSlots(); slot++) {
                     ItemStack sim = src.extractItem(slot, maxCount, true);

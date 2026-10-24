@@ -7,18 +7,10 @@
     "GRG"
   ],
   "key": {
-    "G": {
-      "tag": "c:glass_panes"
-    },
-    "S": {
-      "item": "minecraft:glowstone_dust"
-    },
-    "D": {
-      "tag": "c:dyes/black"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "G": "#c:glass_panes",
+    "S": "minecraft:glowstone_dust",
+    "D": "#c:dyes/black",
+    "R": "#c:dusts/redstone"
   },
   "result": {
     "id": "redcircuit:lamp_black",

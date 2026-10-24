@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.gate;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -55,46 +57,46 @@ public class GateBlockEntity extends BlockEntity {
     /** Zapis + wysłanie danych do klientów (okno ustawień pokazuje aktualne wartości). */
     public void sync() {
         setChanged();
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState s = getBlockState();
             level.sendBlockUpdated(worldPosition, s, s, Block.UPDATE_CLIENTS);
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Interval", interval);
-        tag.putInt("MaxValue", max);
-        tag.putInt("Count", count);
-        tag.putBoolean("L", lastL);
-        tag.putBoolean("B", lastB);
-        tag.putBoolean("R", lastR);
-        tag.putBoolean("LatchL", latchL);
-        tag.putBoolean("LatchR", latchR);
-        tag.putLong("Due", due);
-        tag.putBoolean("Muted", muted);
-        tag.putBoolean("Mirrored", mirrored);
-        tag.putInt("Disabled", disabled);
-        tag.putBoolean("Quiet", quiet);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Interval", interval);
+        output.putInt("MaxValue", max);
+        output.putInt("Count", count);
+        output.putBoolean("L", lastL);
+        output.putBoolean("B", lastB);
+        output.putBoolean("R", lastR);
+        output.putBoolean("LatchL", latchL);
+        output.putBoolean("LatchR", latchR);
+        output.putLong("Due", due);
+        output.putBoolean("Muted", muted);
+        output.putBoolean("Mirrored", mirrored);
+        output.putInt("Disabled", disabled);
+        output.putBoolean("Quiet", quiet);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains("Interval")) interval = tag.getInt("Interval");
-        if (tag.contains("MaxValue")) max = tag.getInt("MaxValue");
-        count = tag.getInt("Count");
-        lastL = tag.getBoolean("L");
-        lastB = tag.getBoolean("B");
-        lastR = tag.getBoolean("R");
-        latchL = tag.getBoolean("LatchL");
-        latchR = tag.getBoolean("LatchR");
-        due = tag.getLong("Due");
-        muted = tag.getBoolean("Muted");
-        mirrored = tag.getBoolean("Mirrored");
-        if (tag.contains("Disabled")) disabled = tag.getInt("Disabled") & 7;
-        quiet = tag.getBoolean("Quiet");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        if (input.getInt("Interval").isPresent()) interval = input.getIntOr("Interval", 0);
+        if (input.getInt("MaxValue").isPresent()) max = input.getIntOr("MaxValue", 0);
+        count = input.getIntOr("Count", 0);
+        lastL = input.getBooleanOr("L", false);
+        lastB = input.getBooleanOr("B", false);
+        lastR = input.getBooleanOr("R", false);
+        latchL = input.getBooleanOr("LatchL", false);
+        latchR = input.getBooleanOr("LatchR", false);
+        due = input.getLongOr("Due", 0L);
+        muted = input.getBooleanOr("Muted", false);
+        mirrored = input.getBooleanOr("Mirrored", false);
+        if (input.getInt("Disabled").isPresent()) disabled = input.getIntOr("Disabled", 0) & 7;
+        quiet = input.getBooleanOr("Quiet", false);
     }
 
     @Override

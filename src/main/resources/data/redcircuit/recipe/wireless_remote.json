@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:wireless_transmitter"
-    },
-    {
-      "item": "minecraft:stone_button"
-    },
-    {
-      "tag": "c:ingots/iron"
-    }
+    "redcircuit:wireless_transmitter",
+    "minecraft:stone_button",
+    "#c:ingots/iron"
   ],
   "result": {
     "id": "redcircuit:wireless_remote",

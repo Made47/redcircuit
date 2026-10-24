@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -53,11 +54,11 @@ public class RegulatorBlock extends ExtractorBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.REGULATOR.get(), RegulatorBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.REGULATOR.get(), RegulatorBlockEntity::tick);
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         // Pracuje stale - nie reaguje na impulsy.
     }
 
@@ -73,19 +74,12 @@ public class RegulatorBlock extends ExtractorBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof RegulatorBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof RegulatorBlockEntity be) {
             player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> new ChestMenu(MenuType.GENERIC_9x1, id, inv, be.filter, 1),
                     Component.translatable("container.redcircuit.regulator")));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof RegulatorBlockEntity be) {
-            Containers.dropContents(level, pos, be.filter);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -9,8 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.energy.ModEnergyStorage;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -44,7 +48,7 @@ public class ManagerBlockEntity extends BlockEntity {
     private IItemHandler managed() {
         if (level == null) return null;
         Direction facing = getBlockState().getValue(ExtractorBlock.FACING);
-        return level.getCapability(Capabilities.ItemHandler.BLOCK, worldPosition.relative(facing.getOpposite()), facing);
+        return ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, worldPosition.relative(facing.getOpposite()), facing));
     }
 
     private static int count(IItemHandler h, ItemStack pattern) {
@@ -65,7 +69,7 @@ public class ManagerBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ManagerBlockEntity be) {
-        if (level.isClientSide || ++be.timer < INTERVAL) return;
+        if (level.isClientSide() || ++be.timer < INTERVAL) return;
         be.timer = 0;
         IItemHandler inv = be.managed();
         if (inv == null || be.filter.isEmpty()) return;
@@ -150,18 +154,25 @@ public class ManagerBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        filter.save(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("Next", next);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        filter.save(output);
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("Next", next);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        filter.load(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
-        next = tag.getInt("Next");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        filter.load(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        next = input.getIntOr("Next", 0);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            Containers.dropContents(level, pos, this.filter);
     }
 }

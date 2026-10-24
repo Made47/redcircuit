@@ -1,6 +1,13 @@
 package pl.geesio.redcircuit.tube;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import pl.geesio.redcircuit.util.transfer.ItemHandlers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueOutput;
+import pl.geesio.redcircuit.util.transfer.DeferredItemHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -16,8 +23,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import pl.geesio.redcircuit.util.transfer.IItemHandler;
+import pl.geesio.redcircuit.util.transfer.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
 
@@ -80,7 +87,7 @@ public class TubeBlockEntity extends BlockEntity {
     // ------------------------------------------------------------------ tick
 
     public static void tick(Level level, BlockPos pos, BlockState state, TubeBlockEntity be) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             be.clientTick();
         } else {
             be.serverTick(level, pos);
@@ -144,7 +151,7 @@ public class TubeBlockEntity extends BlockEntity {
             return true;
         }
 
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, np, out.getOpposite());
+        IItemHandler handler = ItemHandlers.wrap(level.getCapability(Capabilities.Item.BLOCK, np, out.getOpposite()));
         if (handler != null) {
             ItemStack rest = ItemHandlerHelper.insertItem(handler, item.stack, false);
             if (rest.isEmpty()) return true;
@@ -174,46 +181,44 @@ public class TubeBlockEntity extends BlockEntity {
 
     public void sync() {
         setChanged();
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState state = getBlockState();
             level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
         }
     }
 
-    private void writeItems(CompoundTag tag, HolderLookup.Provider registries) {
-        ListTag list = new ListTag();
+    private void writeItems(ValueOutput output) {
+        ValueOutput.ValueOutputList list = output.childrenList("Items");
         for (TubeItem item : items) {
-            if (!item.stack.isEmpty()) list.add(item.save(registries));
+            if (!item.stack.isEmpty()) item.save(list.addChild());
         }
-        tag.put("Items", list);
     }
 
-    private void readItems(CompoundTag tag, HolderLookup.Provider registries) {
+    private void readItems(ValueInput input) {
         items.clear();
-        ListTag list = tag.getList("Items", Tag.TAG_COMPOUND);
-        for (int i = 0; i < list.size(); i++) {
-            TubeItem item = TubeItem.load(list.getCompound(i), registries);
+        for (ValueInput child : input.childrenListOrEmpty("Items")) {
+            TubeItem item = TubeItem.load(child);
             if (item != null) items.add(item);
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        writeItems(tag, registries);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        writeItems(output);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        readItems(tag, registries);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        readItems(input);
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        writeItems(tag, registries);
-        return tag;
+        TagValueOutput out = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, registries);
+        writeItems(out);
+        return out.buildResult();
     }
 
     @Override
@@ -224,7 +229,7 @@ public class TubeBlockEntity extends BlockEntity {
     // ------------------------------------------------------------------ capability
 
     /** Pozwala lejkom i innym modom wkładać przedmioty do rury. */
-    private class InsertHandler implements IItemHandler {
+    private class InsertHandler extends DeferredItemHandler {
         private final Direction side;
 
         InsertHandler(Direction side) {
@@ -244,7 +249,7 @@ public class TubeBlockEntity extends BlockEntity {
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (stack.isEmpty() || !canAccept(-1)) return stack;
-            if (!simulate) insert(stack.copy(), side, -1);
+            if (!simulate) TubeBlockEntity.this.insert(stack.copy(), side, -1);
             return ItemStack.EMPTY;
         }
 
@@ -262,5 +267,15 @@ public class TubeBlockEntity extends BlockEntity {
         public boolean isItemValid(int slot, ItemStack stack) {
             return true;
         }
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+        for (TubeItem item : getItems()) {
+            Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, item.stack);
+        }
+        getItems().clear();
     }
 }

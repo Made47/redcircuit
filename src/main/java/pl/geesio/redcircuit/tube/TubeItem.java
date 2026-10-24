@@ -1,8 +1,8 @@
 package pl.geesio.redcircuit.tube;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,28 +30,26 @@ public class TubeItem {
         this.color = color;
     }
 
-    public CompoundTag save(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        tag.put("Item", stack.save(registries));
+    public void save(ValueOutput tag) {
+        tag.store("Item", ItemStack.CODEC, stack);
         tag.putByte("From", (byte) from.get3DDataValue());
         tag.putByte("To", (byte) (to == null ? -1 : to.get3DDataValue()));
         tag.putFloat("Progress", progress);
         tag.putByte("Color", (byte) color);
         tag.putFloat("Speed", speed);
         if (target != null) tag.putLong("Target", target.asLong());
-        return tag;
     }
 
     @Nullable
-    public static TubeItem load(CompoundTag tag, HolderLookup.Provider registries) {
-        ItemStack stack = ItemStack.parseOptional(registries, tag.getCompound("Item"));
+    public static TubeItem load(ValueInput tag) {
+        ItemStack stack = tag.read("Item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
         if (stack.isEmpty()) return null;
-        TubeItem item = new TubeItem(stack, Direction.from3DDataValue(tag.getByte("From")), tag.getByte("Color"));
-        int to = tag.getByte("To");
+        TubeItem item = new TubeItem(stack, Direction.from3DDataValue(tag.getByteOr("From", (byte) 0)), tag.getByteOr("Color", (byte) -1));
+        int to = tag.getByteOr("To", (byte) -1);
         item.to = to < 0 ? null : Direction.from3DDataValue(to);
-        item.progress = tag.getFloat("Progress");
-        if (tag.contains("Speed")) item.speed = tag.getFloat("Speed");
-        if (tag.contains("Target")) item.target = net.minecraft.core.BlockPos.of(tag.getLong("Target"));
+        item.progress = tag.getFloatOr("Progress", 0f);
+        item.speed = tag.getFloatOr("Speed", item.speed);
+        tag.getLong("Target").ifPresent(t -> item.target = net.minecraft.core.BlockPos.of(t));
         return item;
     }
 }
