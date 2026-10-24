@@ -30,11 +30,11 @@ public class FrequencyScreen extends Screen {
     }
 
     public static void openForBlock(BlockPos pos, int frequency, String descriptionId) {
-        Minecraft.getInstance().setScreen(new FrequencyScreen(Component.translatable(descriptionId), 0, pos, frequency));
+        Minecraft.getInstance().gui.setScreen(new FrequencyScreen(Component.translatable(descriptionId), 0, pos, frequency));
     }
 
     public static void openForItem(InteractionHand hand, int frequency, String descriptionId) {
-        Minecraft.getInstance().setScreen(new FrequencyScreen(Component.translatable(descriptionId),
+        Minecraft.getInstance().gui.setScreen(new FrequencyScreen(Component.translatable(descriptionId),
                 hand == InteractionHand.MAIN_HAND ? 1 : 2, BlockPos.ZERO, frequency));
     }
 
@@ -55,9 +55,15 @@ public class FrequencyScreen extends Screen {
         int x = (width - W) / 2, y = (height - H) / 2;
         field = new EditBox(font, x + 95, y + 30, 60, 18, Component.empty());
         field.setMaxLength(4);
-        field.setFilter(s -> s.chars().allMatch(Character::isDigit));
         field.setValue(Integer.toString(frequency));
-        field.setResponder(s -> read());
+        field.setResponder(s -> {
+            String digits = s.replaceAll("[^0-9]", "");   // tylko cyfry
+            if (!digits.equals(s)) {
+                field.setValue(digits);
+                return;
+            }
+            read();
+        });
         addRenderableWidget(field);
 
         int[] steps = {-100, -10, -1, 1, 10, 100};

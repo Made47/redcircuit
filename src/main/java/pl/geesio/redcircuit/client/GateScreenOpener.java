@@ -9,6 +9,6 @@ public final class GateScreenOpener {
     private GateScreenOpener() {}
 
     public static void open(BlockPos pos, GateType type) {
-        Minecraft.getInstance().setScreen(new GateScreen(pos, type));
+        Minecraft.getInstance().gui.setScreen(new GateScreen(pos, type));
     }
 }

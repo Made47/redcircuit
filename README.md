@@ -1,4 +1,4 @@
-# RedCircuit (NeoForge 26.1.2)
+# RedCircuit (NeoForge 26.2)
 
 *[Polska wersja: README.pl.md](README.pl.md)*
 
@@ -9,8 +9,8 @@ Includes redstone cables, logic gates, sorting tubes and Azurity energy.
 > The source code, the texture-generating scripts, translations and this documentation were largely written by AI,
 > under the direction of the author, who designed, reviewed and play-tested the mod. Expect occasional bugs – reports are welcome.
 
-## Minecraft 26.1.2 notes
-- Requires **Java 25** (bundled with the Minecraft 26.1.2 launcher).
+## Minecraft 26.2 notes
+- Requires **Java 25** (bundled with the Minecraft 26.2 launcher).
 - Items, energy and fluids use the new NeoForge transfer API (`ResourceHandler`, `EnergyHandler`) – compatible with other 26.x mods; machine inventories and tanks saved by the 1.21.1 version are read correctly.
 - **CB Multipart** has no release for Minecraft 26.x, so wires as multipart parts are not available in this version.
 - Recipes use the 1.21.2+ JSON format (`"key": {"A": "minecraft:iron_ingot"}`, tags as `"#c:ingots/tin"`; alloy furnace ingredients as `{"ingredient": "...", "count": n}`).
@@ -24,7 +24,7 @@ Includes redstone cables, logic gates, sorting tubes and Azurity energy.
    .\gradlew.bat build
    ```
    The first build takes a few minutes because it downloads Minecraft and NeoForge.
-3. The finished file: `build\libs\redcircuit-0.1.0.jar` → put it into `mods/` (NeoForge 26.1.2.122 or newer for MC 26.1.2).
+3. The finished file: `build\libs\redcircuit-0.1.0.jar` → put it into `mods/` (NeoForge 26.2.0.93 or newer for MC 26.2).
 
 To test in game without installing: `.\gradlew.bat runClient`.
 
@@ -279,7 +279,7 @@ Azurity is **Forge Energy (FE)**, so it also works with other mods' machines and
 Full list: `src/main/resources/data/redcircuit/recipe/`. The easiest way to browse them in game is JEI/EMI.
 
 ## JEI integration
-With **JEI (Just Enough Items)** for NeoForge 26.1.2 installed you get:
+With **JEI (Just Enough Items)** for NeoForge 26.2 installed you get:
 - a separate **Alloy Furnace** category with all alloy recipes (datapack ones too),
 - alloy furnaces, the electric furnace and the blueprint table as crafting stations,
 - descriptions (“Information” tab) for generators, rotors, tubes, the sorting machine, the blueprint table and saws.
@@ -294,7 +294,7 @@ python tools/gen_assets.py
 
 
 ## CC: Tweaked integration (optional)
-Works automatically when CC: Tweaked is installed (tested with CC: Tweaked 1.120.x for 26.1.2).
+Works automatically when CC: Tweaked is installed (tested with CC: Tweaked 1.120.x for 26.2).
 - **Bundled cable ↔ computers and turtles**: the cable (normal, encased and as a CB Multipart part) visually connects to a computer. `redstone.setBundledOutput` powers cable channels, and `redstone.getBundledInput` reads the channels active in the network (channel = insulated wire colour, as in `colors`). Also works with the Redstone Relay.
 - **`redcircuit_gate` peripheral** (gates with settings): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (state cell: “counting” output on the left).
 - **`redcircuit_wireless` peripheral** (transmitter/receiver): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.

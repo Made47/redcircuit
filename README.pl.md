@@ -1,4 +1,4 @@
-# RedCircuit (NeoForge 26.1.2)
+# RedCircuit (NeoForge 26.2)
 
 *[English version: README.md](README.md)*
 
@@ -10,8 +10,8 @@
 Przewody redstone bez strat sygnału, bramki logiczne, rury pneumatyczne z sortowaniem i energia Azurity. Cały kod i grafiki są autorskie.
 Zawiera kable redstone, bramki logiczne, rury z sortowaniem i Azurity.
 
-## Uwagi do Minecraft 26.1.2
-- Wymaga **Javy 25** (dołączonej do launchera Minecraft 26.1.2).
+## Uwagi do Minecraft 26.2
+- Wymaga **Javy 25** (dołączonej do launchera Minecraft 26.2).
 - Przedmioty, energia i płyny używają nowego API transferu NeoForge (`ResourceHandler`, `EnergyHandler`) – działa z innymi modami 26.x; inwentarze maszyn i zbiorniki zapisane przez wersję 1.21.1 wczytują się poprawnie.
 - **CB Multipart** nie ma wydania dla Minecraft 26.x, więc przewody jako części bloku wieloczęściowego nie są dostępne w tej wersji.
 - Receptury mają format JSON z 1.21.2+ (`"key": {"A": "minecraft:iron_ingot"}`, tagi jako `"#c:ingots/tin"`; składniki pieca do stopów jako `{"ingredient": "...", "count": n}`).
@@ -25,7 +25,7 @@ Zawiera kable redstone, bramki logiczne, rury z sortowaniem i Azurity.
    .\gradlew.bat build
    ```
    Pierwsze budowanie trwa kilka minut, bo pobiera Minecrafta i NeoForge.
-3. Gotowy plik: `build\libs\redcircuit-0.1.0.jar` → wrzuć do `mods/` (NeoForge 26.1.2.122 lub nowszy dla MC 26.1.2).
+3. Gotowy plik: `build\libs\redcircuit-0.1.0.jar` → wrzuć do `mods/` (NeoForge 26.2.0.93 lub nowszy dla MC 26.2).
 
 Do testów w grze bez instalowania: `.\gradlew.bat runClient`.
 
@@ -280,7 +280,7 @@ Azurity to **Forge Energy (FE)**, więc działa też z maszynami/kablami innych 
 Pełna lista: `src/main/resources/data/redcircuit/recipe/`. Najwygodniej podglądać w grze przez JEI/EMI.
 
 ## Integracja z JEI
-Jeśli zainstalujesz **JEI (Just Enough Items)** dla NeoForge 26.1.2, zobaczysz:
+Jeśli zainstalujesz **JEI (Just Enough Items)** dla NeoForge 26.2, zobaczysz:
 - osobną kategorię **Piec do stopów** ze wszystkimi recepturami stopów (także z datapacków),
 - piece do stopów, piec elektryczny i stół kreślarski jako stacje wytwarzania,
 - opisy (zakładka „Informacje”) dla generatorów, wirników, rur, maszyny sortującej, stołu kreślarskiego i pił.
@@ -295,7 +295,7 @@ python tools/gen_assets.py
 
 
 ## Integracja z CC: Tweaked (opcjonalna)
-Działa automatycznie, gdy zainstalowany jest CC: Tweaked (testowane z CC: Tweaked 1.120.x dla 26.1.2).
+Działa automatycznie, gdy zainstalowany jest CC: Tweaked (testowane z CC: Tweaked 1.120.x dla 26.2).
 - **Kabel wiązkowy ↔ komputery i żółwie**: kabel (zwykły, w obudowie i jako część CB Multipart) łączy się wizualnie z komputerem. `redstone.setBundledOutput` zasila kanały kabla, a `redstone.getBundledInput` odczytuje kanały aktywne w sieci (kanał = kolor przewodu izolowanego, jak w `colors`). Działa też z przekaźnikiem redstone (Redstone Relay).
 - **Peryferium `redcircuit_gate`** (bramki z ustawieniami): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (komórka stanu: wyjście „w trakcie” po lewej).
 - **Peryferium `redcircuit_wireless`** (nadajnik/odbiornik): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.
