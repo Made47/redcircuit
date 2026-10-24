@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -282,7 +282,7 @@ public final class WireNetwork {
                     if (WireTypes.isRedstone(WireTypes.typeOf(nb))) continue;
                     int s = level.getSignal(np, d);
                     if (s > best) best = s;
-                    if (!(nb instanceof RedStoneWireBlock) && s > bestReliable) bestReliable = s;
+                    if (!(nb instanceof RedstoneWireBlock) && s > bestReliable) bestReliable = s;
                     if (bestReliable >= 15) return new int[]{15, 15};
                 }
             }

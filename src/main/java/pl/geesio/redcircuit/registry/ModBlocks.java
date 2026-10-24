@@ -59,7 +59,7 @@ public final class ModBlocks {
                 .noCollision()
                 .noOcclusion()
                 .sound(sound)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     private static BlockBehaviour.Properties machineProps() {
@@ -175,12 +175,12 @@ public final class ModBlocks {
     // ---------- Zbiornik na ciecz ----------
     public static final DeferredBlock<pl.geesio.redcircuit.fluid.FluidTankBlock> FLUID_TANK = BLOCKS.register("fluid_tank", RegIds.block(() -> new pl.geesio.redcircuit.fluid.FluidTankBlock(RegIds.blockProps()
                     .mapColor(MapColor.METAL).strength(1.5f).noOcclusion().sound(SoundType.GLASS)
-                    .isViewBlocking((s, l, p) -> false).isSuffocating((s, l, p) -> false))));
+                    .isViewBlocking((s, l, p, box) -> false).isSuffocating((s, l, p) -> false))));
 
     // ---------- Redstone bezprzewodowy ----------
     private static BlockBehaviour.Properties wirelessProps() {
         return RegIds.blockProps().mapColor(MapColor.STONE).instabreak().noOcclusion()
-                .sound(SoundType.STONE).pushReaction(PushReaction.DESTROY);
+                .sound(SoundType.STONE).pushReaction(PushReaction.POPPED);
     }
 
     public static final DeferredBlock<pl.geesio.redcircuit.wireless.WirelessTransmitterBlock> WIRELESS_TRANSMITTER =
@@ -217,7 +217,7 @@ public final class ModBlocks {
                             .instabreak()
                             .noOcclusion()
                             .sound(SoundType.STONE)
-                            .pushReaction(PushReaction.DESTROY), type))));
+                            .pushReaction(PushReaction.POPPED), type))));
         }
     }
 

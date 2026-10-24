@@ -38,7 +38,7 @@ public final class ItemHandlerHelper {
     /** Daje przedmiot graczowi; to, co się nie zmieści, upuszcza obok niego. */
     public static void giveItemToPlayer(Player player, ItemStack stack) {
         if (stack.isEmpty()) return;
-        player.getInventory().placeItemBackInInventory(stack);
+        player.getInventory().placeItemBackInInventory(stack, net.minecraft.util.Prediction.SERVER_ONLY);
     }
 
     public static boolean canItemStacksStack(ItemStack a, ItemStack b) {

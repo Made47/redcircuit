@@ -23,7 +23,7 @@ public class RedCircuit {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public RedCircuit(IEventBus modBus, net.neoforged.fml.ModContainer container) {
-        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, pl.geesio.redcircuit.config.RedCircuitConfig.SPEC);
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.LOCAL, pl.geesio.redcircuit.config.RedCircuitConfig.SPEC);
         pl.geesio.redcircuit.worldgen.ModWorldgen.BIOME_MODIFIERS.register(modBus);
         ModBlocks.BLOCKS.register(modBus);
         ModItems.ITEMS.register(modBus);

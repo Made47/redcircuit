@@ -77,7 +77,6 @@ public class FaceWireModel implements DynamicBlockStateModel {
                     .setCubeFace(side, x0, y0, z0, x1, y1, z1)
                     .setSprite(tex)
                     .bakeUvsFromPosition()
-                    .setShade(true)
                     .toBakedQuad();
             out.addUnculledFace(quad);
         }

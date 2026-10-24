@@ -26,7 +26,7 @@ public record ConfiguredOreModifier(HolderSet<Biome> biomes, HolderSet<PlacedFea
     ).apply(i, ConfiguredOreModifier::new));
 
     @Override
-    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+    public void modify(net.minecraft.core.RegistryAccess registries, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase != Phase.ADD || !biomes.contains(biome) || !RedCircuitConfig.oreEnabled(ore)) return;
         var gen = builder.getGenerationSettings();
         for (Holder<PlacedFeature> f : features) gen.addFeature(step, f);

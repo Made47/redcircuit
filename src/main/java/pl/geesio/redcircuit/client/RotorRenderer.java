@@ -74,11 +74,11 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, 
         boolean windmill = st.rotor == KineticGeneratorBlock.Rotor.WINDMILL;
         pose.pushPose();
         pose.translate(0.5, 0.5, 0.5);
-        pose.mulPose(Axis.YP.rotationDegrees(-st.facing.toYRot()));   // lokalne +Z = przód generatora
+        pose.rotate(Axis.YP.rotationDegrees(-st.facing.toYRot()));   // lokalne +Z = przód generatora
         pose.translate(0, 0, 0.5);                                    // płaszczyzna przedniej ściany
         pose.scale(1 / 16f, 1 / 16f, 1 / 16f);                        // dalej wszystko w pikselach
         // Wiatrak obraca się w prawo (patrząc od przodu), koło wodne - z nurtem
-        pose.mulPose(Axis.ZP.rotationDegrees(windmill ? -st.angle : st.angle));
+        pose.rotate(Axis.ZP.rotationDegrees(windmill ? -st.angle : st.angle));
         int light = st.frontLight;
         collector.submitCustomGeometry(pose, RenderTypes.entityCutout(TextureAtlas.LOCATION_BLOCKS), (last, vc) -> {
             PoseStack ps = new PoseStack();
@@ -99,12 +99,12 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, 
         p.box(metal, -3, -3, 12, 3, 3, 14);                // kołpak
         for (int k = 0; k < 4; k++) {
             p.pose.pushPose();
-            p.pose.mulPose(Axis.ZP.rotationDegrees(k * 90));
+            p.pose.rotate(Axis.ZP.rotationDegrees(k * 90));
             p.box(beam, -1.5f, 4, 7.5f, 1.5f, 38, 10.5f);    // ramię
             // Skrzydło: płótno na ramie, lekko skręcone jak w prawdziwym wiatraku
             p.pose.pushPose();
             p.pose.translate(1.5f, 0, 9);
-            p.pose.mulPose(Axis.YP.rotationDegrees(-14));
+            p.pose.rotate(Axis.YP.rotationDegrees(-14));
             p.box(cloth, 0, 9, -0.5f, 12.5f, 37, 0.5f);
             for (float y : new float[]{9, 16, 23, 30, 36}) {
                 p.box(planks, 0, y, 0.5f, 12.5f, y + 1, 1.5f);   // poprzeczki
@@ -124,14 +124,14 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, 
             // Obręcz z 16 segmentów
             for (int i = 0; i < 16; i++) {
                 p.pose.pushPose();
-                p.pose.mulPose(Axis.ZP.rotationDegrees(i * 22.5f));
+                p.pose.rotate(Axis.ZP.rotationDegrees(i * 22.5f));
                 p.box(dark, -4.4f, 20, rim[0], 4.4f, 23, rim[1]);
                 p.pose.popPose();
             }
             // Szprychy
             for (int i = 0; i < 8; i++) {
                 p.pose.pushPose();
-                p.pose.mulPose(Axis.ZP.rotationDegrees(i * 45 + 22.5f));
+                p.pose.rotate(Axis.ZP.rotationDegrees(i * 45 + 22.5f));
                 p.box(beam, -1, 4, rim[0] + 0.5f, 1, 20, rim[1] - 0.5f);
                 p.pose.popPose();
             }
@@ -139,7 +139,7 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, 
         // Łopatki między obręczami, wystające nieco poza nie
         for (int i = 0; i < 12; i++) {
             p.pose.pushPose();
-            p.pose.mulPose(Axis.ZP.rotationDegrees(i * 30));
+            p.pose.rotate(Axis.ZP.rotationDegrees(i * 30));
             p.box(planks, -0.75f, 13, 2, 0.75f, 24, 14);
             p.pose.popPose();
         }

@@ -33,13 +33,13 @@ public final class ModTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN =
             tab("main", "itemGroup.redcircuit", "signal_alloy_wire", Category.REDSTONE, null);
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> LOGISTICS =
-            tab("logistics", "itemGroup.redcircuit.logistics", "sorting_machine", Category.LOGISTICS, MAIN.getKey());
+            tab("logistics", "itemGroup.redcircuit.logistics", "sorting_machine", Category.LOGISTICS, MAIN.key());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ENERGY =
-            tab("energy", "itemGroup.redcircuit.energy", "battery_box", Category.ENERGY, LOGISTICS.getKey());
+            tab("energy", "itemGroup.redcircuit.energy", "battery_box", Category.ENERGY, LOGISTICS.key());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TOOLS =
-            tab("tools", "itemGroup.redcircuit.tools", "electric_drill", Category.TOOLS, ENERGY.getKey());
+            tab("tools", "itemGroup.redcircuit.tools", "electric_drill", Category.TOOLS, ENERGY.key());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIALS =
-            tab("materials", "itemGroup.redcircuit.materials", "signal_alloy_ingot", Category.MATERIALS, TOOLS.getKey());
+            tab("materials", "itemGroup.redcircuit.materials", "signal_alloy_ingot", Category.MATERIALS, TOOLS.key());
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> tab(String id, String title, String icon,
                                                                         Category category,

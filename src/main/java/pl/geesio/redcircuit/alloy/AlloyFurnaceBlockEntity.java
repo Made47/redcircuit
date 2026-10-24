@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -169,7 +168,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         } else {
             if (canWork && be.burnTime <= 0) {
                 ItemStack fuel = be.items.getStackInSlot(FUEL);
-                int burn = fuel.getBurnTime(RecipeType.SMELTING, level.fuelValues());
+                int burn = pl.geesio.redcircuit.util.Fuel.burnTime(level, be, fuel);
                 if (burn > 0) {
                     be.burnTime = be.burnDuration = burn;
                     ItemStack rest = Recipes.remainder(fuel);
@@ -220,7 +219,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                 if (side == Direction.DOWN || slot == OUTPUT) return stack;
                 boolean fuelSide = !electric && side != Direction.UP;
                 if (fuelSide) {
-                    if (slot != FUEL || stack.getBurnTime(RecipeType.SMELTING, level.fuelValues()) <= 0) return stack;
+                    if (slot != FUEL || !pl.geesio.redcircuit.util.Fuel.isFuel(stack)) return stack;
                 } else if (slot >= INPUTS) {
                     return stack;
                 }

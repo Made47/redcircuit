@@ -9,7 +9,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import pl.geesio.redcircuit.util.transfer.IItemHandler;
 import pl.geesio.redcircuit.util.transfer.ItemStackHandler;
 import pl.geesio.redcircuit.util.transfer.SlotItemHandler;
@@ -56,7 +55,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             addSlot(new SlotItemHandler(items, AlloyFurnaceBlockEntity.FUEL, FUEL_X, FUEL_Y) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.getBurnTime(RecipeType.SMELTING, inventory.player.level().fuelValues()) > 0;
+                    return pl.geesio.redcircuit.util.Fuel.isFuel(stack);
                 }
             });
         } else {
@@ -111,7 +110,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             if (!moveItemStackTo(stack, invStart, invEnd, true)) return ItemStack.EMPTY;
         } else {
             boolean moved = false;
-            if (electric ? BatteryHelper.isBattery(stack) : stack.getBurnTime(RecipeType.SMELTING, player.level().fuelValues()) > 0) {
+            if (electric ? BatteryHelper.isBattery(stack) : pl.geesio.redcircuit.util.Fuel.isFuel(stack)) {
                 moved = moveItemStackTo(stack, 10, 11, false);
             }
             if (!moved && !moveItemStackTo(stack, 0, 9, false)) return ItemStack.EMPTY;

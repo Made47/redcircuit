@@ -70,7 +70,11 @@ public class RedCircuitClient {
 
     /** Podmienia modele przewodów na dynamiczne (przyklejane do ścian). */
     private static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Function<Identifier, TextureAtlasSprite> textures = event.getTextureGetter();
+        var atlas = event.getBlockAtlasPreparations();
+        Function<Identifier, TextureAtlasSprite> textures = id -> {
+            TextureAtlasSprite s = atlas.getSprite(id);
+            return s != null ? s : atlas.missing();
+        };
         replace(event, ModBlocks.SIGNAL_ALLOY_WIRE.get(),
                 sprite(textures, "signal_alloy_off"), sprite(textures, "signal_alloy_on"));
         for (DyeColor color : DyeColor.values()) {
