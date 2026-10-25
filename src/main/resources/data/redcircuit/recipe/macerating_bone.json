@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "item": "minecraft:bone"
-  },
+  "ingredient": "minecraft:bone",
   "result": {
     "id": "minecraft:bone_meal",
     "count": 6

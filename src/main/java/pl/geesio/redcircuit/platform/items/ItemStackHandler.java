@@ -1,13 +1,11 @@
 package pl.geesio.redcircuit.platform.items;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 
-/** Odpowiednik ItemStackHandler z NeoForge (ten sam format zapisu NBT: "Items" + "Size"). */
+/** Odpowiednik ItemStackHandler z NeoForge (ten sam format zapisu: "Items" + "Size"). */
 public class ItemStackHandler implements IItemHandlerModifiable {
     protected NonNullList<ItemStack> stacks;
 
@@ -105,29 +103,26 @@ public class ItemStackHandler implements IItemHandlerModifiable {
         return true;
     }
 
-    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-        ListTag list = new ListTag();
+    /** Zapis jak w NeoForge 1.21.1: {Items: [{Slot, id, count, ...}], Size}. */
+    public void save(ValueOutput output) {
+        ValueOutput.ValueOutputList list = output.childrenList("Items");
         for (int i = 0; i < stacks.size(); i++) {
             if (!stacks.get(i).isEmpty()) {
-                CompoundTag itemTag = new CompoundTag();
-                itemTag.putInt("Slot", i);
-                list.add(stacks.get(i).save(provider, itemTag));
+                ValueOutput item = list.addChild();
+                item.putInt("Slot", i);
+                item.store(ItemStack.MAP_CODEC, stacks.get(i));
             }
         }
-        CompoundTag nbt = new CompoundTag();
-        nbt.put("Items", list);
-        nbt.putInt("Size", stacks.size());
-        return nbt;
+        output.putInt("Size", stacks.size());
     }
 
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        setSize(nbt.contains("Size", Tag.TAG_INT) ? nbt.getInt("Size") : stacks.size());
-        ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
-        for (int i = 0; i < list.size(); i++) {
-            CompoundTag itemTags = list.getCompound(i);
-            int slot = itemTags.getInt("Slot");
+    /** Wczytuje sloty, zachowując rozmiar inwentarza (starsze zapisy mogły mieć inną liczbę slotów). */
+    public void load(ValueInput input) {
+        for (int i = 0; i < stacks.size(); i++) stacks.set(i, ItemStack.EMPTY);
+        for (ValueInput item : input.childrenListOrEmpty("Items")) {
+            int slot = item.getIntOr("Slot", -1);
             if (slot >= 0 && slot < stacks.size()) {
-                ItemStack.parse(provider, itemTags).ifPresent(stack -> stacks.set(slot, stack));
+                item.read(ItemStack.MAP_CODEC).ifPresent(stack -> stacks.set(slot, stack));
             }
         }
         onLoad();

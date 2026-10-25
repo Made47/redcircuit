@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -58,9 +60,9 @@ public class BatteryItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.redcircuit.battery", getEnergy(stack), CAPACITY)
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+        tooltip.accept(Component.translatable("tooltip.redcircuit.battery", getEnergy(stack), CAPACITY)
                 .withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("tooltip.redcircuit.battery_hint").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("tooltip.redcircuit.battery_hint").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.fluid;
 
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
@@ -54,7 +57,7 @@ public class FluidTankBlockEntity extends BlockEntity {
 
     private void changed() {
         setChanged();
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState s = getBlockState();
             level.sendBlockUpdated(worldPosition, s, s, Block.UPDATE_CLIENTS);
             level.updateNeighbourForOutputSignal(worldPosition, s.getBlock());
@@ -69,7 +72,7 @@ public class FluidTankBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FluidTankBlockEntity be) {
-        if (level.isClientSide || be.tank.isEmpty() || (level.getGameTime() % 5) != 0) return;
+        if (level.isClientSide() || be.tank.isEmpty() || (level.getGameTime() % 5) != 0) return;
         // Grawitacja: ciecz spływa do zbiornika poniżej (gazy, np. lżejsze od powietrza, zostają)
         if (be.tank.getFluid().getFluidType().isLighterThanAir()) return;
         if (level.getBlockEntity(pos.below()) instanceof FluidTankBlockEntity below) {
@@ -82,16 +85,16 @@ public class FluidTankBlockEntity extends BlockEntity {
     // ------------------------------------------------------------------ zapis / sync / przedmiot
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        tank.save(output.child("Tank"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        tank.readFromNBT(registries, tag.getCompound("Tank"));
-        if (level != null && level.isClientSide) level.getLightEngine().checkBlock(worldPosition);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        tank.load(input.childOrEmpty("Tank"));
+        if (level != null && level.isClientSide()) level.getLightEngine().checkBlock(worldPosition);
     }
 
     @Override
@@ -111,15 +114,14 @@ public class FluidTankBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(BlockEntity.DataComponentInput input) {
+    protected void applyImplicitComponents(DataComponentGetter input) {
         super.applyImplicitComponents(input);
         tank.setFluid(input.getOrDefault(ModDataComponents.FLUID.get(), SimpleFluidContent.EMPTY).copy());
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public void removeComponentsFromTag(CompoundTag tag) {
-        super.removeComponentsFromTag(tag);
-        tag.remove("Tank");
+    public void removeComponentsFromTag(ValueOutput output) {
+        super.removeComponentsFromTag(output);
+        output.discard("Tank");
     }
 }

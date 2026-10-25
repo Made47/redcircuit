@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.craft;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -55,11 +57,11 @@ public class PlanItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         NonNullList<ItemStack> data = read(stack);
         ItemStack result = data.get(RESULT_INDEX);
         if (result.isEmpty()) return;
-        tooltip.add(Component.translatable("tooltip.redcircuit.plan.result", result.getCount(), result.getHoverName())
+        tooltip.accept(Component.translatable("tooltip.redcircuit.plan.result", result.getCount(), result.getHoverName())
                 .withStyle(ChatFormatting.GRAY));
         Map<String, Integer> counts = new LinkedHashMap<>();
         Map<String, Component> names = new LinkedHashMap<>();
@@ -71,7 +73,7 @@ public class PlanItem extends Item {
             names.putIfAbsent(key, s.getHoverName());
         }
         for (Map.Entry<String, Integer> e : counts.entrySet()) {
-            tooltip.add(Component.literal(" " + e.getValue() + " x ").append(names.get(e.getKey()))
+            tooltip.accept(Component.literal(" " + e.getValue() + " x ").append(names.get(e.getKey()))
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
     }

@@ -7,12 +7,8 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone_slab"
-    }
+    "W": "redcircuit:power_alloy_wire",
+    "S": "minecraft:smooth_stone_slab"
   },
   "result": {
     "id": "redcircuit:encased_power_alloy_wire",

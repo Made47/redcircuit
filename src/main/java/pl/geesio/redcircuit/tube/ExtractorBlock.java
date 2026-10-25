@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.tube;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -14,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import pl.geesio.redcircuit.platform.capabilities.Capabilities;
 import pl.geesio.redcircuit.platform.items.IItemHandler;
 import pl.geesio.redcircuit.platform.items.ItemHandlerHelper;
@@ -25,7 +27,7 @@ import pl.geesio.redcircuit.platform.items.ItemHandlerHelper;
  * Stawia się go, klikając na inwentarz, z którego ma pobierać.
  */
 public class ExtractorBlock extends Block implements TubeConnectable {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public ExtractorBlock(Properties properties) {
@@ -60,8 +62,8 @@ public class ExtractorBlock extends Block implements TubeConnectable {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean powered = level.hasNeighborSignal(pos);
         if (powered != state.getValue(POWERED)) {
             level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS);

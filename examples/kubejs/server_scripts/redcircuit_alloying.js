@@ -1,14 +1,14 @@
-// RedCircuit - przykłady dla KubeJS (1.21.1). Skopiuj do kubejs/server_scripts/.
+// RedCircuit - przykłady dla KubeJS (Minecraft 26.x). Skopiuj do kubejs/server_scripts/.
 // Typ receptury: redcircuit:alloying (piec do stopów i elektryczny piec do stopów).
-// Składniki: lista {item|tag, count}, do 9 pozycji; wynik: {id, count}; cooktime w tickach (domyślnie 200).
+// Składniki: lista {ingredient, count} (ingredient: 'id' albo '#tag'), do 9 pozycji; wynik: {id, count}; cooktime w tickach (domyślnie 200).
 
 ServerEvents.recipes(event => {
   // Dodanie: stal z żelaza i węgla
   event.custom({
     type: 'redcircuit:alloying',
     ingredients: [
-      { tag: 'c:ingots/iron', count: 1 },
-      { item: 'minecraft:coal', count: 2 }
+      { ingredient: '#c:ingots/iron', count: 1 },
+      { ingredient: 'minecraft:coal', count: 2 }
     ],
     result: { id: 'minecraft:netherite_scrap', count: 1 },
     cooktime: 400

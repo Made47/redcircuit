@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.tube;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -43,18 +46,26 @@ public class SortingMachineBlockEntity extends BlockEntity {
     public int colorOf(int column) {
         if (column < 0) return -1;
         ItemStack dye = config.getItem(column);
-        return dye.getItem() instanceof DyeItem d ? d.getDyeColor().getId() : -1;
+        net.minecraft.world.item.DyeColor c = dye.get(net.minecraft.core.component.DataComponents.DYE);
+        return c != null ? c.getId() : -1;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        config.save(tag, registries);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        config.save(output);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        config.load(tag, registries);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        config.load(input);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            Containers.dropContents(level, pos, this.config);
     }
 }

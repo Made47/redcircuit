@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.client.rei;
 
+import pl.geesio.redcircuit.compat.rei.AlloyDisplay;
+import pl.geesio.redcircuit.compat.rei.ProcessingDisplay;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;

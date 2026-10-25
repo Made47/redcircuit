@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:ores/lapis"
-  },
+  "ingredient": "#c:ores/lapis",
   "result": {
     "id": "minecraft:lapis_lazuli",
     "count": 8

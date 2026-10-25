@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -31,9 +33,9 @@ public class SolarPanelBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SolarPanelBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         int gen = 0;
-        if (level.isDay() && level.canSeeSky(pos.above())) {
+        if (level.isBrightOutside() && level.canSeeSky(pos.above())) {
             gen = level.isRaining() ? pl.geesio.redcircuit.config.RedCircuitConfig.SOLAR_FE.get() / 3 : pl.geesio.redcircuit.config.RedCircuitConfig.SOLAR_FE.get();
         }
         be.lastGeneration = gen;
@@ -52,14 +54,14 @@ public class SolarPanelBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

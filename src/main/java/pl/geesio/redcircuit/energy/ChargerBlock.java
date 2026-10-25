@@ -41,22 +41,13 @@ public class ChargerBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.CHARGER.get(), ChargerBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.CHARGER.get(), ChargerBlockEntity::tick);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ChargerBlockEntity be) player.openMenu(be);
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof ChargerBlockEntity be) player.openMenu(be);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof ChargerBlockEntity be) {
-            for (int i = 0; i < be.getItems().getSlots(); i++) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItems().getStackInSlot(i));
-            }
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

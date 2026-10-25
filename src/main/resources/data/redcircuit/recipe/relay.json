@@ -7,18 +7,10 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "C": {
-      "tag": "c:chests/wooden"
-    },
-    "H": {
-      "item": "minecraft:hopper"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "I": "#c:ingots/iron",
+    "C": "#c:chests/wooden",
+    "H": "minecraft:hopper",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:relay",

@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
 import pl.geesio.redcircuit.RedCircuit;
@@ -30,8 +30,8 @@ import java.util.Locale;
 final class Providers {
     private Providers() {}
 
-    private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, path);
+    private static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(RedCircuit.MODID, path);
     }
 
     private static String seconds(int ticks) {
@@ -50,7 +50,7 @@ final class Providers {
         }
 
         @Override
-        public ResourceLocation getUid() {
+        public Identifier getUid() {
             return id("signal");
         }
     };
@@ -68,7 +68,7 @@ final class Providers {
 
         @Override
         public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-            byte[] ch = accessor.getServerData().getByteArray("Channels");
+            byte[] ch = accessor.getServerData().getByteArray("Channels").orElse(new byte[0]);
             if (ch.length < 16) return;
             MutableComponent line = Component.translatable("jade.redcircuit.channels");
             boolean any = false;
@@ -105,10 +105,10 @@ final class Providers {
             CompoundTag d = accessor.getServerData();
             GateType t = gate.getGateType();
             if (t.hasInterval() && d.contains("Interval")) {
-                tooltip.add(Component.translatable("jade.redcircuit.interval", seconds(d.getInt("Interval"))));
+                tooltip.add(Component.translatable("jade.redcircuit.interval", seconds(d.getIntOr("Interval", 0))));
             }
             if (t == GateType.COUNTER && d.contains("Count")) {
-                tooltip.add(Component.translatable("jade.redcircuit.count", d.getInt("Count"), d.getInt("Max")));
+                tooltip.add(Component.translatable("jade.redcircuit.count", d.getIntOr("Count", 0), d.getIntOr("Max", 0)));
             }
             int dis = GateBlock.disabledMask(s);
             if (dis != 0) {
@@ -122,7 +122,7 @@ final class Providers {
                 }
                 tooltip.add(Component.translatable(t.switchesOutputs() ? "jade.redcircuit.gate_disabled_out" : "jade.redcircuit.gate_disabled", sides).withStyle(ChatFormatting.GRAY));
             }
-            if (d.getBoolean("Muted")) {
+            if (d.getBooleanOr("Muted", false)) {
                 tooltip.add(Component.translatable("jade.redcircuit.muted").withStyle(ChatFormatting.DARK_GRAY));
             }
         }
@@ -140,7 +140,7 @@ final class Providers {
         }
 
         @Override
-        public ResourceLocation getUid() {
+        public Identifier getUid() {
             return id("lamp");
         }
     };
@@ -155,7 +155,7 @@ final class Providers {
         @Override
         public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
             if (!accessor.getServerData().contains("Rate")) return;
-            int rate = accessor.getServerData().getInt("Rate");
+            int rate = accessor.getServerData().getIntOr("Rate", 0);
             tooltip.add(Component.translatable("jade.redcircuit.generating", rate)
                     .withStyle(rate > 0 ? ChatFormatting.AQUA : ChatFormatting.GRAY));
         }
@@ -170,7 +170,7 @@ final class Providers {
 
         @Override
         public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-            int n = accessor.getServerData().getInt("Items");
+            int n = accessor.getServerData().getIntOr("Items", 0);
             if (n > 0) tooltip.add(Component.translatable("jade.redcircuit.tube_items", n));
         }
     };
@@ -190,11 +190,11 @@ final class Providers {
         @Override
         public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
             CompoundTag d = accessor.getServerData();
-            if (d.contains("Progress") && d.getInt("Progress") > 0) {
-                tooltip.add(Component.translatable("jade.redcircuit.progress", d.getInt("Progress")));
+            if (d.contains("Progress") && d.getIntOr("Progress", 0) > 0) {
+                tooltip.add(Component.translatable("jade.redcircuit.progress", d.getIntOr("Progress", 0)));
             }
-            if (d.getInt("Burn") > 0) {
-                tooltip.add(Component.translatable("jade.redcircuit.burn", seconds(d.getInt("Burn"))).withStyle(ChatFormatting.GOLD));
+            if (d.getIntOr("Burn", 0) > 0) {
+                tooltip.add(Component.translatable("jade.redcircuit.burn", seconds(d.getIntOr("Burn", 0))).withStyle(ChatFormatting.GOLD));
             }
         }
     };
@@ -211,7 +211,7 @@ final class Providers {
         @Override
         public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
             if (accessor.getServerData().contains("Freq")) {
-                tooltip.add(Component.translatable("tooltip.redcircuit.frequency", accessor.getServerData().getInt("Freq"))
+                tooltip.add(Component.translatable("tooltip.redcircuit.frequency", accessor.getServerData().getIntOr("Freq", 0))
                         .withStyle(ChatFormatting.AQUA));
             }
             boolean on = accessor.getBlockState().getValue(pl.geesio.redcircuit.wireless.WirelessBlock.POWERED);
@@ -222,14 +222,14 @@ final class Providers {
 
     /** Dostawca z danymi z serwera i podpowiedzią po stronie klienta. */
     abstract static class Both implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
-        private final ResourceLocation uid;
+        private final Identifier uid;
 
         Both(String path) {
             this.uid = id(path);
         }
 
         @Override
-        public ResourceLocation getUid() {
+        public Identifier getUid() {
             return uid;
         }
     }

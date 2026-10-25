@@ -1,9 +1,7 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "ingredient": {
-    "item": "redcircuit:gold_dust"
-  },
+  "ingredient": "redcircuit:gold_dust",
   "result": {
     "id": "minecraft:gold_ingot"
   },

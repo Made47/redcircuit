@@ -2,12 +2,8 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "ingredient": [
-    {
-      "item": "redcircuit:tin_ore"
-    },
-    {
-      "item": "redcircuit:deepslate_tin_ore"
-    }
+    "redcircuit:tin_ore",
+    "redcircuit:deepslate_tin_ore"
   ],
   "result": {
     "id": "redcircuit:tin_ingot"

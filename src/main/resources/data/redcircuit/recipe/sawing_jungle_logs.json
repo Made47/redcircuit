@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:sawing",
-  "ingredient": {
-    "tag": "minecraft:jungle_logs"
-  },
+  "ingredient": "#minecraft:jungle_logs",
   "result": {
     "id": "minecraft:jungle_planks",
     "count": 6

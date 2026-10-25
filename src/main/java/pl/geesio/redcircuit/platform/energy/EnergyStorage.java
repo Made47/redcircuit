@@ -1,8 +1,5 @@
 package pl.geesio.redcircuit.platform.energy;
 
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.core.HolderLookup;
 
 /** Odpowiednik EnergyStorage z NeoForge. */
 public class EnergyStorage implements IEnergyStorage {
@@ -66,11 +63,4 @@ public class EnergyStorage implements IEnergyStorage {
         return maxReceive > 0;
     }
 
-    public Tag serializeNBT(HolderLookup.Provider provider) {
-        return IntTag.valueOf(getEnergyStored());
-    }
-
-    public void deserializeNBT(HolderLookup.Provider provider, Tag nbt) {
-        if (nbt instanceof IntTag intNbt) energy = intNbt.getAsInt();
-    }
 }

@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.wire;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -111,8 +113,8 @@ public class RedWireBlock extends FaceWireBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (!level.isClientSide) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (!level.isClientSide()) {
             WireNetwork.update(level, pos);
         }
     }

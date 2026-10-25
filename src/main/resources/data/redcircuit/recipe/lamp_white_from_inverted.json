@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:inverted_lamp_white"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    }
+    "redcircuit:inverted_lamp_white",
+    "minecraft:redstone_torch"
   ],
   "result": {
     "id": "redcircuit:lamp_white",

@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.wireless;
 
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -22,7 +23,7 @@ public class WirelessReceiverBlock extends WirelessBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.WIRELESS.get(), WirelessBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.WIRELESS.get(), WirelessBlockEntity::tick);
     }
 
     void setOutput(Level level, BlockPos pos, BlockState state, boolean on) {
@@ -32,7 +33,7 @@ public class WirelessReceiverBlock extends WirelessBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         if (!state.canSurvive(level, pos)) {
             dropResources(state, level, pos);
             level.removeBlock(pos, false);

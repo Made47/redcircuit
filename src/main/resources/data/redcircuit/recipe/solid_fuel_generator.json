@@ -7,18 +7,10 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "C": {
-      "item": "redcircuit:copper_coil"
-    },
-    "F": {
-      "item": "minecraft:furnace"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "C": "redcircuit:copper_coil",
+    "F": "minecraft:furnace",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:solid_fuel_generator",

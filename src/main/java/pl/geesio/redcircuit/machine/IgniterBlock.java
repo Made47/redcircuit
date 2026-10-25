@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.machine;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,8 +26,8 @@ public class IgniterBlock extends ExtractorBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean powered = level.hasNeighborSignal(pos);
         if (powered == state.getValue(POWERED)) return;
         level.setBlock(pos, state.setValue(POWERED, powered), Block.UPDATE_CLIENTS);

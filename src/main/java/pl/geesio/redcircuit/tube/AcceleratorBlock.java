@@ -37,11 +37,11 @@ public class AcceleratorBlock extends TubeBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!player.isShiftKeyDown()) {
-            if (!level.isClientSide && level.getBlockEntity(pos) instanceof AcceleratorBlockEntity be) {
-                player.displayClientMessage(Component.translatable("message.redcircuit.energy",
-                        be.getEnergy().getEnergyStored(), be.getEnergy().getMaxEnergyStored()), true);
+            if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AcceleratorBlockEntity be) {
+                player.sendOverlayMessage(Component.translatable("message.redcircuit.energy",
+                        be.getEnergy().getEnergyStored(), be.getEnergy().getMaxEnergyStored()));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         }
         return super.useWithoutItem(state, level, pos, player, hit);
     }

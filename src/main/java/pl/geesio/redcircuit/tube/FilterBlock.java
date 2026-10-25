@@ -36,19 +36,12 @@ public class FilterBlock extends ExtractorBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FilterBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof FilterBlockEntity be) {
             player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> new ChestMenu(MenuType.GENERIC_9x1, id, inv, be.filter, 1),
                     Component.translatable("container.redcircuit.filter")));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof FilterBlockEntity be) {
-            Containers.dropContents(level, pos, be.filter);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

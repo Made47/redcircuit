@@ -11,14 +11,15 @@
     "main": ["pl.geesio.redcircuit.RedCircuit"],
     "client": ["pl.geesio.redcircuit.client.RedCircuitClient"],
     "rei_client": ["pl.geesio.redcircuit.client.rei.RedCircuitReiPlugin"],
+    "rei_common": ["pl.geesio.redcircuit.compat.rei.RedCircuitReiCommonPlugin"],
     "jade": ["pl.geesio.redcircuit.compat.jade.RedCircuitJadePlugin"]
   },
   "depends": {
-    "fabricloader": ">=0.16.0",
-    "minecraft": "~1.21.1",
-    "java": ">=21",
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~26.1.2",
+    "java": ">=25",
     "fabric-api": "*",
-    "team_reborn_energy": ">=4.1.0"
+    "team_reborn_energy": ">=5.0.0"
   },
   "suggests": {
     "roughlyenoughitems": "*",

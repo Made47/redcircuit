@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.gate;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -18,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -28,7 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Płaska bramka logiczna leżąca na bloku. FACING = kierunek wyjścia.
  */
 public class GateBlock extends Block implements net.minecraft.world.level.block.EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     /** Stan wewnętrzny (zatrzaski). */
     public static final BooleanProperty STATE = BooleanProperty.create("state");
@@ -154,11 +157,11 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbor, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor, RandomSource random) {
         if (dir == Direction.DOWN && !state.canSurvive(level, pos)) {
             return Blocks.AIR.defaultBlockState();
         }
-        return super.updateShape(state, dir, neighbor, level, pos, neighborPos);
+        return super.updateShape(state, level, ticks, pos, dir, neighborPos, neighbor, random);
     }
 
     // ---------- Redstone ----------
@@ -252,7 +255,7 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         if (level.getBlockEntity(pos) instanceof GateBlockEntity be) {
             return Math.min(15, be.count * 15 / Math.max(1, be.max()));
         }
@@ -266,14 +269,14 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (!level.isClientSide && !oldState.is(state.getBlock())) {
+        if (!level.isClientSide() && !oldState.is(state.getBlock())) {
             level.scheduleTick(pos, this, 1);
         }
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         if (!state.canSurvive(level, pos)) {
             dropResources(state, level, pos);
             level.removeBlock(pos, false);
@@ -285,11 +288,9 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!level.isClientSide && !state.is(newState.getBlock())) {
-            updateFront(level, pos, state);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        updateFront(level, pos, state);
     }
 
     private static boolean input(Level level, BlockPos pos, Direction dir) {
@@ -309,8 +310,8 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
 
     private void updateSide(Level level, BlockPos pos, Direction side) {
         BlockPos front = pos.relative(side);
-        level.neighborChanged(front, this, pos);
-        level.updateNeighborsAtExceptFromFacing(front, this, side.getOpposite());
+        level.neighborChanged(front, this, null);
+        level.updateNeighborsAtExceptFromFacing(front, this, side.getOpposite(), null);
     }
 
     @Override
@@ -510,7 +511,7 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (type == GateType.TOGGLE && !player.isSecondaryUseActive()) {
             // Przerzutnik T: PPM przełącza ręcznie, Shift + PPM otwiera okno
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 boolean st = !state.getValue(STATE);
                 BlockState ns = state.setValue(STATE, st).setValue(POWERED, st);
                 level.setBlock(pos, ns, Block.UPDATE_ALL);
@@ -518,12 +519,12 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
                 level.playSound(null, pos, net.minecraft.sounds.SoundEvents.LEVER_CLICK,
                         net.minecraft.sounds.SoundSource.BLOCKS, 0.3f, st ? 0.6f : 0.5f);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         }
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             pl.geesio.redcircuit.client.GateScreenOpener.open(pos, type);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     /** Strona wyjścia "w trakcie odliczania" komórki stanu: prawa, albo lewa po przełączeniu w oknie. */
@@ -537,7 +538,7 @@ public class GateBlock extends Block implements net.minecraft.world.level.block.
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                             @org.jetbrains.annotations.Nullable net.minecraft.world.entity.LivingEntity placer, net.minecraft.world.item.ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         if (level.getBlockEntity(pos) instanceof GateBlockEntity be) {
             BlockState ns = state;
             if (type == GateType.STATE_CELL || type == GateType.RS_LATCH) ns = ns.setValue(MIRRORED, be.mirrored);

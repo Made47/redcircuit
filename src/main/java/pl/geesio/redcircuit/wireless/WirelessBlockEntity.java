@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.wireless;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +29,7 @@ public class WirelessBlockEntity extends BlockEntity {
     public void setFrequency(int f) {
         frequency = WirelessNetwork.clampFreq(f);
         setChanged();
-        if (level != null && !level.isClientSide) {
+        if (level != null && !level.isClientSide()) {
             BlockState s = getBlockState();
             level.sendBlockUpdated(worldPosition, s, s, Block.UPDATE_CLIENTS);
         }
@@ -35,22 +37,22 @@ public class WirelessBlockEntity extends BlockEntity {
 
     /** Odbiornik: co 2 ticki sprawdza, czy jego częstotliwość jest aktywna. */
     public static void tick(Level level, BlockPos pos, BlockState state, WirelessBlockEntity be) {
-        if (level.isClientSide || level.getServer() == null || (level.getGameTime() & 1) != 0) return;
+        if (level.isClientSide() || level.getServer() == null || (level.getGameTime() & 1) != 0) return;
         if (!(state.getBlock() instanceof WirelessReceiverBlock receiver)) return;
         boolean on = WirelessNetwork.get(level.getServer()).isActive(level.getServer(), be.frequency);
         receiver.setOutput(level, pos, state, on);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Frequency", frequency);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Frequency", frequency);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        frequency = tag.contains("Frequency") ? WirelessNetwork.clampFreq(tag.getInt("Frequency")) : 1;
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        frequency = input.getInt("Frequency").isPresent() ? WirelessNetwork.clampFreq(input.getIntOr("Frequency", 0)) : 1;
     }
 
     @Override

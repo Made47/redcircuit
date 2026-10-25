@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "G": {
-      "tag": "c:gears/brass"
-    },
-    "M": {
-      "item": "redcircuit:power_machine_casing"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "B": "minecraft:bucket",
+    "G": "#c:gears/brass",
+    "M": "redcircuit:power_machine_casing",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:pump",

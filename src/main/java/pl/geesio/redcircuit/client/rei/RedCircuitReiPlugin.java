@@ -8,14 +8,10 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.common.BuiltinPlugin;
 import me.shedaniel.rei.plugin.common.displays.DefaultInformationDisplay;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
-import pl.geesio.redcircuit.RedCircuit;
-import pl.geesio.redcircuit.alloy.AlloyRecipe;
-import pl.geesio.redcircuit.alloy.MaceratingRecipe;
-import pl.geesio.redcircuit.alloy.ModRecipes;
-import pl.geesio.redcircuit.alloy.SawingRecipe;
+import pl.geesio.redcircuit.compat.rei.AlloyDisplay;
+import pl.geesio.redcircuit.compat.rei.ProcessingDisplay;
+import pl.geesio.redcircuit.compat.rei.ReiIds;
 import pl.geesio.redcircuit.gate.GateType;
 import pl.geesio.redcircuit.registry.ModBlocks;
 import pl.geesio.redcircuit.registry.ModItems;
@@ -24,14 +20,14 @@ import java.util.List;
 
 /**
  * Integracja z REI (Roughly Enough Items) - Fabric; na NeoForge jest JEI. Ładowana tylko, gdy REI jest zainstalowane.
- * - kategorie: piec do stopów, macerator, tartak,
+ * - kategorie: piec do stopów, macerator, tartak (wyświetlenia buduje serwer - RedCircuitReiCommonPlugin),
  * - piece / stół kreślarski jako stanowiska,
  * - strony informacyjne dla generatorów, wirników, pił i maszyn.
  */
 public class RedCircuitReiPlugin implements REIClientPlugin {
-    public static final CategoryIdentifier<AlloyDisplay> ALLOYING = CategoryIdentifier.of(RedCircuit.MODID, "alloying");
-    public static final CategoryIdentifier<ProcessingDisplay> MACERATING = CategoryIdentifier.of(RedCircuit.MODID, "macerating");
-    public static final CategoryIdentifier<ProcessingDisplay> SAWING = CategoryIdentifier.of(RedCircuit.MODID, "sawing");
+    public static final CategoryIdentifier<AlloyDisplay> ALLOYING = ReiIds.ALLOYING;
+    public static final CategoryIdentifier<ProcessingDisplay> MACERATING = ReiIds.MACERATING;
+    public static final CategoryIdentifier<ProcessingDisplay> SAWING = ReiIds.SAWING;
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
@@ -48,19 +44,6 @@ public class RedCircuitReiPlugin implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        RecipeManager rm = registry.getRecipeManager();
-        for (RecipeHolder<AlloyRecipe> h : rm.getAllRecipesFor(ModRecipes.ALLOYING.get())) {
-            registry.add(new AlloyDisplay(h.value()));
-        }
-        for (RecipeHolder<MaceratingRecipe> h : rm.getAllRecipesFor(ModRecipes.MACERATING.get())) {
-            MaceratingRecipe r = h.value();
-            registry.add(new ProcessingDisplay(MACERATING, r.ingredient(), r.result(), r.bonus(), r.bonusChance(), r.time()));
-        }
-        for (RecipeHolder<SawingRecipe> h : rm.getAllRecipesFor(ModRecipes.SAWING.get())) {
-            SawingRecipe r = h.value();
-            registry.add(new ProcessingDisplay(SAWING, r.ingredient(), r.result(), r.bonus(), r.bonusChance(), r.time()));
-        }
-
         info(registry, ModBlocks.THERMOPILE.get(), "thermopile");
         info(registry, ModBlocks.MACERATOR.get(), "macerator");
         info(registry, ModBlocks.SAWMILL.get(), "sawmill");
@@ -116,7 +99,7 @@ public class RedCircuitReiPlugin implements REIClientPlugin {
 
     /** Strona informacyjna (teksty z kluczy jei.redcircuit.info.* - wspólne z wersją NeoForge). */
     private static void info(DisplayRegistry registry, ItemLike item, String key) {
-        registry.add(DefaultInformationDisplay.createFromEntry(EntryStacks.of(item), item.asItem().getDescription())
+        registry.add(DefaultInformationDisplay.createFromEntry(EntryStacks.of(item), new net.minecraft.world.item.ItemStack(item).getHoverName())
                 .line(Component.translatable("jei.redcircuit.info." + key)));
     }
 }

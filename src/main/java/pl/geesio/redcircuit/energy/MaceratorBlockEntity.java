@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.energy;
 
+import pl.geesio.redcircuit.util.Recipes;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -96,11 +100,11 @@ public class MaceratorBlockEntity extends BlockEntity implements MenuProvider {
 
     private Optional<RecipeHolder<MaceratingRecipe>> recipeFor(Level level, ItemStack input) {
         if (input.isEmpty()) return Optional.empty();
-        return level.getRecipeManager().getRecipeFor(ModRecipes.MACERATING.get(), new SingleRecipeInput(input), level);
+        return Recipes.find(level, ModRecipes.MACERATING.get(), new SingleRecipeInput(input));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, MaceratorBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         BatteryHelper.discharge(be.items.getStackInSlot(BATTERY_SLOT), be.energy, 400);
         int cost = RedCircuitConfig.MACERATOR_FE.get();
         boolean working = false;
@@ -118,7 +122,7 @@ public class MaceratorBlockEntity extends BlockEntity implements MenuProvider {
                     be.progress = 0;
                     be.items.extractItem(INPUT, 1, false);
                     be.items.insertItem(OUTPUT, result.copy(), false);
-                    if (!recipe.bonus().isEmpty() && level.random.nextFloat() < recipe.bonusChance()) {
+                    if (!recipe.bonus().isEmpty() && level.getRandom().nextFloat() < recipe.bonusChance()) {
                         be.items.insertItem(BONUS, recipe.bonus().copy(), false);
                     }
                 }
@@ -145,19 +149,19 @@ public class MaceratorBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("Progress", progress);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("Progress", progress);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        BatteryHelper.loadItems(items, registries, tag.getCompound("Items"));
-        energy.setEnergy(tag.getInt("Energy"));
-        progress = tag.getInt("Progress");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        items.load(input.childOrEmpty("Items"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        progress = input.getIntOr("Progress", 0);
     }
 
     /** Lejki/rury: wkładanie do wejścia (tylko to, co da się zmielić), wyjmowanie z obu wyjść. */
@@ -192,5 +196,14 @@ public class MaceratorBlockEntity extends BlockEntity implements MenuProvider {
         public boolean isItemValid(int slot, ItemStack stack) {
             return slot == INPUT && level != null && recipeFor(level, stack).isPresent();
         }
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            for (int i = 0; i < this.getItems().getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.getItems().getStackInSlot(i));
+            }
     }
 }

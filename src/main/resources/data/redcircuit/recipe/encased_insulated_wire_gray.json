@@ -7,12 +7,8 @@
     "WWW"
   ],
   "key": {
-    "W": {
-      "item": "redcircuit:insulated_wire_gray"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone_slab"
-    }
+    "W": "redcircuit:insulated_wire_gray",
+    "S": "minecraft:smooth_stone_slab"
   },
   "result": {
     "id": "redcircuit:encased_insulated_wire_gray",

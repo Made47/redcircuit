@@ -7,12 +7,8 @@
     "SIS"
   ],
   "key": {
-    "S": {
-      "tag": "c:strings"
-    },
-    "I": {
-      "tag": "redcircuit:insulated_wires"
-    }
+    "S": "#c:strings",
+    "I": "#redcircuit:insulated_wires"
   },
   "result": {
     "id": "redcircuit:bundled_cable",

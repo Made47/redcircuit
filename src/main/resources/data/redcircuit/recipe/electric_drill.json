@@ -7,18 +7,10 @@
     "IBI"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:diamond_pickaxe"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "M": {
-      "item": "redcircuit:power_circuit"
-    },
-    "B": {
-      "item": "redcircuit:battery"
-    }
+    "P": "minecraft:diamond_pickaxe",
+    "I": "#c:ingots/iron",
+    "M": "redcircuit:power_circuit",
+    "B": "redcircuit:battery"
   },
   "result": {
     "id": "redcircuit:electric_drill",

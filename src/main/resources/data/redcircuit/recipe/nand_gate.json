@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:circuit_plate"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    }
+    "redcircuit:circuit_plate",
+    "minecraft:redstone_torch",
+    "minecraft:redstone_torch",
+    "minecraft:redstone_torch",
+    "#c:dusts/redstone"
   ],
   "result": {
     "id": "redcircuit:nand_gate",

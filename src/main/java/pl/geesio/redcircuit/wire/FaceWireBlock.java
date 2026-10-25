@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.wire;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -260,11 +263,11 @@ public abstract class FaceWireBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbor, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir, BlockPos neighborPos, BlockState neighbor, RandomSource random) {
         if (hasFace(state, dir) && !canAttach(level, pos, dir)) {
             BlockState ns = state.setValue(face(dir), false);
             if (faceCount(ns) == 0) return Blocks.AIR.defaultBlockState();
-            if (level instanceof Level lvl && !lvl.isClientSide) {
+            if (level instanceof Level lvl && !lvl.isClientSide()) {
                 popResource(lvl, pos, new ItemStack(this));
             }
             return ns;
@@ -280,7 +283,7 @@ public abstract class FaceWireBlock extends Block {
         if (faceCount(state) <= 1) return true;
         Direction side = pickFace(level, pos, state, player);
         level.setBlock(pos, state.setValue(face(side), false), Block.UPDATE_ALL);
-        if (!level.isClientSide && !player.isCreative()) {
+        if (!level.isClientSide() && !player.isCreative()) {
             popResource(level, pos, new ItemStack(this));
         }
         return false;
@@ -311,18 +314,16 @@ public abstract class FaceWireBlock extends Block {
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         if (!oldState.is(state.getBlock()) || facesChanged(oldState, state)) {
             onWireChanged(level, pos);
         }
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        super.onRemove(state, level, pos, newState, movedByPiston);
-        if (!level.isClientSide && !state.is(newState.getBlock())) {
-            onWireRemoved(level, pos);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        onWireRemoved(level, pos);
     }
 
     private static boolean facesChanged(BlockState a, BlockState b) {

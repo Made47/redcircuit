@@ -3467,7 +3467,7 @@ def gen_sawmill():
     # Trociny: paliwo i papier
     save_png(tex_dust((196, 160, 110)), "item", "sawdust")
     generated_item("sawdust")
-    # Fabric: paliwo rejestruje kod (FuelRegistry w RedCircuit)
+    # Fabric: paliwo rejestruje kod (FuelValueEvents w RedCircuit)
     shaped("paper_from_sawdust", ["SSS"], {"S": M + "sawdust"}, "minecraft:paper", 2)
     write_json(os.path.join(RES, "data", "c", "tags", "item", "dusts", "wood.json"), {"values": [M + "sawdust"]})
 
@@ -3674,4 +3674,6 @@ if __name__ == "__main__":
     from gen_advancements import gen_advancements
     gen_advancements(ROOT, write_json)
     gen_tag_names()
+    from mc26_format import convert
+    convert(RES, MODID)
     print("OK - zasoby wygenerowane w", os.path.abspath(RES))

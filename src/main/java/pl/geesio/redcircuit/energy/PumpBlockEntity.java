@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -54,7 +56,7 @@ public class PumpBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PumpBlockEntity be) {
-        if (level.isClientSide || level.getGameTime() % INTERVAL != 0) return;
+        if (level.isClientSide() || level.getGameTime() % INTERVAL != 0) return;
         if (level.hasNeighborSignal(pos)) return;              // redstone = stop
         Direction facing = state.getValue(PumpBlock.FACING);
         be.intake(level, pos.relative(facing.getOpposite()), facing);
@@ -140,16 +142,16 @@ public class PumpBlockEntity extends BlockEntity {
     // ------------------------------------------------------------------ zapis
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        tank.save(output.child("Tank"));
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        tank.readFromNBT(registries, tag.getCompound("Tank"));
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        tank.load(input.childOrEmpty("Tank"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

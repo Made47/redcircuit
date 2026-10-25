@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:ores/coal"
-  },
+  "ingredient": "#c:ores/coal",
   "result": {
     "id": "minecraft:coal",
     "count": 2

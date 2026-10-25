@@ -7,12 +7,8 @@
     " M "
   ],
   "key": {
-    "M": {
-      "tag": "c:gems/diamond"
-    },
-    "G": {
-      "tag": "c:gears/stone"
-    }
+    "M": "#c:gems/diamond",
+    "G": "#c:gears/stone"
   },
   "result": {
     "id": "redcircuit:diamond_gear",

@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:raw_materials/tin"
-  },
+  "ingredient": "#c:raw_materials/tin",
   "result": {
     "id": "redcircuit:tin_dust",
     "count": 2

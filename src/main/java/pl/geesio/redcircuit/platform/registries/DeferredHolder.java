@@ -1,7 +1,7 @@
 package pl.geesio.redcircuit.platform.registries;
 
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ public class DeferredHolder<R, T extends R> implements Supplier<T> {
 
     @Override
     public T get() {
-        if (value == null) throw new IllegalStateException("Registry entry not present yet: " + key.location());
+        if (value == null) throw new IllegalStateException("Registry entry not present yet: " + key.identifier());
         return value;
     }
 
@@ -33,8 +33,8 @@ public class DeferredHolder<R, T extends R> implements Supplier<T> {
         return value != null;
     }
 
-    public ResourceLocation getId() {
-        return key.location();
+    public Identifier getId() {
+        return key.identifier();
     }
 
     public ResourceKey<R> getKey() {

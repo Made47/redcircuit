@@ -26,21 +26,12 @@ public class BlueprintTableBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BlueprintTableBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof BlueprintTableBlockEntity be) {
             player.openMenu(be);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BlueprintTableBlockEntity be) {
-            drop(level, pos, be.grid);
-            drop(level, pos, be.storage);
-            drop(level, pos, be.plan);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 
     private static void drop(Level level, BlockPos pos, IItemHandler handler) {
         for (int i = 0; i < handler.getSlots(); i++) {

@@ -39,15 +39,15 @@ public class SolarPanelBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.SOLAR_PANEL.get(), SolarPanelBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.SOLAR_PANEL.get(), SolarPanelBlockEntity::tick);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof SolarPanelBlockEntity be) {
-            player.displayClientMessage(Component.translatable("message.redcircuit.solar",
-                    be.getLastGeneration(), be.getEnergy().getEnergyStored()), true);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof SolarPanelBlockEntity be) {
+            player.sendOverlayMessage(Component.translatable("message.redcircuit.solar",
+                    be.getLastGeneration(), be.getEnergy().getEnergyStored()));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

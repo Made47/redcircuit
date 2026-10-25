@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.alloy;
 
+import pl.geesio.redcircuit.util.Recipes;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -130,8 +134,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         if (lastInputs != null && sameStacks(now, lastInputs)) return Optional.ofNullable(cachedRecipe);
         lastInputs = new ArrayList<>();
         for (ItemStack s : now) lastInputs.add(s.copy());
-        cachedRecipe = level.getRecipeManager()
-                .getRecipeFor(ModRecipes.ALLOYING.get(), new AlloyRecipe.Input(now), level).orElse(null);
+        cachedRecipe = Recipes.find(level, ModRecipes.ALLOYING.get(), new AlloyRecipe.Input(now)).orElse(null);
         return Optional.ofNullable(cachedRecipe);
     }
 
@@ -145,14 +148,14 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AlloyFurnaceBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         boolean wasLit = state.getValue(AlloyFurnaceBlock.LIT);
         boolean working = false;
 
         if (be.burnTime > 0) be.burnTime--;
 
         Optional<RecipeHolder<AlloyRecipe>> recipe = be.findRecipe(level);
-        ItemStack result = recipe.map(r -> r.value().getResultItem(level.registryAccess())).orElse(ItemStack.EMPTY);
+        ItemStack result = recipe.map(r -> r.value().result()).orElse(ItemStack.EMPTY);
         boolean canWork = recipe.isPresent() && be.outputFits(result);
         if (canWork) be.cookTime = recipe.get().value().cookTime();
 
@@ -166,10 +169,10 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         } else {
             if (canWork && be.burnTime <= 0) {
                 ItemStack fuel = be.items.getStackInSlot(FUEL);
-                int burn = pl.geesio.redcircuit.platform.Fuel.burnTime(fuel);
+                int burn = pl.geesio.redcircuit.platform.Fuel.burnTime(fuel, level);
                 if (burn > 0) {
                     be.burnTime = be.burnDuration = burn;
-                    ItemStack rest = !fuel.getRecipeRemainder().isEmpty() ? fuel.getRecipeRemainder() : ItemStack.EMPTY;
+                    ItemStack rest = pl.geesio.redcircuit.util.Recipes.remainder(fuel);
                     ItemStack f = fuel.copy();
                     f.shrink(1);
                     be.items.setStackInSlot(FUEL, f.isEmpty() ? rest : f);
@@ -217,7 +220,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                 if (side == Direction.DOWN || slot == OUTPUT) return stack;
                 boolean fuelSide = !electric && side != Direction.UP;
                 if (fuelSide) {
-                    if (slot != FUEL || pl.geesio.redcircuit.platform.Fuel.burnTime(stack) <= 0) return stack;
+                    if (slot != FUEL || pl.geesio.redcircuit.platform.Fuel.burnTime(stack, level) <= 0) return stack;
                 } else if (slot >= INPUTS) {
                     return stack;
                 }
@@ -255,22 +258,31 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("Burn", burnTime);
-        tag.putInt("BurnMax", burnDuration);
-        tag.putInt("Progress", progress);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("Burn", burnTime);
+        output.putInt("BurnMax", burnDuration);
+        output.putInt("Progress", progress);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        items.deserializeNBT(registries, tag.getCompound("Items"));
-        energy.setEnergy(tag.getInt("Energy"));
-        burnTime = tag.getInt("Burn");
-        burnDuration = tag.getInt("BurnMax");
-        progress = tag.getInt("Progress");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        items.load(input.childOrEmpty("Items"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        burnTime = input.getIntOr("Burn", 0);
+        burnDuration = input.getIntOr("BurnMax", 0);
+        progress = input.getIntOr("Progress", 0);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            for (int i = 0; i < this.items.getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.items.getStackInSlot(i));
+            }
     }
 }

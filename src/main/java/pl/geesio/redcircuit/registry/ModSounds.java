@@ -1,7 +1,7 @@
 package pl.geesio.redcircuit.registry;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import pl.geesio.redcircuit.platform.registries.DeferredHolder;
 import pl.geesio.redcircuit.platform.registries.DeferredRegister;
@@ -14,5 +14,5 @@ public final class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, RedCircuit.MODID);
 
     public static final DeferredHolder<SoundEvent, SoundEvent> GATE_TICK = SOUNDS.register("gate_tick",
-            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, "gate_tick")));
+            () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(RedCircuit.MODID, "gate_tick")));
 }

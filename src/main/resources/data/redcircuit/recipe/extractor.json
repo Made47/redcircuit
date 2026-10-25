@@ -7,18 +7,10 @@
     "CWC"
   ],
   "key": {
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "C": {
-      "tag": "c:cobblestones/normal"
-    },
-    "T": {
-      "item": "minecraft:piston"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "P": "#minecraft:planks",
+    "C": "#c:cobblestones/normal",
+    "T": "minecraft:piston",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:extractor",

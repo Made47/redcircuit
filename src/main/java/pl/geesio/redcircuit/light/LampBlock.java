@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.light;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -51,8 +53,8 @@ public class LampBlock extends Block {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean lit = state.getValue(LIT);
         boolean want = shouldBeLit(level, pos);
         if (lit == want) return;

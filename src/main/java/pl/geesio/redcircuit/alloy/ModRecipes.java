@@ -1,7 +1,7 @@
 package pl.geesio.redcircuit.alloy;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import pl.geesio.redcircuit.platform.registries.DeferredHolder;
@@ -29,17 +29,17 @@ public final class ModRecipes {
             () -> simple("alloying"));
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlloyRecipe>> ALLOYING_SERIALIZER =
-            SERIALIZERS.register("alloying", AlloyRecipe.Serializer::new);
+            SERIALIZERS.register("alloying", () -> AlloyRecipe.Serializer.INSTANCE);
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<MaceratingRecipe>> MACERATING = TYPES.register("macerating",
             () -> simple("macerating"));
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<MaceratingRecipe>> MACERATING_SERIALIZER =
-            SERIALIZERS.register("macerating", MaceratingRecipe.Serializer::new);
+            SERIALIZERS.register("macerating", () -> MaceratingRecipe.Serializer.INSTANCE);
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<SawingRecipe>> SAWING = TYPES.register("sawing",
             () -> simple("sawing"));
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SawingRecipe>> SAWING_SERIALIZER =
-            SERIALIZERS.register("sawing", SawingRecipe.Serializer::new);
+            SERIALIZERS.register("sawing", () -> SawingRecipe.Serializer.INSTANCE);
 }

@@ -5,12 +5,8 @@
     "MMS"
   ],
   "key": {
-    "M": {
-      "tag": "c:ingots/copper"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "M": "#c:ingots/copper",
+    "S": "#c:rods/wooden"
   },
   "result": {
     "id": "redcircuit:copper_handsaw",

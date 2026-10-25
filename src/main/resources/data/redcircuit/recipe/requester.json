@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "F": {
-      "item": "redcircuit:filter"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    },
-    "M": {
-      "item": "redcircuit:power_machine_casing"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "I": "#c:ingots/iron",
+    "F": "redcircuit:filter",
+    "G": "#c:ingots/gold",
+    "M": "redcircuit:power_machine_casing",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:requester",

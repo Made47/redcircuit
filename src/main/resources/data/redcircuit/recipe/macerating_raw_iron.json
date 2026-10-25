@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:raw_materials/iron"
-  },
+  "ingredient": "#c:raw_materials/iron",
   "result": {
     "id": "redcircuit:iron_dust",
     "count": 2

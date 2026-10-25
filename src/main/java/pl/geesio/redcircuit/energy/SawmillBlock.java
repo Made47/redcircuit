@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -26,7 +26,7 @@ import pl.geesio.redcircuit.util.TickerUtil;
 
 /** Tartak: tnie kłody na deski (6 zamiast 4), deski na patyki, z trocinami jako produktem ubocznym. Zasilany FE. */
 public class SawmillBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public SawmillBlock(Properties properties) {
@@ -62,24 +62,15 @@ public class SawmillBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.SAWMILL.get(), SawmillBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.SAWMILL.get(), SawmillBlockEntity::tick);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof SawmillBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof SawmillBlockEntity be) {
             player.openMenu(be);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof SawmillBlockEntity be) {
-            for (int i = 0; i < be.getItems().getSlots(); i++) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.getItems().getStackInSlot(i));
-            }
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

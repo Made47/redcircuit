@@ -12,19 +12,25 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.component.TooltipDisplay;
+import java.util.function.Consumer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,41 +44,12 @@ import java.util.List;
  * Narzędzie elektryczne (wiertło, piła łańcuchowa): zamiast wytrzymałości zużywa energię (FE).
  * Bez energii kopie bardzo wolno. Ładuje się w ładowarce, akumulatorze albo ładowarkach innych modów.
  */
-public class ElectricToolItem extends DiggerItem {
+public class ElectricToolItem extends Item {
     public static final int CAPACITY = 100_000, RATE = 1_000, COST_PER_BLOCK = 50, COST_PER_HIT = 100;
 
-    /** Poziom jak diament: kopie obsydian, prędkość 10. Wytrzymałość nieużywana (energia zamiast niej). */
-    public static final Tier TIER = new Tier() {
-        @Override
-        public int getUses() {
-            return 1_000_000;
-        }
-
-        @Override
-        public float getSpeed() {
-            return 10.0f;
-        }
-
-        @Override
-        public float getAttackDamageBonus() {
-            return 3.0f;
-        }
-
-        @Override
-        public TagKey<Block> getIncorrectBlocksForDrops() {
-            return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
-        }
-
-        @Override
-        public int getEnchantmentValue() {
-            return 12;
-        }
-
-        @Override
-        public Ingredient getRepairIngredient() {
-            return Ingredient.EMPTY;
-        }
-    };
+    /** Poziom jak diament: kopie obsydian, prędkość 10. Zamiast wytrzymałości zużywa energię. */
+    public static final float SPEED = 10.0f;
+    public static final float DAMAGE_BONUS = 3.0f;
 
     private final boolean areaCapable;
     /** Zapobiega rekurencji: rozbijanie bloków obok wywołuje mineBlock ponownie. */
@@ -84,8 +61,23 @@ public class ElectricToolItem extends DiggerItem {
 
     /** @param areaCapable czy narzędzie ma tryb 3x3 (wiertarka) */
     public ElectricToolItem(TagKey<Block> blocks, float attackDamage, float attackSpeed, Properties properties, boolean areaCapable) {
-        super(TIER, blocks, properties.stacksTo(1).attributes(DiggerItem.createAttributes(TIER, attackDamage, attackSpeed)));
+        super(toolProperties(properties.stacksTo(1), blocks, attackDamage, attackSpeed));
         this.areaCapable = areaCapable;
+    }
+
+    private static Properties toolProperties(Properties properties, TagKey<Block> blocks, float attackDamage, float attackSpeed) {
+        HolderGetter<Block> lookup = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
+        return properties
+                .enchantable(12)
+                .component(DataComponents.TOOL, new Tool(List.of(
+                        Tool.Rule.deniesDrops(lookup.getOrThrow(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)),
+                        Tool.Rule.minesAndDrops(lookup.getOrThrow(blocks), SPEED)), 1.0f, 0, true))
+                .attributes(ItemAttributeModifiers.builder()
+                        .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID,
+                                attackDamage + DAMAGE_BONUS, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID,
+                                attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .build());
     }
 
     public boolean isAreaMode(ItemStack stack) {
@@ -95,11 +87,11 @@ public class ElectricToolItem extends DiggerItem {
     // ------------------------------------------------------------------ przełączanie trybu
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!areaCapable || !player.isShiftKeyDown()) return InteractionResultHolder.pass(stack);
+        if (!areaCapable || !player.isShiftKeyDown()) return InteractionResult.PASS;
         toggle(level, player, stack);
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -107,17 +99,17 @@ public class ElectricToolItem extends DiggerItem {
         Player player = ctx.getPlayer();
         if (areaCapable && player != null && player.isShiftKeyDown()) {
             toggle(ctx.getLevel(), player, ctx.getItemInHand());
-            return InteractionResult.sidedSuccess(ctx.getLevel().isClientSide);
+            return InteractionResult.SUCCESS;
         }
         return super.useOn(ctx);
     }
 
     private void toggle(Level level, Player player, ItemStack stack) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         boolean area = !isAreaMode(stack);
         stack.set(ModDataComponents.DRILL_AREA.get(), area);
-        player.displayClientMessage(Component.translatable(area ? "message.redcircuit.drill_3x3" : "message.redcircuit.drill_1x1")
-                .withStyle(ChatFormatting.AQUA), true);
+        player.sendOverlayMessage(Component.translatable(area ? "message.redcircuit.drill_3x3" : "message.redcircuit.drill_1x1")
+                .withStyle(ChatFormatting.AQUA));
         level.playSound(null, player.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.4f, area ? 1.4f : 1.0f);
     }
 
@@ -179,17 +171,12 @@ public class ElectricToolItem extends DiggerItem {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0f) use(stack, COST_PER_BLOCK);
-        if (!level.isClientSide && isAreaMode(stack) && !BREAKING_AREA.get() && miner instanceof ServerPlayer player
+        if (!level.isClientSide() && state.getDestroySpeed(level, pos) != 0.0f) use(stack, COST_PER_BLOCK);
+        if (!level.isClientSide() && isAreaMode(stack) && !BREAKING_AREA.get() && miner instanceof ServerPlayer player
                 && !player.isShiftKeyDown() && isCorrectToolForDrops(stack, state)) {
             breakArea(stack, level, state, pos, player);   // Shift podczas kopania = tylko jeden blok
         }
         return true;   // bez zużycia wytrzymałości
-    }
-
-    @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return true;
     }
 
     @Override
@@ -213,18 +200,13 @@ public class ElectricToolItem extends DiggerItem {
     }
 
     @Override
-    public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
-        return false;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.redcircuit.battery", energy(stack), CAPACITY).withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("tooltip.redcircuit.electric_tool", COST_PER_BLOCK).withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+        tooltip.accept(Component.translatable("tooltip.redcircuit.battery", energy(stack), CAPACITY).withStyle(ChatFormatting.AQUA));
+        tooltip.accept(Component.translatable("tooltip.redcircuit.electric_tool", COST_PER_BLOCK).withStyle(ChatFormatting.GRAY));
         if (areaCapable) {
-            tooltip.add(Component.translatable(isAreaMode(stack) ? "tooltip.redcircuit.drill_mode_3x3" : "tooltip.redcircuit.drill_mode_1x1")
+            tooltip.accept(Component.translatable(isAreaMode(stack) ? "tooltip.redcircuit.drill_mode_3x3" : "tooltip.redcircuit.drill_mode_1x1")
                     .withStyle(ChatFormatting.YELLOW));
-            tooltip.add(Component.translatable("tooltip.redcircuit.drill_toggle").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.accept(Component.translatable("tooltip.redcircuit.drill_toggle").withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 }

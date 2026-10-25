@@ -7,9 +7,7 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "tag": "c:nuggets/tin"
-    }
+    "X": "#c:nuggets/tin"
   },
   "result": {
     "id": "redcircuit:tin_ingot",

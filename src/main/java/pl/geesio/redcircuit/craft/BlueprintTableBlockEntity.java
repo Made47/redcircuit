@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.craft;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -66,18 +69,29 @@ public class BlueprintTableBlockEntity extends BlockEntity implements MenuProvid
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Grid", grid.serializeNBT(registries));
-        tag.put("Storage", storage.serializeNBT(registries));
-        tag.put("Plan", plan.serializeNBT(registries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        grid.save(output.child("Grid"));
+        storage.save(output.child("Storage"));
+        plan.save(output.child("Plan"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        grid.deserializeNBT(registries, tag.getCompound("Grid"));
-        storage.deserializeNBT(registries, tag.getCompound("Storage"));
-        plan.deserializeNBT(registries, tag.getCompound("Plan"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        grid.load(input.childOrEmpty("Grid"));
+        storage.load(input.childOrEmpty("Storage"));
+        plan.load(input.childOrEmpty("Plan"));
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+        for (var handler : java.util.List.of(this.grid, this.storage, this.plan)) {
+            for (int i = 0; i < handler.getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
+            }
+        }
     }
 }

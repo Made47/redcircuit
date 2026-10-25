@@ -1,4 +1,4 @@
-# RedCircuit (Fabric 1.21.1)
+# RedCircuit (Fabric 26.1.2)
 
 *[English version: README.md](README.md)*
 
@@ -17,16 +17,22 @@
 Przewody redstone bez strat sygnału, bramki logiczne, rury pneumatyczne z sortowaniem i energia Azurity. Cały kod i grafiki są autorskie.
 Zawiera kable redstone, bramki logiczne, rury z sortowaniem i Azurity.
 
+## Uwagi do Minecraft 26.1.2
+- Wymaga **Javy 25** (dołączonej do launchera Minecraft 26.1.2), Fabric Loadera 0.20+ i Fabric API dla 26.1.2.
+- Inwentarze maszyn i zbiorniki zapisane przez wersję 1.21.1 wczytują się poprawnie.
+- Receptury mają format JSON z 1.21.2+ (`"key": {"A": "minecraft:iron_ingot"}`, tagi jako `"#c:ingots/tin"`; składniki pieca do stopów jako `{"ingredient": "...", "count": n}`).
+- Od 1.21.2 receptury są tylko na serwerze, więc strony receptur RedCircuit w REI buduje serwer – na serwerze dedykowanym zainstaluj tam też REI, inaczej widoczne będą tylko strony informacyjne.
+
 ## Budowanie `.jar`
 
 ### Opcja A – na swoim komputerze (Windows)
-1. Zainstaluj **JDK 21**, np. Temurin: https://adoptium.net (zaznacz „Set JAVA_HOME”).
+1. Zainstaluj **JDK 25**, np. Temurin: https://adoptium.net (zaznacz „Set JAVA_HOME”).
 2. Rozpakuj projekt, otwórz w tym folderze terminal (PowerShell) i uruchom:
    ```
    .\gradlew.bat build
    ```
    Pierwsze budowanie trwa kilka minut, bo pobiera Minecrafta, Fabric Loom i Fabric API.
-3. Gotowy plik: `build\libs\redcircuit-fabric-0.1.0.jar` → wrzuć do `mods/` razem z **Fabric API** (Fabric Loader 0.16+ dla MC 1.21.1).
+3. Gotowy plik: `build\libs\redcircuit-fabric-0.1.0.jar` → wrzuć do `mods/` razem z **Fabric API** (Fabric Loader 0.20+ i Fabric API 0.155.3 lub nowsze dla MC 26.1.2).
 
 Do testów w grze bez instalowania: `.\gradlew.bat runClient`.
 
@@ -278,7 +284,7 @@ Azurity to **Forge Energy (FE)**, więc działa też z maszynami/kablami innych 
 Pełna lista: `src/main/resources/data/redcircuit/recipe/`. Najwygodniej podglądać w grze przez REI.
 
 ## Integracja z REI
-Jeśli zainstalujesz **REI (Roughly Enough Items)** dla Fabric 1.21.1, zobaczysz:
+Jeśli zainstalujesz **REI (Roughly Enough Items)** dla Fabric 26.1.2, zobaczysz:
 - kategorie **Piec do stopów**, **Macerator** i **Tartak** ze wszystkimi recepturami (także z datapacków),
 - piece do stopów, piec elektryczny, macerator, tartak i stół kreślarski jako stacje wytwarzania,
 - opisy (strony informacyjne) dla generatorów, wirników, rur, maszyn, stołu kreślarskiego i pił.
@@ -293,7 +299,7 @@ python tools/gen_assets.py
 
 
 ## Integracja z CC: Tweaked (opcjonalna)
-Działa automatycznie, gdy zainstalowany jest CC: Tweaked (testowane API 1.120.x dla 1.21.1).
+Działa automatycznie, gdy zainstalowany jest CC: Tweaked (testowane z CC: Tweaked 1.120.x dla 26.1.2).
 - **Kabel wiązkowy ↔ komputery i żółwie**: kabel (zwykły i w obudowie) łączy się wizualnie z komputerem. `redstone.setBundledOutput` zasila kanały kabla, a `redstone.getBundledInput` odczytuje kanały aktywne w sieci (kanał = kolor przewodu izolowanego, jak w `colors`). Działa też z przekaźnikiem redstone (Redstone Relay).
 - **Peryferium `redcircuit_gate`** (bramki z ustawieniami): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (komórka stanu: wyjście „w trakcie” po lewej).
 - **Peryferium `redcircuit_wireless`** (nadajnik/odbiornik): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.

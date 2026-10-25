@@ -1,7 +1,8 @@
 package pl.geesio.redcircuit.client;
 
+import pl.geesio.redcircuit.platform.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -233,35 +234,35 @@ public class GateScreen extends Screen {
     // ------------------------------------------------------------------ rysowanie
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.render(g, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(g, mouseX, mouseY, partialTick);
         int x = (width - W) / 2, y = (height - h) / 2;
-        g.drawCenteredString(font, title, width / 2, y + 9, 0xFFFFFF);
+        g.centeredText(font, title, width / 2, y + 9, 0xFFFFFFFF);
 
         drawDiagram(g, x + 10, y + 30);
         int ty = y + 30;
         for (FormattedCharSequence line : desc) {
-            g.drawString(font, line, x + 62, ty, 0xD0D0D0);
+            g.text(font, line, x + 62, ty, 0xFFD0D0D0);
             ty += 10;
         }
 
         if (valueRowY >= 0) {
             Component label = counter() ? Component.translatable("screen.redcircuit.gate.max")
                     : Component.translatable("screen.redcircuit.gate.time");
-            g.drawString(font, label, x + 10, valueRowY + 5, 0xE0E0E0);
+            g.text(font, label, x + 10, valueRowY + 5, 0xFFE0E0E0);
             if (!counter()) {
-                g.drawString(font, Component.translatable("screen.redcircuit.gate.ticks", interval), x + 166, valueRowY + 5, 0xA0A0A0);
+                g.text(font, Component.translatable("screen.redcircuit.gate.ticks", interval), x + 166, valueRowY + 5, 0xFFA0A0A0);
             }
         }
         if (countRowY >= 0) {
             int count = 0;
             var level = Minecraft.getInstance().level;
             if (level != null && level.getBlockEntity(pos) instanceof GateBlockEntity be) count = be.count;
-            g.drawString(font, Component.translatable("screen.redcircuit.gate.count", resetCount ? 0 : count, max),
-                    x + 128, countRowY + 5, 0xA0A0A0);
+            g.text(font, Component.translatable("screen.redcircuit.gate.count", resetCount ? 0 : count, max),
+                    x + 128, countRowY + 5, 0xFFA0A0A0);
         }
         if (inputsRowY >= 0) {
-            g.drawString(font, Component.translatable(type.switchesOutputs() ? "screen.redcircuit.gate.outputs" : "screen.redcircuit.gate.inputs"), x + 10, inputsRowY + 5, 0xE0E0E0);
+            g.text(font, Component.translatable(type.switchesOutputs() ? "screen.redcircuit.gate.outputs" : "screen.redcircuit.gate.inputs"), x + 10, inputsRowY + 5, 0xFFE0E0E0);
         }
     }
 
@@ -269,7 +270,7 @@ public class GateScreen extends Screen {
      * Schemat bramki widziany z góry (przód = góra): wypustki wejść i wyjść w kolorze aktualnego sygnału.
      * Jasnoczerwony = wyjście świeci, czerwony = wejście zasilone, ciemny = brak sygnału, szary = wejście wyłączone.
      */
-    private void drawDiagram(GuiGraphics g, int bx, int by) {
+    private void drawDiagram(GuiGraphicsExtractor g, int bx, int by) {
         Level level = Minecraft.getInstance().level;
         BlockState state = level != null ? level.getBlockState(pos) : null;
         if (level == null || !(state.getBlock() instanceof GateBlock)) return;
@@ -320,8 +321,8 @@ public class GateScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(g, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(g, mouseX, mouseY, partialTick);
         int x = (width - W) / 2, y = (height - h) / 2;
         g.fill(x - 1, y - 1, x + W + 1, y + h + 1, 0xFF000000);
         g.fill(x, y, x + W, y + h, 0xFF3A3A40);

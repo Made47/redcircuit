@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "P": {
-      "item": "minecraft:stone_pressure_plate"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "O": {
-      "item": "minecraft:observer"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "I": "#c:ingots/iron",
+    "P": "minecraft:stone_pressure_plate",
+    "G": "#c:glass_blocks",
+    "O": "minecraft:observer",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:item_detector",

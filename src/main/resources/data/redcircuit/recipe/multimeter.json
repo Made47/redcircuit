@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "minecraft:comparator"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "redcircuit:power_alloy_wire"
-    },
-    {
-      "tag": "c:glass_panes"
-    },
-    {
-      "tag": "c:ingots/iron"
-    }
+    "minecraft:comparator",
+    "redcircuit:signal_alloy_wire",
+    "redcircuit:power_alloy_wire",
+    "#c:glass_panes",
+    "#c:ingots/iron"
   ],
   "result": {
     "id": "redcircuit:multimeter",

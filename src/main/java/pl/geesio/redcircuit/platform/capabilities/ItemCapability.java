@@ -1,6 +1,6 @@
 package pl.geesio.redcircuit.platform.capabilities;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -16,14 +16,14 @@ public final class ItemCapability<T, C> {
         T getCapability(ItemStack stack, C context);
     }
 
-    private final ResourceLocation name;
+    private final Identifier name;
     private final Map<Item, Provider<T, C>> providers = new HashMap<>();
 
-    ItemCapability(ResourceLocation name) {
+    ItemCapability(Identifier name) {
         this.name = name;
     }
 
-    public ResourceLocation name() {
+    public Identifier name() {
         return name;
     }
 

@@ -1,7 +1,7 @@
 package pl.geesio.redcircuit.platform.capabilities;
 
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import pl.geesio.redcircuit.platform.energy.IEnergyStorage;
 import pl.geesio.redcircuit.platform.fluids.capability.IFluidHandler;
 import pl.geesio.redcircuit.platform.items.IItemHandler;
@@ -14,8 +14,8 @@ import pl.geesio.redcircuit.platform.transfer.FabricTransfer;
 public final class Capabilities {
     private Capabilities() {}
 
-    private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("redcircuit", path);
+    private static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath("redcircuit", path);
     }
 
     public static final class ItemHandler {

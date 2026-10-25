@@ -1,5 +1,6 @@
 package pl.geesio.redcircuit.alloy;
 
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import pl.geesio.redcircuit.registry.ModBlockEntities;
@@ -30,7 +30,7 @@ import pl.geesio.redcircuit.util.TickerUtil;
 
 /** Piec do stopów (na paliwo) lub elektryczny (na energię). */
 public class AlloyFurnaceBlock extends Block implements EntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     private final boolean electric;
@@ -69,7 +69,7 @@ public class AlloyFurnaceBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
+        if (level.isClientSide()) return null;
         return TickerUtil.create(type,
                 electric ? ModBlockEntities.POWER_ALLOY_FURNACE.get() : ModBlockEntities.ALLOY_FURNACE.get(),
                 AlloyFurnaceBlockEntity::tick);
@@ -77,21 +77,12 @@ public class AlloyFurnaceBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof AlloyFurnaceBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof AlloyFurnaceBlockEntity be) {
             player.openMenu(be);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof AlloyFurnaceBlockEntity be) {
-            for (int i = 0; i < be.items.getSlots(); i++) {
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.items.getStackInSlot(i));
-            }
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 
     /** Dym i trzask ognia jak w zwykłym piecu (tylko wersja na paliwo). */
     @Override

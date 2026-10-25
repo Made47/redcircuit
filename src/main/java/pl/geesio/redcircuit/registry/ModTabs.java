@@ -3,9 +3,9 @@ package pl.geesio.redcircuit.registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import pl.geesio.redcircuit.platform.registries.DeferredHolder;
@@ -41,9 +41,9 @@ public final class ModTabs {
             tab("materials", "itemGroup.redcircuit.materials", "signal_alloy_ingot", Category.MATERIALS);
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> tab(String id, String title, String icon, Category category) {
-        return TABS.register(id, () -> FabricItemGroup.builder()
+        return TABS.register(id, () -> FabricCreativeModeTab.builder()
                 .title(Component.translatable(title))
-                .icon(() -> new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, icon))))
+                .icon(() -> new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath(RedCircuit.MODID, icon))))
                 .displayItems((params, output) -> ModItems.ITEMS.getEntries().forEach(h -> {
                     Item item = h.get();
                     if (categoryOf(h.getId().getPath()) != category) return;

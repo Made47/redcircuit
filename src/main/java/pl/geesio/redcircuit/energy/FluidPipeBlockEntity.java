@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -84,7 +86,7 @@ public class FluidPipeBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FluidPipeBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         for (int i = 0; i < 6; i++) if (be.inputCooldown[i] > 0) be.inputCooldown[i]--;
         if (be.tank.isEmpty()) return;
 
@@ -117,14 +119,14 @@ public class FluidPipeBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        tank.save(output.child("Tank"));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        tank.readFromNBT(registries, tag.getCompound("Tank"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        tank.load(input.childOrEmpty("Tank"));
     }
 }

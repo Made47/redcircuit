@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:ores/gold"
-  },
+  "ingredient": "#c:ores/gold",
   "result": {
     "id": "redcircuit:gold_dust",
     "count": 2

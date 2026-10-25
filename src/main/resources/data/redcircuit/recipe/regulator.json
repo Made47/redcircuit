@@ -7,21 +7,11 @@
     "IWI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "F": {
-      "item": "redcircuit:filter"
-    },
-    "T": {
-      "item": "redcircuit:extractor"
-    },
-    "C": {
-      "item": "minecraft:comparator"
-    },
-    "W": {
-      "item": "redcircuit:signal_machine_casing"
-    }
+    "I": "#c:ingots/iron",
+    "F": "redcircuit:filter",
+    "T": "redcircuit:extractor",
+    "C": "minecraft:comparator",
+    "W": "redcircuit:signal_machine_casing"
   },
   "result": {
     "id": "redcircuit:regulator",

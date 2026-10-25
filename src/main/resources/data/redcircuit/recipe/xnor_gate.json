@@ -2,24 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:circuit_plate"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    }
+    "redcircuit:circuit_plate",
+    "redcircuit:signal_alloy_wire",
+    "redcircuit:signal_alloy_wire",
+    "minecraft:redstone_torch",
+    "minecraft:redstone_torch",
+    "minecraft:redstone_torch"
   ],
   "result": {
     "id": "redcircuit:xnor_gate",

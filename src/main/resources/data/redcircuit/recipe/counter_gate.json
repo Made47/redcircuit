@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:circuit_plate"
-    },
-    {
-      "item": "minecraft:comparator"
-    },
-    {
-      "item": "minecraft:redstone_torch"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    }
+    "redcircuit:circuit_plate",
+    "minecraft:comparator",
+    "minecraft:redstone_torch",
+    "redcircuit:signal_alloy_wire"
   ],
   "result": {
     "id": "redcircuit:counter_gate",

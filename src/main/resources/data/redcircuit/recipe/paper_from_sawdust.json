@@ -5,9 +5,7 @@
     "SSS"
   ],
   "key": {
-    "S": {
-      "item": "redcircuit:sawdust"
-    }
+    "S": "redcircuit:sawdust"
   },
   "result": {
     "id": "minecraft:paper",

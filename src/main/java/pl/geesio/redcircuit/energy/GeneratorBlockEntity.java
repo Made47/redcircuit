@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -119,7 +121,7 @@ public class GeneratorBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, GeneratorBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         // Termostos przelicza otoczenie co 20 ticków, generator co 40.
         if (level.getGameTime() % (be.kind == Kind.THERMOPILE ? 20 : 40) == 0) {
             be.lastRate = be.computeRate(level, pos);
@@ -145,14 +147,14 @@ public class GeneratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        energy.setEnergy(input.getIntOr("Energy", 0));
     }
 }

@@ -7,24 +7,12 @@
     "IWI"
   ],
   "key": {
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "H": {
-      "tag": "redcircuit:handsaws"
-    },
-    "G": {
-      "tag": "c:gears/iron"
-    },
-    "M": {
-      "item": "redcircuit:power_machine_casing"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "W": {
-      "item": "redcircuit:power_alloy_wire"
-    }
+    "P": "#minecraft:planks",
+    "H": "#redcircuit:handsaws",
+    "G": "#c:gears/iron",
+    "M": "redcircuit:power_machine_casing",
+    "I": "#c:ingots/iron",
+    "W": "redcircuit:power_alloy_wire"
   },
   "result": {
     "id": "redcircuit:sawmill",

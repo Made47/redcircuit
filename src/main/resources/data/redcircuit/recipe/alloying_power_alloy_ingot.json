@@ -2,10 +2,10 @@
   "type": "redcircuit:alloying",
   "ingredients": [
     {
-      "tag": "c:ingots/silver"
+      "ingredient": "#c:ingots/silver"
     },
     {
-      "tag": "c:dusts/azurite",
+      "ingredient": "#c:dusts/azurite",
       "count": 4
     }
   ],

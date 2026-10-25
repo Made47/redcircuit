@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:silver_block"
-    }
+    "redcircuit:silver_block"
   ],
   "result": {
     "id": "redcircuit:silver_ingot",

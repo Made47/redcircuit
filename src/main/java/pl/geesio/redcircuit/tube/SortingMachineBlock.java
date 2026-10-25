@@ -45,19 +45,12 @@ public class SortingMachineBlock extends ExtractorBlock implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof SortingMachineBlockEntity be) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof SortingMachineBlockEntity be) {
             player.openMenu(new SimpleMenuProvider(
                     (id, inv, p) -> ChestMenu.threeRows(id, inv, be.config),
                     Component.translatable("container.redcircuit.sorting_machine")));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof SortingMachineBlockEntity be) {
-            Containers.dropContents(level, pos, be.config);
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
-    }
 }

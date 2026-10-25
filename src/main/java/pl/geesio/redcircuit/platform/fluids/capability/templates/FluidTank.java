@@ -1,7 +1,7 @@
 package pl.geesio.redcircuit.platform.fluids.capability.templates;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import pl.geesio.redcircuit.platform.fluids.FluidStack;
 import pl.geesio.redcircuit.platform.fluids.capability.IFluidHandler;
 
@@ -48,14 +48,12 @@ public class FluidTank implements IFluidHandler {
         return fluid.getAmount();
     }
 
-    public FluidTank readFromNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        fluid = FluidStack.parseOptional(provider, nbt.getCompound("Fluid"));
-        return this;
+    public void load(ValueInput input) {
+        fluid = input.read("Fluid", FluidStack.CODEC).orElse(FluidStack.EMPTY);
     }
 
-    public CompoundTag writeToNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        if (!fluid.isEmpty()) nbt.put("Fluid", fluid.save(provider));
-        return nbt;
+    public void save(ValueOutput output) {
+        if (!fluid.isEmpty()) output.store("Fluid", FluidStack.CODEC, fluid);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class PowerWireBlock extends FaceWireBlock implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.POWER_WIRE.get(), EnergyNodeBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.POWER_WIRE.get(), EnergyNodeBlockEntity::tick);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class PowerWireBlock extends FaceWireBlock implements EntityBlock {
     }
 
     static InteractionResult showEnergy(Level level, BlockPos pos, Player player) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) {
-            player.displayClientMessage(Component.translatable("message.redcircuit.energy",
-                    node.getEnergy().getEnergyStored(), node.getEnergy().getMaxEnergyStored()), true);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) {
+            player.sendOverlayMessage(Component.translatable("message.redcircuit.energy",
+                    node.getEnergy().getEnergyStored(), node.getEnergy().getMaxEnergyStored()));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

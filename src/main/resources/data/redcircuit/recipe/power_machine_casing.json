@@ -7,15 +7,9 @@
     "IBI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "tag": "c:ingots/brass"
-    },
-    "C": {
-      "item": "redcircuit:power_circuit"
-    }
+    "I": "#c:ingots/iron",
+    "B": "#c:ingots/brass",
+    "C": "redcircuit:power_circuit"
   },
   "result": {
     "id": "redcircuit:power_machine_casing",

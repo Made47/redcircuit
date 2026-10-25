@@ -1,5 +1,10 @@
 package pl.geesio.redcircuit.wireless;
 
+import java.util.List;
+import java.util.ArrayList;
+import net.minecraft.world.level.saveddata.SavedDataType;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
@@ -8,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -26,15 +31,25 @@ import java.util.UUID;
  */
 public class WirelessNetwork extends SavedData {
     public static final int MIN_FREQ = 1, MAX_FREQ = 5000;
-    private static final String NAME = "redcircuit_wireless";
+    private record Entry(int freq, GlobalPos pos) {
+        static final Codec<Entry> CODEC = RecordCodecBuilder.create(i -> i.group(
+                Codec.INT.fieldOf("Freq").forGetter(Entry::freq),
+                GlobalPos.CODEC.fieldOf("Pos").forGetter(Entry::pos)
+        ).apply(i, Entry::new));
+    }
+
+    private static final Codec<WirelessNetwork> CODEC = Entry.CODEC.listOf().fieldOf("Transmitters").codec().xmap(
+            WirelessNetwork::fromEntries, WirelessNetwork::entries);
+
+    public static final SavedDataType<WirelessNetwork> TYPE = new SavedDataType<>(
+            Identifier.fromNamespaceAndPath(pl.geesio.redcircuit.RedCircuit.MODID, "wireless"), WirelessNetwork::new, CODEC, null);
 
     private final Map<Integer, Set<GlobalPos>> transmitters = new HashMap<>();
     /** Piloty: częstotliwość -> (gracz -> czas wygaśnięcia). Nie są zapisywane. */
     private final Map<Integer, Map<UUID, Long>> remotes = new HashMap<>();
 
     public static WirelessNetwork get(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(
-                new SavedData.Factory<>(WirelessNetwork::new, WirelessNetwork::load, null), NAME);
+        return server.overworld().getDataStorage().computeIfAbsent(TYPE);
     }
 
     public static int clampFreq(int f) {
@@ -80,32 +95,15 @@ public class WirelessNetwork extends SavedData {
 
     // ------------------------------------------------------------------ zapis
 
-    @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        ListTag list = new ListTag();
-        transmitters.forEach((freq, set) -> {
-            for (GlobalPos gp : set) {
-                CompoundTag e = new CompoundTag();
-                e.putInt("Freq", freq);
-                e.putString("Dim", gp.dimension().location().toString());
-                e.putLong("Pos", gp.pos().asLong());
-                list.add(e);
-            }
-        });
-        tag.put("Transmitters", list);
-        return tag;
+    private List<Entry> entries() {
+        List<Entry> list = new ArrayList<>();
+        transmitters.forEach((freq, set) -> set.forEach(gp -> list.add(new Entry(freq, gp))));
+        return list;
     }
 
-    private static WirelessNetwork load(CompoundTag tag, HolderLookup.Provider registries) {
+    private static WirelessNetwork fromEntries(List<Entry> list) {
         WirelessNetwork net = new WirelessNetwork();
-        ListTag list = tag.getList("Transmitters", Tag.TAG_COMPOUND);
-        for (int i = 0; i < list.size(); i++) {
-            CompoundTag e = list.getCompound(i);
-            ResourceLocation dim = ResourceLocation.tryParse(e.getString("Dim"));
-            if (dim == null) continue;
-            GlobalPos gp = GlobalPos.of(ResourceKey.create(Registries.DIMENSION, dim), BlockPos.of(e.getLong("Pos")));
-            net.transmitters.computeIfAbsent(e.getInt("Freq"), k -> new HashSet<>()).add(gp);
-        }
+        for (Entry e : list) net.transmitters.computeIfAbsent(e.freq(), k -> new HashSet<>()).add(e.pos());
         return net;
     }
 }

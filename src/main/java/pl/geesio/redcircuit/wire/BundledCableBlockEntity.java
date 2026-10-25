@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.wire;
 
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -27,15 +29,17 @@ public class BundledCableBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putByteArray("Channels", channels.clone());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        int[] data = new int[16];
+        for (int i = 0; i < 16; i++) data[i] = channels[i];
+        output.putIntArray("Channels", data);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        byte[] data = tag.getByteArray("Channels");
-        for (int i = 0; i < 16 && i < data.length; i++) channels[i] = data[i];
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        int[] data = input.getIntArray("Channels").orElse(new int[0]);
+        for (int i = 0; i < 16 && i < data.length; i++) channels[i] = (byte) data[i];
     }
 }

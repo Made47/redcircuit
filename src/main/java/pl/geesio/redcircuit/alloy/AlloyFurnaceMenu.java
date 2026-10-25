@@ -56,7 +56,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             addSlot(new SlotItemHandler(items, AlloyFurnaceBlockEntity.FUEL, FUEL_X, FUEL_Y) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return pl.geesio.redcircuit.platform.Fuel.burnTime(stack) > 0;
+                    return pl.geesio.redcircuit.platform.Fuel.burnTime(stack, inventory.player.level()) > 0;
                 }
             });
         } else {
@@ -111,7 +111,7 @@ public class AlloyFurnaceMenu extends AbstractContainerMenu {
             if (!moveItemStackTo(stack, invStart, invEnd, true)) return ItemStack.EMPTY;
         } else {
             boolean moved = false;
-            if (electric ? BatteryHelper.isBattery(stack) : pl.geesio.redcircuit.platform.Fuel.burnTime(stack) > 0) {
+            if (electric ? BatteryHelper.isBattery(stack) : pl.geesio.redcircuit.platform.Fuel.burnTime(stack, player.level()) > 0) {
                 moved = moveItemStackTo(stack, 10, 11, false);
             }
             if (!moved && !moveItemStackTo(stack, 0, 9, false)) return ItemStack.EMPTY;

@@ -32,7 +32,7 @@ public class MultimeterItem extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level level = ctx.getLevel();
         Player player = ctx.getPlayer();
-        if (level.isClientSide || player == null) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.isClientSide() || player == null) return InteractionResult.SUCCESS;
         BlockPos pos = ctx.getClickedPos();
         Direction side = ctx.getClickedFace();
         BlockState state = level.getBlockState(pos);

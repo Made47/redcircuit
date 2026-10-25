@@ -10,8 +10,8 @@ public final class ModNetwork {
     private ModNetwork() {}
 
     public static void register() {
-        PayloadTypeRegistry.playC2S().register(GateConfigPayload.TYPE, GateConfigPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(FrequencyPayload.TYPE, FrequencyPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(GateConfigPayload.TYPE, GateConfigPayload.STREAM_CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(FrequencyPayload.TYPE, FrequencyPayload.STREAM_CODEC);
         ServerPlayNetworking.registerGlobalReceiver(GateConfigPayload.TYPE, ModNetwork::handleGateConfig);
         ServerPlayNetworking.registerGlobalReceiver(FrequencyPayload.TYPE, ModNetwork::handleFrequency);
     }

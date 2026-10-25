@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import pl.geesio.redcircuit.RedCircuit;
 
 /**
@@ -14,7 +14,7 @@ import pl.geesio.redcircuit.RedCircuit;
  */
 public record FrequencyPayload(int target, BlockPos pos, int frequency) implements CustomPacketPayload {
     public static final Type<FrequencyPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(RedCircuit.MODID, "frequency"));
+            new Type<>(Identifier.fromNamespaceAndPath(RedCircuit.MODID, "frequency"));
 
     public static final StreamCodec<ByteBuf, FrequencyPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, FrequencyPayload::target,

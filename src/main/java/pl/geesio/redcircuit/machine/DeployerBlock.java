@@ -1,11 +1,10 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.InteractionResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -36,7 +35,7 @@ public class DeployerBlock extends ContainerMachineBlock {
         Vec3 eye = Vec3.atCenterOf(pos);
         float yRot = facing.getAxis().isHorizontal() ? facing.toYRot() : 0f;
         float xRot = facing == Direction.UP ? -90f : facing == Direction.DOWN ? 90f : 0f;
-        player.moveTo(eye.x, eye.y - player.getEyeHeight(), eye.z, yRot, xRot);
+        player.snapTo(eye.x, eye.y - player.getEyeHeight(), eye.z, yRot, xRot);
         player.setYHeadRot(yRot);
 
         int n = be.items.getContainerSize();
@@ -68,13 +67,15 @@ public class DeployerBlock extends ContainerMachineBlock {
                 facing.getOpposite(), front, false);
         BlockState fs = level.getBlockState(front);
         if (!fs.isAir()) {
-            ItemInteractionResult r = fs.useItemOn(stack, level, player, InteractionHand.MAIN_HAND, hit);
+            InteractionResult r = fs.useItemOn(stack, level, player, InteractionHand.MAIN_HAND, hit);
             if (r.consumesAction()) return true;
         }
         if (stack.useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, hit)).consumesAction()) return true;
-        InteractionResultHolder<ItemStack> r = stack.use(level, player, InteractionHand.MAIN_HAND);
-        if (r.getResult().consumesAction()) {
-            player.setItemInHand(InteractionHand.MAIN_HAND, r.getObject());
+        InteractionResult r = stack.use(level, player, InteractionHand.MAIN_HAND);
+        if (r.consumesAction()) {
+            if (r instanceof InteractionResult.Success s && s.heldItemTransformedTo() != null) {
+                player.setItemInHand(InteractionHand.MAIN_HAND, s.heldItemTransformedTo());
+            }
             return true;
         }
         return false;

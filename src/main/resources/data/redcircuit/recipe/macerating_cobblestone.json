@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:cobblestones/normal"
-  },
+  "ingredient": "#c:cobblestones/normal",
   "result": {
     "id": "minecraft:gravel",
     "count": 1

@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "minecraft:green_wool"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    },
-    {
-      "item": "redcircuit:signal_alloy_wire"
-    }
+    "minecraft:green_wool",
+    "redcircuit:signal_alloy_wire",
+    "redcircuit:signal_alloy_wire",
+    "redcircuit:signal_alloy_wire",
+    "redcircuit:signal_alloy_wire"
   ],
   "result": {
     "id": "redcircuit:insulated_wire_green",

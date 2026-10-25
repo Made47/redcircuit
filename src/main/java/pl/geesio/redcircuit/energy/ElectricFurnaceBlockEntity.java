@@ -1,5 +1,9 @@
 package pl.geesio.redcircuit.energy;
 
+import pl.geesio.redcircuit.util.Recipes;
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -99,17 +103,17 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
 
     private Optional<RecipeHolder<SmeltingRecipe>> recipeFor(Level level, ItemStack input) {
         if (input.isEmpty()) return Optional.empty();
-        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(input), level);
+        return Recipes.find(level, RecipeType.SMELTING, new SingleRecipeInput(input));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ElectricFurnaceBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         BatteryHelper.discharge(be.items.getStackInSlot(BATTERY_SLOT), be.energy, 400);
         boolean working = false;
         ItemStack input = be.items.getStackInSlot(0);
         Optional<RecipeHolder<SmeltingRecipe>> recipe = be.recipeFor(level, input);
         if (recipe.isPresent()) {
-            ItemStack result = recipe.get().value().getResultItem(level.registryAccess());
+            ItemStack result = recipe.get().value().assemble(new SingleRecipeInput(input));
             boolean fits = !result.isEmpty() && be.items.insertItem(1, result.copy(), true).isEmpty();
             if (fits && be.energy.getEnergyStored() >= pl.geesio.redcircuit.config.RedCircuitConfig.ELECTRIC_FURNACE_FE.get()) {
                 working = true;
@@ -147,19 +151,19 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     // ---------- Zapis ----------
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
-        tag.putInt("Energy", energy.getEnergyStored());
-        tag.putInt("Progress", progress);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
+        output.putInt("Energy", energy.getEnergyStored());
+        output.putInt("Progress", progress);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        BatteryHelper.loadItems(items, registries, tag.getCompound("Items"));
-        energy.setEnergy(tag.getInt("Energy"));
-        progress = tag.getInt("Progress");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        items.load(input.childOrEmpty("Items"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
+        progress = input.getIntOr("Progress", 0);
     }
 
     /** Dla lejków/rur: wkładanie tylko do wejścia (i tylko przetapialnych), wyjmowanie tylko z wyjścia. */
@@ -194,5 +198,14 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         public boolean isItemValid(int slot, ItemStack stack) {
             return slot == 0 && level != null && recipeFor(level, stack).isPresent();
         }
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            for (int i = 0; i < this.getItems().getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.getItems().getStackInSlot(i));
+            }
     }
 }

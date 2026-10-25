@@ -2,12 +2,8 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "ingredient": [
-    {
-      "item": "redcircuit:azurite_ore"
-    },
-    {
-      "item": "redcircuit:deepslate_azurite_ore"
-    }
+    "redcircuit:azurite_ore",
+    "redcircuit:deepslate_azurite_ore"
   ],
   "result": {
     "id": "redcircuit:azurite"

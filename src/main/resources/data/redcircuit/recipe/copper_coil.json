@@ -7,12 +7,8 @@
     " W "
   ],
   "key": {
-    "W": {
-      "item": "redcircuit:fine_copper_wire"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "W": "redcircuit:fine_copper_wire",
+    "I": "#c:ingots/iron"
   },
   "result": {
     "id": "redcircuit:copper_coil",

@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.machine;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -41,7 +44,7 @@ public class RegulatorBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, RegulatorBlockEntity be) {
-        if (level.isClientSide || ++be.timer < INTERVAL) return;
+        if (level.isClientSide() || ++be.timer < INTERVAL) return;
         be.timer = 0;
         Direction facing = state.getValue(ExtractorBlock.FACING);
         BlockPos front = pos.relative(facing), back = pos.relative(facing.getOpposite());
@@ -76,14 +79,21 @@ public class RegulatorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        filter.save(tag, registries);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        filter.save(output);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        filter.load(tag, registries);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        filter.load(input);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            Containers.dropContents(level, pos, this.filter);
     }
 }

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:encased_insulated_wire_purple"
-    }
+    "redcircuit:encased_insulated_wire_purple"
   ],
   "result": {
     "id": "redcircuit:insulated_wire_purple",

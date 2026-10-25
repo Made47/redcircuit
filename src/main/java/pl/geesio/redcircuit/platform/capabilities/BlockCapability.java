@@ -2,7 +2,7 @@ package pl.geesio.redcircuit.platform.capabilities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -36,16 +36,16 @@ public final class BlockCapability<T, C> {
         T find(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity be, @Nullable Direction side);
     }
 
-    private final ResourceLocation name;
+    private final Identifier name;
     private final Map<BlockEntityType<?>, BlockEntityProvider<T, C, ?>> beProviders = new HashMap<>();
     private final Map<Block, BlockProvider<T, C>> blockProviders = new HashMap<>();
     private Fallback<T> fallback = (l, p, s, b, d) -> null;
 
-    BlockCapability(ResourceLocation name) {
+    BlockCapability(Identifier name) {
         this.name = name;
     }
 
-    public ResourceLocation name() {
+    public Identifier name() {
         return name;
     }
 

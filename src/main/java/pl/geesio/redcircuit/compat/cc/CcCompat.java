@@ -5,7 +5,7 @@ import dan200.computercraft.api.peripheral.PeripheralLookup;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,7 +50,7 @@ public final class CcCompat {
 
     /** Komputery, żółwie i przekaźnik redstone z CC: Tweaked. */
     static boolean isComputer(BlockState state) {
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        Identifier id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
         if (!ComputerCraftAPI.MOD_ID.equals(id.getNamespace())) return false;
         String p = id.getPath();
         return p.startsWith("computer_") || p.startsWith("turtle_") || p.equals("redstone_relay");

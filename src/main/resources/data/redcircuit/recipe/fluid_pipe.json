@@ -5,12 +5,8 @@
     "BGB"
   ],
   "key": {
-    "B": {
-      "tag": "c:ingots/brass"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    }
+    "B": "#c:ingots/brass",
+    "G": "#c:glass_blocks"
   },
   "result": {
     "id": "redcircuit:fluid_pipe",

@@ -1,8 +1,6 @@
 {
   "type": "redcircuit:macerating",
-  "ingredient": {
-    "tag": "c:ores/silver"
-  },
+  "ingredient": "#c:ores/silver",
   "result": {
     "id": "redcircuit:silver_dust",
     "count": 2

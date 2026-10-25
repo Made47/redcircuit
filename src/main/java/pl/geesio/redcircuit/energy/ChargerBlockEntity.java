@@ -1,5 +1,8 @@
 package pl.geesio.redcircuit.energy;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -71,7 +74,7 @@ public class ChargerBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ChargerBlockEntity be) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         boolean charging = false;
         for (int i = 0; i < SLOTS; i++) {
             if (BatteryHelper.charge(be.items.getStackInSlot(i), be.energy, RATE) > 0) charging = true;
@@ -129,16 +132,25 @@ public class ChargerBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", items.serializeNBT(registries));
-        tag.putInt("Energy", energy.getEnergyStored());
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        items.save(output.child("Items"));
+        output.putInt("Energy", energy.getEnergyStored());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        BatteryHelper.loadItems(items, registries, tag.getCompound("Items"));
-        energy.setEnergy(tag.getInt("Energy"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        items.load(input.childOrEmpty("Items"));
+        energy.setEnergy(input.getIntOr("Energy", 0));
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (level == null) return;
+            for (int i = 0; i < this.getItems().getSlots(); i++) {
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), this.getItems().getStackInSlot(i));
+            }
     }
 }

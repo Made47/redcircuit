@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "redstone",
   "ingredients": [
-    {
-      "item": "redcircuit:encased_bundled_cable"
-    }
+    "redcircuit:encased_bundled_cable"
   ],
   "result": {
     "id": "redcircuit:bundled_cable",

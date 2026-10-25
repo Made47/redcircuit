@@ -1,11 +1,13 @@
 package pl.geesio.redcircuit.fluid;
 
+import net.minecraft.core.Direction;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -61,28 +63,28 @@ public class FluidTankBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : TickerUtil.create(type, ModBlockEntities.FLUID_TANK.get(), FluidTankBlockEntity::tick);
+        return level.isClientSide() ? null : TickerUtil.create(type, ModBlockEntities.FLUID_TANK.get(), FluidTankBlockEntity::tick);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
                                               InteractionHand hand, BlockHitResult hit) {
         Storage<FluidVariant> held = FluidStorage.ITEM.find(stack, ContainerItemContext.forPlayerInteraction(player, hand));
-        if (held == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
+        if (held == null) return InteractionResult.TRY_WITH_EMPTY_HAND;
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         Storage<FluidVariant> tank = FluidStorage.SIDED.find(level, pos, hit.getDirection());
         if (tank != null && FluidStorageUtil.interactWithFluidStorage(tank, player, hand)) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidTankBlockEntity be) {
-            player.displayClientMessage(describe(be.getTank().getFluid()), true);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof FluidTankBlockEntity be) {
+            player.sendOverlayMessage(describe(be.getTank().getFluid()));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     private static Component describe(FluidStack fs) {
@@ -96,19 +98,19 @@ public class FluidTankBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         if (!(level.getBlockEntity(pos) instanceof FluidTankBlockEntity be) || be.getTank().isEmpty()) return 0;
         return 1 + Math.round(be.fill() * 14);
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    /** Opis przedmiotu zbiornika (wywoływany przez BlockItem w ModItems - bloki nie mają już własnych podpowiedzi). */
+    public static void appendTooltip(ItemStack stack, Consumer<Component> tooltip) {
         SimpleFluidContent content = stack.getOrDefault(ModDataComponents.FLUID.get(), SimpleFluidContent.EMPTY);
-        tooltip.add(describe(content.copy()).copy().withStyle(ChatFormatting.AQUA));
+        tooltip.accept(describe(content.copy()).copy().withStyle(ChatFormatting.AQUA));
     }
 
     @Override
-    protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+    protected boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 

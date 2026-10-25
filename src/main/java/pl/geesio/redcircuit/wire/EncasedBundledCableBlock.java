@@ -1,5 +1,7 @@
 package pl.geesio.redcircuit.wire;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +23,7 @@ public class EncasedBundledCableBlock extends EncasedWireBlock implements Entity
     }
 
     @Override
-    protected boolean connectsToDevice(net.minecraft.world.level.LevelAccessor level, BlockPos pos, net.minecraft.core.Direction dir,
+    protected boolean connectsToDevice(net.minecraft.world.level.LevelReader level, BlockPos pos, net.minecraft.core.Direction dir,
                                        BlockPos neighborPos, BlockState neighbor) {
         return BundledIO.isDevice(level, neighborPos, neighbor);
     }
@@ -32,9 +34,9 @@ public class EncasedBundledCableBlock extends EncasedWireBlock implements Entity
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        if (!level.isClientSide && (WireTypes.typeOf(neighborBlock) != null
-                || BundledIO.isDevice(level, neighborPos, level.getBlockState(neighborPos)))) WireNetwork.update(level, pos);
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        // 26.x nie podaje pozycji sąsiada - odświeżamy sieć przy każdej zmianie obok.
+        if (!level.isClientSide()) WireNetwork.update(level, pos);
     }
 
     @Override
