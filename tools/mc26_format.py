@@ -59,7 +59,31 @@ def convert_recipe(d):
     return d
 
 
+def convert_worldgen_263(res_root, modid):
+    """26.3: worldgen/configured_feature -> worldgen/feature, bez opakowania "config", stan bloku jako tekst."""
+    src = os.path.join(res_root, "data", modid, "worldgen", "configured_feature")
+    if not os.path.isdir(src):
+        return
+    dst = os.path.join(res_root, "data", modid, "worldgen", "feature")
+    os.makedirs(dst, exist_ok=True)
+    for p in glob.glob(os.path.join(src, "*.json")):
+        with open(p, encoding="utf-8") as f:
+            d = json.load(f)
+        out = {"type": d["type"]}
+        out.update(d.get("config", {}))
+        for t in out.get("targets", []):
+            st = t.get("state")
+            if isinstance(st, dict) and set(st) == {"Name"}:
+                t["state"] = st["Name"]
+        with open(os.path.join(dst, os.path.basename(p)), "w", encoding="utf-8") as f:
+            json.dump(out, f, indent=2)
+            f.write("\n")
+        os.remove(p)
+    os.rmdir(src)
+
+
 def convert(res_root, modid):
+    convert_worldgen_263(res_root, modid)
     for p in glob.glob(os.path.join(res_root, "data", "*", "recipe", "*.json")):
         with open(p, encoding="utf-8") as f:
             d = json.load(f)

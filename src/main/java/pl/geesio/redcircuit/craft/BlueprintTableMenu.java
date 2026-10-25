@@ -158,7 +158,7 @@ public class BlueprintTableMenu extends AbstractContainerMenu {
             for (int s = 0; s < storage.getSlots() && !left.isEmpty(); s++) {
                 left = storage.insertItem(s, left, false);
             }
-            if (!left.isEmpty() && !player.getInventory().add(left)) player.drop(left, false);
+            if (!left.isEmpty() && !player.getInventory().add(left)) player.drop(left, false, net.minecraft.util.Prediction.SERVER_ONLY);
         }
     }
 
@@ -233,7 +233,7 @@ public class BlueprintTableMenu extends AbstractContainerMenu {
                 ItemStack moving = out.copy();
                 if (!moveItemStackTo(moving, INV_START, INV_END, true)) break;
                 slot.onTake(p, out.copy());
-                if (!moving.isEmpty()) p.drop(moving, false);
+                if (!moving.isEmpty()) p.drop(moving, false, net.minecraft.util.Prediction.PREDICTED);
                 result.setItem(0, ItemStack.EMPTY);
                 updateResult(true);
             }

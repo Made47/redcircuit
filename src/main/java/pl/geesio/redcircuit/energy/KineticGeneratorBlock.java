@@ -102,7 +102,7 @@ public class KineticGeneratorBlock extends GeneratorBlock {
             if (!level.isClientSide()) {
                 level.setBlock(pos, state.setValue(ROTOR, Rotor.NONE).setValue(RUNNING, false), Block.UPDATE_ALL);
                 ItemStack back = new ItemStack(itemFor(rotor));
-                if (!player.getInventory().add(back)) player.drop(back, false);
+                if (!player.getInventory().add(back)) player.drop(back, false, net.minecraft.util.Prediction.SERVER_ONLY);
             }
             return InteractionResult.SUCCESS;
         }

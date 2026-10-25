@@ -48,7 +48,7 @@ public final class ItemHandlerHelper {
     public static void giveItemToPlayer(Player player, ItemStack stack) {
         if (stack.isEmpty()) return;
         if (!player.getInventory().add(stack) || !stack.isEmpty()) {
-            player.drop(stack, false);
+            player.drop(stack, false, net.minecraft.util.Prediction.SERVER_ONLY);
         }
     }
 }

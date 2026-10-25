@@ -70,7 +70,7 @@ public class FluidTankRenderer implements BlockEntityRenderer<FluidTankBlockEnti
         float h = Math.max(0.02f, state.fill);
         float y0 = 1.02f / 16f, y1 = y0 + (MAX - y0) * h;
         float v0 = 1 - h;
-        collector.submitCustomGeometry(pose, RenderTypes.entityTranslucentCullItemTarget(TextureAtlas.LOCATION_BLOCKS), (p, vc) -> {
+        collector.submitCustomGeometry(pose, RenderTypes.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS), (p, vc) -> {
             // góra
             quad(vc, p, sprite, color, lightUv, 0, 1, 0,
                     MIN, y1, MIN, MIN, y1, MAX, MAX, y1, MAX, MAX, y1, MIN, 0, 0, 1, 1);

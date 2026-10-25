@@ -77,7 +77,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
     }
 
     public static boolean isFuel(ItemStack stack, net.minecraft.world.level.Level level) {
-        return pl.geesio.redcircuit.platform.Fuel.burnTime(stack, level) > 0;
+        return pl.geesio.redcircuit.platform.Fuel.isFuel(stack);
     }
 
     public ModEnergyStorage getEnergy() {
@@ -100,7 +100,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements MenuProvide
         // Nowe paliwo tylko, gdy jest miejsce na energię i brak sygnału redstone
         if (be.burnTime <= 0 && !powered && be.energy.getEnergyStored() + rate <= CAPACITY) {
             ItemStack fuel = be.items.getStackInSlot(0);
-            int time = pl.geesio.redcircuit.platform.Fuel.burnTime(fuel, level);
+            int time = pl.geesio.redcircuit.platform.Fuel.burnTime(level, be, fuel);
             if (time > 0) {
                 be.burnTime = be.burnTotal = time;
                 ItemStack remainder = pl.geesio.redcircuit.util.Recipes.remainder(fuel);   // np. pusty kubeł po lawie

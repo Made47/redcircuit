@@ -93,7 +93,8 @@ public final class ModItems {
     public static final DeferredItem<Item> COPPER_DUST = ITEMS.registerSimpleItem("copper_dust");
     public static final DeferredItem<Item> TIN_DUST = ITEMS.registerSimpleItem("tin_dust");
     public static final DeferredItem<Item> SILVER_DUST = ITEMS.registerSimpleItem("silver_dust");
-    public static final DeferredItem<Item> SAWDUST = ITEMS.registerSimpleItem("sawdust");
+    public static final DeferredItem<Item> SAWDUST = ITEMS.register("sawdust", RegIds.item(() -> new Item(RegIds.itemProps()
+            .cookingFuel(net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.COOKING_TIME_WOOD_ITEMS_EXTRA_SMALL))));   // paliwo jak patyk
 
     // Przedmiot (BlockItem) dla każdego zarejestrowanego bloku.
     static {

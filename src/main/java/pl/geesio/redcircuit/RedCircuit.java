@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +49,6 @@ public class RedCircuit implements ModInitializer {
         pl.geesio.redcircuit.network.ModNetwork.register();
         pl.geesio.redcircuit.worldgen.ModWorldgen.register();
 
-        FuelValueEvents.BUILD.register((builder, ctx) -> builder.add(ModItems.SAWDUST.get(), 100));
 
         // Śrubokręt działa przed interakcją z blokiem (NeoForge: onItemUseFirst)
         UseBlockCallback.EVENT.register((player, level, hand, hit) -> {

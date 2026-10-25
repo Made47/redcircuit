@@ -169,7 +169,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
         } else {
             if (canWork && be.burnTime <= 0) {
                 ItemStack fuel = be.items.getStackInSlot(FUEL);
-                int burn = pl.geesio.redcircuit.platform.Fuel.burnTime(fuel, level);
+                int burn = pl.geesio.redcircuit.platform.Fuel.burnTime(level, be, fuel);
                 if (burn > 0) {
                     be.burnTime = be.burnDuration = burn;
                     ItemStack rest = pl.geesio.redcircuit.util.Recipes.remainder(fuel);
@@ -220,7 +220,7 @@ public class AlloyFurnaceBlockEntity extends BlockEntity implements MenuProvider
                 if (side == Direction.DOWN || slot == OUTPUT) return stack;
                 boolean fuelSide = !electric && side != Direction.UP;
                 if (fuelSide) {
-                    if (slot != FUEL || pl.geesio.redcircuit.platform.Fuel.burnTime(stack, level) <= 0) return stack;
+                    if (slot != FUEL || !pl.geesio.redcircuit.platform.Fuel.isFuel(stack)) return stack;
                 } else if (slot >= INPUTS) {
                     return stack;
                 }

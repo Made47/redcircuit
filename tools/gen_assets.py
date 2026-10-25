@@ -3467,7 +3467,7 @@ def gen_sawmill():
     # Trociny: paliwo i papier
     save_png(tex_dust((196, 160, 110)), "item", "sawdust")
     generated_item("sawdust")
-    # Fabric: paliwo rejestruje kod (FuelValueEvents w RedCircuit)
+    # Fabric: paliwo rejestruje kod (komponent cooking_fuel w ModItems)
     shaped("paper_from_sawdust", ["SSS"], {"S": M + "sawdust"}, "minecraft:paper", 2)
     write_json(os.path.join(RES, "data", "c", "tags", "item", "dusts", "wood.json"), {"values": [M + "sawdust"]})
 
