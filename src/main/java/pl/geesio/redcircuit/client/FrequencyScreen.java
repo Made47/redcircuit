@@ -30,11 +30,11 @@ public class FrequencyScreen extends Screen {
     }
 
     public static void openForBlock(BlockPos pos, int frequency, String descriptionId) {
-        Minecraft.getInstance().setScreen(new FrequencyScreen(Component.translatable(descriptionId), 0, pos, frequency));
+        Minecraft.getInstance().gui.setScreen(new FrequencyScreen(Component.translatable(descriptionId), 0, pos, frequency));
     }
 
     public static void openForItem(InteractionHand hand, int frequency, String descriptionId) {
-        Minecraft.getInstance().setScreen(new FrequencyScreen(Component.translatable(descriptionId),
+        Minecraft.getInstance().gui.setScreen(new FrequencyScreen(Component.translatable(descriptionId),
                 hand == InteractionHand.MAIN_HAND ? 1 : 2, BlockPos.ZERO, frequency));
     }
 

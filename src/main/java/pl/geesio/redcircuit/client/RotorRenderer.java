@@ -65,7 +65,7 @@ public class RotorRenderer implements BlockEntityRenderer<GeneratorBlockEntity, 
         float speed = st.rotor == KineticGeneratorBlock.Rotor.WINDMILL ? 2.0f : 3.5f;   // stopnie na tick
         st.angle = state.getValue(KineticGeneratorBlock.RUNNING)
                 ? ((be.getLevel().getGameTime() % 3600) + partialTick) * speed : 0f;
-        st.frontLight = LevelRenderer.getLightCoords(be.getLevel(), be.getBlockPos().relative(st.facing));
+        st.frontLight = net.minecraft.util.LightCoordsUtil.getLightCoords(be.getLevel(), be.getBlockPos().relative(st.facing));
     }
 
     @Override

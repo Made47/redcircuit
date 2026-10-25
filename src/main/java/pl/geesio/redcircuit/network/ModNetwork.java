@@ -22,7 +22,7 @@ public final class ModNetwork {
             int freq = pl.geesio.redcircuit.wireless.WirelessNetwork.clampFreq(msg.frequency());
             if (msg.target() == 0) {
                 Level level = player.level();
-                if (!level.isLoaded(msg.pos()) || player.distanceToSqr(msg.pos().getCenter()) > 64.0) return;
+                if (!level.isLoaded(msg.pos()) || player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(msg.pos())) > 64.0) return;
                 if (level.getBlockState(msg.pos()).getBlock() instanceof pl.geesio.redcircuit.wireless.WirelessBlock block) {
                     block.applyFrequency(level, msg.pos(), freq);
                 }
@@ -40,7 +40,7 @@ public final class ModNetwork {
         ctx.server().execute(() -> {
             ServerPlayer player = ctx.player();
             Level level = player.level();
-            if (!level.isLoaded(msg.pos()) || player.distanceToSqr(msg.pos().getCenter()) > 64.0) return;
+            if (!level.isLoaded(msg.pos()) || player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(msg.pos())) > 64.0) return;
             if (level.getBlockState(msg.pos()).getBlock() instanceof GateBlock gate && gate.configurable()) {
                 gate.applySettings(level, msg.pos(), msg.interval(), msg.max(), msg.resetCount(), msg.muted(), msg.mirrored(),
                         msg.disabled(), msg.quiet());

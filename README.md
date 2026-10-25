@@ -1,4 +1,4 @@
-# RedCircuit (Fabric 26.1.2)
+# RedCircuit (Fabric 26.2)
 
 *[Polska wersja: README.pl.md](README.pl.md)*
 
@@ -16,8 +16,8 @@ Includes redstone cables, logic gates, sorting tubes and Azurity energy.
 > The source code, the texture-generating scripts, translations and this documentation were largely written by AI,
 > under the direction of the author, who designed, reviewed and play-tested the mod. Expect occasional bugs – reports are welcome.
 
-## Minecraft 26.1.2 notes
-- Requires **Java 25** (bundled with the Minecraft 26.1.2 launcher), Fabric Loader 0.20+ and Fabric API for 26.1.2.
+## Minecraft 26.2 notes
+- Requires **Java 25** (bundled with the Minecraft 26.2 launcher), Fabric Loader 0.20+ and Fabric API for 26.2.
 - Machine inventories and tanks saved by the 1.21.1 version are read correctly.
 - Recipes use the 1.21.2+ JSON format (`"key": {"A": "minecraft:iron_ingot"}`, tags as `"#c:ingots/tin"`; alloy furnace ingredients as `{"ingredient": "...", "count": n}`).
 - Since 1.21.2 recipes live only on the server, so REI builds the RedCircuit recipe pages on the server – on a dedicated server install REI there too, otherwise only the information pages are shown.
@@ -31,7 +31,7 @@ Includes redstone cables, logic gates, sorting tubes and Azurity energy.
    .\gradlew.bat build
    ```
    The first build takes a few minutes because it downloads Minecraft, Fabric Loom and Fabric API.
-3. The finished file: `build\libs\redcircuit-fabric-0.1.0.jar` → put it into `mods/` together with **Fabric API** (Fabric Loader 0.20+ and Fabric API 0.155.3 or newer for MC 26.1.2).
+3. The finished file: `build\libs\redcircuit-fabric-0.1.0.jar` → put it into `mods/` together with **Fabric API** (Fabric Loader 0.20+ and Fabric API 0.161.0 or newer for MC 26.2).
 
 To test in game without installing: `.\gradlew.bat runClient`.
 
@@ -283,7 +283,7 @@ Azurity is **Forge Energy (FE)**, so it also works with other mods' machines and
 Full list: `src/main/resources/data/redcircuit/recipe/`. The easiest way to browse them in game is REI.
 
 ## REI integration
-With **REI (Roughly Enough Items)** for Fabric 26.1.2 installed you get:
+With **REI (Roughly Enough Items)** for Fabric 26.2 installed you get:
 - **Alloy Furnace**, **Macerator** and **Sawmill** categories with all recipes (datapack ones too),
 - alloy furnaces, the electric furnace, macerator, sawmill and blueprint table as crafting stations,
 - descriptions (information pages) for generators, rotors, tubes, machines, the blueprint table and saws.
@@ -298,7 +298,7 @@ python tools/gen_assets.py
 
 
 ## CC: Tweaked integration (optional)
-Works automatically when CC: Tweaked is installed (tested with CC: Tweaked 1.120.x for 26.1.2).
+Works automatically when CC: Tweaked is installed (tested with CC: Tweaked 1.120.x for 26.2).
 - **Bundled cable ↔ computers and turtles**: the cable (normal and encased) visually connects to a computer. `redstone.setBundledOutput` powers cable channels, and `redstone.getBundledInput` reads the channels active in the network (channel = insulated wire colour, as in `colors`). Also works with the Redstone Relay.
 - **`redcircuit_gate` peripheral** (gates with settings): `getGateType()`, `getState()`, `getInterval()/setInterval(ticks)`, `getCount()`, `getMax()/setMax(n)`, `resetCount()`, `isMuted()/setMuted(bool)`, `isMirrored()/setMirrored(bool)` (state cell: “counting” output on the left).
 - **`redcircuit_wireless` peripheral** (transmitter/receiver): `getFrequency()/setFrequency(n)`, `isTransmitter()`, `isPowered()`, `isChannelActive([freq])`.
